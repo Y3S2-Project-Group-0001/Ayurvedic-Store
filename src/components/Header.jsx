@@ -18,7 +18,7 @@ export default function Header(props) {
 
   if (props.type == 'home') {
     textColor = 'black'
-    bgColor = 'rgba(0, 0, 0, 0.3)'
+    bgColor = 'rgba(0, 0, 0, 0)'
   } else {
     bgColor = 'rgba(61, 86, 49, 1)'
     textColor = 'white'
