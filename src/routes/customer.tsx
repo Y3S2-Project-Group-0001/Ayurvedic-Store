@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { FileUpload } from '../pages/examples/file-upload'
-import Home from '../pages/Home'
+import Home from '../pages/Home/Home'
 import ShoppingCart from '../pages/ShoppingCart'
 
 export default function CustomerRouter() {
