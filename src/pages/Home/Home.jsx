@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Header from '../../components/Header'
 import Banner from './Banner'
 import Categories from './Categories'
+import SellAd from './SellWithUs'
 
 const Test = styled.div`
   position: fixed;
@@ -15,20 +16,7 @@ export default function Home() {
       <Header type="home" />
       <Banner />
       <Categories />
-
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
+      <SellAd />
     </>
   )
 }

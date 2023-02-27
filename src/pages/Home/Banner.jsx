@@ -24,6 +24,13 @@ const HeroContent = styled.div`
   position: absolute;
   top: 50%;
   left: 25%;
+  @media only screen and (max-width: 1000px) {
+    left: 50%;
+    background-color: #759068bd;
+    padding: 50px;
+    border-radius: 20px;
+  }
+  transition: 1s;
   transform: translate(-50%, -50%);
 `
 
@@ -31,6 +38,11 @@ const HeroText = styled.div`
   font-size: 40px;
   text-align: start;
   color: rgba(61, 86, 49, 1);
+  font-family: 'Quicksand';
+  font-weight: 500;
+  @media only screen and (max-width: 1000px) {
+    color: #2d5b19;
+  }
 `
 
 const Button = styled.button`
@@ -42,6 +54,11 @@ const Button = styled.button`
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  transition: 2s;
+
+  @media only screen and (max-width: 1000px) {
+    background: #354410e3;
+  }
 
   &:hover {
     background: #5b6a36;
@@ -60,6 +77,11 @@ const SearchBar = styled.input`
   color: white;
   outline: none;
   border-radius: 5px;
+  transition: 1s;
+
+  @media only screen and (max-width: 1000px) {
+    background: #f7ffe1bf;
+  }
 
   &:focus {
     background: #434839;
@@ -76,6 +98,10 @@ export default function Banner() {
   return (
     <>
       <Container>
+        <link
+          href="https://fonts.googleapis.com/css?family=Quicksand"
+          rel="stylesheet"
+        ></link>
         <img src="images/homeBanner.jpg" alt="Home_Page_Image" />
         <HeroContent>
           <HeroText>

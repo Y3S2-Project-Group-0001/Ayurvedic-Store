@@ -8,8 +8,7 @@ const link1 =
 const link2 =
   'https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
 const title1 = 'A community that likes killing'
-const descriptoon1 =
-  'sometimes its the thought that counts of killing someone else.'
+const descriptoon1 = 'sometimes its the thought that counts of killing someone.'
 
 const BigContainer = styled.div`
   display: flex;
@@ -19,9 +18,12 @@ const BigContainer = styled.div`
 const Container = styled.div`
   display: grid;
   grid-template-columns: auto auto;
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: auto;
+  }
   margin: 30px;
-  row-gap: 50px;
-  column-gap: 100px;
+  row-gap: 30px;
+  column-gap: 80px;
   flex-wrap: 2;
 `
 
@@ -30,7 +32,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   font-family: 'Quicksand';
-  font-weight: 600;
+  font-weight: 500;
   font-size: 22px;
   color: gray;
   margin-top: 50px;
