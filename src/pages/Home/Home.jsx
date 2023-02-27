@@ -4,6 +4,7 @@ import Header from '../../components/Header'
 import Banner from './Banner'
 import Categories from './Categories'
 import SellAd from './SellWithUs'
+import AboutUsHome from './AboutUsInHome'
 
 const Test = styled.div`
   position: fixed;
@@ -17,6 +18,7 @@ export default function Home() {
       <Banner />
       <Categories />
       <SellAd />
+      <AboutUsHome />
     </>
   )
 }

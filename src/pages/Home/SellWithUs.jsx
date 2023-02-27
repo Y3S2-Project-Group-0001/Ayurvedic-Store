@@ -48,7 +48,7 @@ const SmallerContainer = styled.div`
 
 const MiniContainer = styled.div`
   background-color: ${props => props.color};
-  display: flex;
+  display: ${props => props.flex};
   flex-direction: ${props => props.dirrection};
   justify-content: ${props => props.center};
   margin-top: ${props => props.mt};
@@ -64,10 +64,21 @@ const MiniContainer = styled.div`
     justify-content: center;
     object-fit: cover;
     object-position: right top;
+    @media only screen and (max-width: 1000px) {
+      width: 80%;
+      height: 70%;
+    }
     width: 100%;
     height: 80%;
     border-style: solid;
     rotate: -10deg;
+  }
+`
+
+const CenterContain = styled.div`
+  @media only screen and (max-width: 1000px) {
+    display: flex;
+    justify-content: center;
   }
 `
 
@@ -78,25 +89,39 @@ export default function SellAd() {
   return (
     <>
       <Container>
-        <MiniContainer center="center" mt="100px" mb="80px" fontSize="30px">
+        <MiniContainer
+          center="center"
+          mt="100px"
+          mb="80px"
+          fontSize="30px"
+          flex="flex"
+        >
           Come Sell with us
         </MiniContainer>
 
-        <SmallerContainer>
-          <MiniContainer color="" width="500px">
-            {' '}
-            <img src={Image} />{' '}
-          </MiniContainer>
-          <MiniContainer mt="40px" color="" width="500px" dirrection="column">
-            {TextData} <br />
-            <br /> {TextData2}
-            <MiniContainer center="center">
-              <Button onClick={() => SignUpPressed()}>
-                Register as a seller!
-              </Button>{' '}
+        <CenterContain>
+          <SmallerContainer>
+            <MiniContainer color="" width="500px" flex="flex">
+              {' '}
+              <img src={Image} />{' '}
             </MiniContainer>
-          </MiniContainer>
-        </SmallerContainer>
+            <MiniContainer
+              mt="40px"
+              color=""
+              width="500px"
+              dirrection="column"
+              flex="grid"
+            >
+              {TextData} <br />
+              <br /> {TextData2}
+              <MiniContainer center="center" flex="flex">
+                <Button onClick={() => SignUpPressed()}>
+                  Register as a seller!
+                </Button>{' '}
+              </MiniContainer>
+            </MiniContainer>
+          </SmallerContainer>
+        </CenterContain>
       </Container>
     </>
   )
