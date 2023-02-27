@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Test></Test>
       <Header type="home" />
-
+      <Banner />
       <h1>ddd</h1>
       <h1>ddd</h1>
       <h1>ddd</h1>

@@ -6,6 +6,7 @@ const MainContainer = styled.div`
   position: fixed;
   top: 0%;
   width: 100%;
+  z-index: 100;
 `
 
 const Container = styled.div`
@@ -87,7 +88,7 @@ export default function Header(props) {
   useEffect(() => {
     if (props.type == 'home' && scrolled) {
       setTextColor('black')
-      setBgColor('rgba(0, 0, 0, 0.1)')
+      setBgColor('rgba(0, 0, 0, 0)')
     } else {
       setTextColor('white')
       setBgColor('rgba(61, 86, 49, 1)')
