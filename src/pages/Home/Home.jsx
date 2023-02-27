@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Header from '../../components/Header'
 import Banner from './Banner'
+import Categories from './Categories'
 
 const Test = styled.div`
   position: fixed;
@@ -13,18 +14,8 @@ export default function Home() {
       <Test></Test>
       <Header type="home" />
       <Banner />
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
+      <Categories />
 
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
-      <h1>ddd</h1>
       <h1>ddd</h1>
       <h1>ddd</h1>
       <h1>ddd</h1>
