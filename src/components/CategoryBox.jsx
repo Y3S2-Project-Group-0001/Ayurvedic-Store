@@ -16,6 +16,7 @@ const OuterContainer = styled.div`
 
   &:hover {
     background: #c7df8a;
+    transform: scale(1.05);
   }
 `
 

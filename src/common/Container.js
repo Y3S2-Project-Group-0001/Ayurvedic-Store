@@ -11,9 +11,17 @@ const Container = styled.div`
   align-items: ${props => props.align};
   flex-direction: ${props => props.dirrection};
   grid-template-columns: ${props => props.auto};
+  border-radius: ${props => props.borderR};
+  border-bottom: ${props => props.borderBot};
+  border-right: ${props => props.borderRight};
+  border-color: ${props => props.borderColor};
   @media only screen and (max-width: 1000px) {
     grid-template-columns: ${props => props.smallauto};
+    border-right: ${props => props.smallborderRight};
+    border-top: ${props => props.smallborderTop};
+    padding-top: ${props => props.smallPaddingTop};
   }
+  padding: ${props => props.padding};
   margin-top: ${props => props.mt};
   margin-bottom: ${props => props.mb};
   margin-left: ${props => props.ml};

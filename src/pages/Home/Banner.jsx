@@ -5,7 +5,7 @@ import { useState } from 'react'
 const Container = styled.div`
   background-color: gray;
   width: 100%;
-  height: 722px;
+  height: 755px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
