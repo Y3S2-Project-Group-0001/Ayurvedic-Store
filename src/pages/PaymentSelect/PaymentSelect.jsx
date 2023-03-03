@@ -5,6 +5,14 @@ import Footer from '../../components/Footer'
 import PaymentInfo from './PaymentInfo'
 import PaymentOptions from './PaymentOptions'
 import Container from '../../common/Container'
+import GooglePay from './GooglePay'
+import Paypal from './Paypal'
+import Cards from './Cards'
+
+const Trans = styled.div`
+  transition-property: opacity, left, top, height;
+  transition-duration: 3s, 5s;
+`
 
 export default function PaymentSelect() {
   const [method, setMethod] = useState('none')
@@ -24,6 +32,9 @@ export default function PaymentSelect() {
           <Container display="grid">
             <PaymentInfo></PaymentInfo>
             <PaymentOptions setTheMethod={setMethod} />
+            {method == 'gpay' ? <GooglePay /> : ''}
+            {method == 'paypal' ? <Paypal /> : ''}
+            {method == 'card' ? <Cards /> : ''}
           </Container>
         </Container>
       </Container>

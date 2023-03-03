@@ -15,6 +15,7 @@ const Container = styled.div`
   border-bottom: ${props => props.borderBot};
   border-right: ${props => props.borderRight};
   border-color: ${props => props.borderColor};
+  padding: ${props => props.p};
   @media only screen and (max-width: 1000px) {
     grid-template-columns: ${props => props.smallauto};
     border-right: ${props => props.smallborderRight};
