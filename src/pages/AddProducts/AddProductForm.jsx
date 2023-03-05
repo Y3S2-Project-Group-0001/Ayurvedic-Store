@@ -7,6 +7,9 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `
 
 const Form = styled.form`
@@ -15,6 +18,9 @@ const Form = styled.form`
   justify-content: center;
   align-item: center;
   flex-direction: column;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `
 
 const LeftForm = styled.div`
@@ -37,6 +43,9 @@ const Input = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  @media only screen and (max-width: 1000px) {
+    width: 450px;
+  }
 `
 
 const LeftFormInput = styled.input`
@@ -45,6 +54,9 @@ const LeftFormInput = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  @media only screen and (max-width: 1000px) {
+    width: 450px;
+  }
 `
 
 const RightFormInput = styled.input`
@@ -53,6 +65,9 @@ const RightFormInput = styled.input`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  @media only screen and (max-width: 1000px) {
+    width: 450px;
+  }
 `
 
 const TextArea = styled.textarea`
@@ -61,6 +76,9 @@ const TextArea = styled.textarea`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  @media only screen and (max-width: 1000px) {
+    width: 450px;
+  }
 `
 
 const Label = styled.label`
@@ -106,6 +124,9 @@ const FormGroup = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `
 
 function AddProducts() {
