@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import ProductCard from './ProductCard'
+import SearchBar from './SearchBar'
 
 const Container = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `
 
 const GridContainer = styled.div`
@@ -16,19 +19,22 @@ const GridContainer = styled.div`
 
 function ProductsDisplay() {
   return (
-    <Container>
-      <GridContainer>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-      </GridContainer>
-    </Container>
+    <>
+      <Container>
+        <SearchBar />
+        <GridContainer>
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </GridContainer>
+      </Container>
+    </>
   )
 }
 

@@ -47,7 +47,7 @@ function ProductCard() {
     <Container>
       <ButtonGroup>
         <Image>
-          <img src="images/products/product.png" alt="Home_Page_Image" />
+          <img src="images/products/product.png" alt="Product_Image" />
         </Image>
         <Title>Amila Zindagi Juice for hair Growth and stress reliever</Title>
       </ButtonGroup>
