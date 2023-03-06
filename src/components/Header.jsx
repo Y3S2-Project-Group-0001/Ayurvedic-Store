@@ -86,7 +86,7 @@ export default function Header(props) {
   window.addEventListener('scroll', changeBackground)
 
   useEffect(() => {
-    if (props.type == 'home' && scrolled) {
+    if (props.type === 'home' && scrolled) {
       setTextColor('black')
       setBgColor('rgba(0, 0, 0, 0)')
     } else {

@@ -5,6 +5,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
 
 const OuterContainer = styled.div`
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
