@@ -5,7 +5,6 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
 
 const OuterContainer = styled.div`
-  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,10 +13,11 @@ const OuterContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: left;
   width: 90%;
 `
 
-const Title = styled.span`
+const Title = styled.h1`
   font-size: 3rem;
   font-weight: 300;
   color: #333;
@@ -130,6 +130,7 @@ const ImageWithDetailsContainer = styled.div`
 
 const ProductNameQuantityContainer = styled.div`
   display: flex;
+  flex-grow: 0;
   flex-direction: column;
   justify-content: space-between;
   margin: 10px 20px;
@@ -138,38 +139,12 @@ const ProductNameQuantityContainer = styled.div`
   margin-left: 50px;
 `
 
-const StyledImage = styled.img`
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-`
+const StyledImage = styled.img``
 
-const StyledProductTitle = styled.span`
-  font-size: 20px;
-  font-weight: 700;
-  color: #333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`
+const StyledProductTitle = styled.span``
 
-const QuantityContainer = styled.div`
-  display: flex;
-`
-const QuentityHandler = styled.span`
-  border: 2px solid #a2a3b1;
-  font-size: 15px;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 5px;
-  *:last-child,
-  *:first-child {
-    cursor: pointer;
-  }
-`
-
-const QuantitySpan = styled.span`
-  width: 100px;
-  margin: 0px 20px;
+const QuantityContainer = styled.span`
+  border: 1px solid black;
 `
 
 function ShoppingCart() {
@@ -187,11 +162,9 @@ function ShoppingCart() {
                     <StyledProductTitle>{product.name}</StyledProductTitle>
                     <span>{product.description}</span>
                     <QuantityContainer>
-                      <QuentityHandler>
-                        <AiOutlinePlus />
-                        <QuantitySpan>{product.quantity}</QuantitySpan>
-                        <AiOutlineMinus />
-                      </QuentityHandler>
+                      <AiOutlinePlus />
+                      {product.quantity}
+                      <AiOutlineMinus />
                     </QuantityContainer>
                   </ProductNameQuantityContainer>
                 </ImageWithDetailsContainer>
