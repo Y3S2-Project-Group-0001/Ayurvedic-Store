@@ -4,7 +4,7 @@ import { FileUpload } from '../pages/examples/file-upload'
 import Home from '../pages/Home/Home'
 import ShoppingCart from '../pages/ShoppingCart'
 import PaymentSelect from '../pages/PaymentSelect/PaymentSelect'
-import ProductsDisplay from '../pages/ProductsPage_Customer/ProductsDisplay'
+import ProductsPage from '../pages/ProductsPage_Customer/ProductsPage'
 
 export default function CustomerRouter() {
   return (
@@ -15,7 +15,7 @@ export default function CustomerRouter() {
 
       <Route path="/TestingPage" element={<PaymentSelect />} />
 
-      <Route path="/allProductsCustomer" element={<ProductsDisplay />} />
+      <Route path="/allProductsCustomer" element={<ProductsPage />} />
     </Routes>
   )
 }

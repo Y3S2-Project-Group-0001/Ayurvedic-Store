@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import ProductCard from './ProductCard'
-import SearchBar from './SearchBar'
 
 const Container = styled.div`
   height: 100%;
@@ -21,7 +20,6 @@ function ProductsDisplay() {
   return (
     <>
       <Container>
-        <SearchBar />
         <GridContainer>
           <ProductCard />
           <ProductCard />
