@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Bg_img from './images/addProduct_Bg.png'
 
 const Container = styled.div`
   width: 100%;
@@ -44,7 +43,10 @@ export default function Banner() {
     <>
       <Container>
         <Shape />
-        <img src={Bg_img} alt="Add-Product_Bg" />
+        <img
+          src="images/products/addProduct_Bg.png"
+          alt="AddProduct_Bg_Image"
+        />
         <TitleContent>
           <Title>Add New Product</Title>
         </TitleContent>
