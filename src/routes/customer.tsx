@@ -5,13 +5,12 @@ import Home from '../pages/Home/Home'
 import ShoppingCart from '../pages/ShoppingCart'
 import PaymentSelect from '../pages/PaymentSelect/PaymentSelect'
 
-
-
 import MainLayout from '../pages/MainLayout'
 import DashboardLayout from '../pages/DashboardLayout'
 // import CustomerDashBoard from "../pages/customer-dashboard/dashboard";
 // import ShoppingCart from '../pages/ShoppingCart copy'
 
+import ProductsPage from '../pages/ProductsPage_Customer/ProductsPage'
 
 export default function CustomerRouter() {
   return (
@@ -20,8 +19,7 @@ export default function CustomerRouter() {
       <Route path="/example/file-upload" element={<FileUpload />} />
       <Route path="/TestingPage" element={<PaymentSelect />} />
 
-
-     
+      <Route path="/allProductsCustomer" element={<ProductsPage />} />
 
       <Route path="/customer" element={<MainLayout />}>
         <Route path="/customer/shoppingCart" element={<ShoppingCart />}></Route>
@@ -32,7 +30,6 @@ export default function CustomerRouter() {
           ></Route>
         </Route>
       </Route>
-
     </Routes>
   )
 }
