@@ -4,6 +4,7 @@ import { FileUpload } from '../pages/examples/file-upload'
 import Home from '../pages/Home/Home'
 import ShoppingCart from '../pages/ShoppingCart'
 import PaymentSelect from '../pages/PaymentSelect/PaymentSelect'
+// import ShoppingCart from '../pages/ShoppingCart copy'
 
 export default function CustomerRouter() {
   return (
