@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import Category from './Category'
+import PriceRange from './PriceRange'
 import ProductsDisplay from './ProductsDisplay'
+import RatingsRange from './RatingsRange'
 import SearchBar from './SearchBar'
 
 const MainContainer = styled.div`
@@ -42,6 +44,10 @@ function ProductsPage() {
       <VerticalContainer>
         <LeftContainer>
           <Category />
+          <hr />
+          <RatingsRange />
+          <hr />
+          <PriceRange />
         </LeftContainer>
         <RightContainer>
           <ProductsDisplay />
