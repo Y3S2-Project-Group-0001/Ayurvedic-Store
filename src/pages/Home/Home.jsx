@@ -5,20 +5,17 @@ import Banner from './Banner'
 import Categories from './Categories'
 import SellAd from './SellWithUs'
 import AboutUsHome from './AboutUsInHome'
-
-const Test = styled.div`
-  position: fixed;
-`
+import Footer from '../../components/Footer'
 
 export default function Home() {
   return (
     <>
-      <Test></Test>
       <Header type="home" />
       <Banner />
       <Categories />
       <SellAd />
       <AboutUsHome />
+      <Footer />
     </>
   )
 }

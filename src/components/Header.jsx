@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 
 const MainContainer = styled.div`
   position: fixed;
@@ -91,7 +91,7 @@ export default function Header(props) {
       setBgColor('rgba(0, 0, 0, 0)')
     } else {
       setTextColor('white')
-      setBgColor('rgba(61, 86, 49, 1)')
+      setBgColor('#3d5631ec')
     }
   }, [props, scrolled])
 
@@ -114,15 +114,15 @@ export default function Header(props) {
               </span>
               <span>
                 {' '}
-                <a href="">Categories</a>{' '}
+                <a href="#">Categories</a>{' '}
               </span>
               <span>
                 {' '}
-                <a href="">About us</a>{' '}
+                <a href="#">About us</a>{' '}
               </span>
               <span>
                 {' '}
-                <a href="">More</a>{' '}
+                <a href="#">More</a>{' '}
               </span>
             </Nav>
 
@@ -131,13 +131,13 @@ export default function Header(props) {
 
               {login == 'Logged' ? (
                 <div>
-                  <a href="">Logout </a>
+                  <a href="#">Logout </a>
                 </div>
               ) : (
                 <div>
-                  <a href="">Login</a>
+                  <a href="#">Login</a>
                   <span> | </span>
-                  <a href="">Signup</a>
+                  <a href="#">Signup</a>
                 </div>
               )}
             </Login>

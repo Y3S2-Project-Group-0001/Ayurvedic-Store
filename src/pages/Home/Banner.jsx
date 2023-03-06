@@ -5,7 +5,7 @@ import { useState } from 'react'
 const Container = styled.div`
   background-color: gray;
   width: 100%;
-  height: 722px;
+  height: 755px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -24,6 +24,9 @@ const HeroContent = styled.div`
   position: absolute;
   top: 50%;
   left: 25%;
+  background-color: #7590680;
+  padding: 50px;
+  border-radius: 20px;
   @media only screen and (max-width: 1000px) {
     left: 50%;
     background-color: #759068bd;
