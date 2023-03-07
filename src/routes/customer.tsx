@@ -10,6 +10,8 @@ import OrderHistory from '../pages/OrderHistory'
 // import CustomerDashBoard from "../pages/customer-dashboard/dashboard";
 // import ShoppingCart from '../pages/ShoppingCart copy'
 
+import ProductsPage from '../pages/ProductsPage_Customer/ProductsPage'
+
 export default function CustomerRouter() {
   return (
     <Routes>
@@ -17,6 +19,7 @@ export default function CustomerRouter() {
       <Route path="/example/file-upload" element={<FileUpload />} />
       <Route path="/TestingPage" element={<PaymentSelect />} />
       <Route path="/shoppingCart" element={<ShoppingCart />}></Route>
+      <Route path="/allProductsCustomer" element={<ProductsPage />} />
       <Route path="/customer" element={<MainLayout />}>
         <Route path="/customer/dashBoard" element={<DashboardLayout />}>
           <Route
