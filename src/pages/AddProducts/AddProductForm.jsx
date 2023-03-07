@@ -131,16 +131,6 @@ const FormGroup = styled.div`
   }
 `
 
-const AddImgGroup = styled.div`
-  display: flex;
-  width: 500px;
-  justify-content: space-between;
-
-  @media only screen and (max-width: 1000px) {
-    width: 450px;
-  }
-`
-
 function AddProducts() {
   return (
     <Container>
