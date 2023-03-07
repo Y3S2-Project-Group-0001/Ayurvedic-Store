@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Dropdown from './DropDown'
 
 const Container = styled.div`
   height: 100%;
@@ -146,7 +147,7 @@ function AddProducts() {
           </LeftForm>
           <RightForm>
             <Label> Category </Label>
-            <RightFormInput />
+            <Dropdown />
             <Label> Stock Amount </Label>
             <RightFormInput />
           </RightForm>
