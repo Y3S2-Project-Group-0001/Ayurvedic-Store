@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Dropdown from './DropDown'
+import ImageUpload from './ImageUpload'
 
 const Container = styled.div`
   height: 100%;
@@ -130,10 +131,22 @@ const FormGroup = styled.div`
   }
 `
 
+const AddImgGroup = styled.div`
+  display: flex;
+  width: 500px;
+  justify-content: space-between;
+
+  @media only screen and (max-width: 1000px) {
+    width: 450px;
+  }
+`
+
 function AddProducts() {
   return (
     <Container>
       <Form>
+        <Label> Add Images </Label>
+        <ImageUpload />
         <Label> Product Name </Label>
         <Input type="text" />
         <Label> Product Description </Label>
