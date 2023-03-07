@@ -37,17 +37,35 @@ const GridContainer = styled.div`
   grid-gap: 20px;
 `
 
-const UploadedImage = ({ src }) => {
+const UploadedImage = ({ src, onRemove }) => {
+  const handleRemove = () => {
+    onRemove(src)
+  }
+
   return (
-    <ImagePreview
-      src={src}
-      width="100px"
-      height="100px"
-      display="flex"
-      flex-direction="row"
-    />
+    <div style={{ position: 'relative' }}>
+      <ImagePreview src={src} width="100px" height="100px" />
+      <RemoveButton onClick={handleRemove}>&times;</RemoveButton>
+    </div>
   )
 }
+
+const RemoveButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  clip-path: circle(50% at 50% 50%);
+  background-color: red;
+
+  &:hover {
+    color: #990000;
+  }
+`
 
 const AddImgGroup = styled.div`
   display: flex;
@@ -71,6 +89,10 @@ function ImageUpload() {
     reader.readAsDataURL(file)
   }
 
+  const handleRemoveImage = src => {
+    setImages(images.filter(imageSrc => imageSrc !== src))
+  }
+
   return (
     <UploadImage>
       <AddImgGroup>
@@ -80,7 +102,7 @@ function ImageUpload() {
           <UploadImage />
         </UploadLabel>
         <ul>
-          <li>Add Least one Image</li>
+          <li>Add at least one Image</li>
           <li>All must be Image format</li>
           <li>Max size per image is 2MB</li>
         </ul>
@@ -88,7 +110,7 @@ function ImageUpload() {
 
       <GridContainer>
         {images.map(src => (
-          <UploadedImage key={src} src={src} />
+          <UploadedImage key={src} src={src} onRemove={handleRemoveImage} />
         ))}
       </GridContainer>
     </UploadImage>

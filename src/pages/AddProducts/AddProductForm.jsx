@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Dropdown from './DropDown'
 import ImageUpload from './ImageUpload'
@@ -43,8 +43,8 @@ const Input = styled.input`
   width: 500px;
   height: 20px;
   padding: 10px;
-  border: 1px solid #ccc;
   border-radius: 5px;
+  border: 1px solid ${props => (props.hasError ? '#f44336' : '#ccc')};
   @media only screen and (max-width: 1000px) {
     width: 450px;
   }
@@ -54,7 +54,7 @@ const LeftFormInput = styled.input`
   width: 200px;
   height: 20px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ error }) => (error ? 'red' : '#ccc')};
   border-radius: 5px;
   @media only screen and (max-width: 1000px) {
     width: 450px;
@@ -65,7 +65,7 @@ const RightFormInput = styled.input`
   width: 200px;
   height: 20px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid ${({ error }) => (error ? 'red' : '#ccc')};
   border-radius: 5px;
   @media only screen and (max-width: 1000px) {
     width: 450px;
@@ -76,7 +76,7 @@ const TextArea = styled.textarea`
   width: 500px;
   height: 70%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid ${props => (props.hasError ? '#f44336' : '#ccc')};
   border-radius: 5px;
   @media only screen and (max-width: 1000px) {
     width: 450px;
@@ -131,20 +131,63 @@ const FormGroup = styled.div`
   }
 `
 
-const AddImgGroup = styled.div`
-  display: flex;
-  width: 500px;
-  justify-content: space-between;
-
-  @media only screen and (max-width: 1000px) {
-    width: 450px;
-  }
+const ErrorMessage = styled.span`
+  color: #f44336;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
 `
 
 function AddProducts() {
+  const [price, setPrice] = useState('')
+  const [stockAmount, setStockAmount] = useState('')
+
+  const [priceError, setPriceError] = useState('')
+  const [stockAmountError, setStockAmountError] = useState('')
+
+  const handleSubmit = e => {
+    //form submission
+  }
+
+  /*
+      validate price
+  */
+  const validatePrice = e => {
+    const priceValue = e.target.value
+
+    if (priceValue < 0) {
+      setPriceError('Please enter a valid price')
+    } else {
+      setPriceError('')
+    }
+    setPrice(priceValue)
+  }
+
+  /*
+      validate stock amount
+  */
+  const validateStockAmount = e => {
+    const stockAmountValue = e.target.value
+
+    if (stockAmountValue < 0) {
+      setStockAmountError('Please enter a valid price')
+    } else {
+      setStockAmountError('')
+    }
+    setStockAmount(stockAmountValue)
+  }
+
+  //make upcoming dates invisible
+  const [maxDate, setMaxDate] = useState(getMaxDate())
+
+  function getMaxDate() {
+    const date = new Date()
+    date.setDate(date.getDate())
+    return date.toISOString().split('T')[0]
+  }
+
   return (
     <Container>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Label> Add Images </Label>
         <ImageUpload />
         <Label> Product Name </Label>
@@ -154,20 +197,36 @@ function AddProducts() {
         <FormGroup>
           <LeftForm>
             <Label> M.F.D </Label>
-            <LeftFormInput type="date" />
+            <LeftFormInput type="date" max={maxDate} />
             <Label> Price (Rs.) </Label>
-            <LeftFormInput type="number" />
+            <LeftFormInput
+              id="price"
+              type="number"
+              value={price}
+              onChange={validatePrice}
+              error={priceError}
+            />
+            {priceError && <ErrorMessage>{priceError}</ErrorMessage>}
           </LeftForm>
           <RightForm>
             <Label> Category </Label>
             <Dropdown />
             <Label> Stock Amount (Rs.) </Label>
-            <RightFormInput type="number" />
+            <RightFormInput
+              id="stockAmount"
+              type="number"
+              value={stockAmount}
+              onChange={validateStockAmount}
+              error={stockAmountError}
+            />
+            {stockAmountError && (
+              <ErrorMessage>{stockAmountError}</ErrorMessage>
+            )}
           </RightForm>
         </FormGroup>
         <ButtonGroup>
           <CancelBtn>Cancel</CancelBtn>
-          <SubmitBtn>Add Item</SubmitBtn>
+          <SubmitBtn type="submit">Add Item</SubmitBtn>
         </ButtonGroup>
       </Form>
     </Container>
