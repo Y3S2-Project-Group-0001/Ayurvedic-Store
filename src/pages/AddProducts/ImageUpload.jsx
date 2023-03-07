@@ -102,7 +102,7 @@ function ImageUpload() {
           <UploadImage />
         </UploadLabel>
         <ul>
-          <li>Add Least one Image</li>
+          <li>Add at least one Image</li>
           <li>All must be Image format</li>
           <li>Max size per image is 2MB</li>
         </ul>
