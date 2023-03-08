@@ -28,6 +28,7 @@ const VerticalContainer = styled.div`
 `
 
 const LeftContainer = styled.div`
+  margin: 12px;
   flex: 2;
 `
 

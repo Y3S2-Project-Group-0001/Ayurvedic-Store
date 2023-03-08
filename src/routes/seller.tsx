@@ -9,7 +9,7 @@ export default function SellerRouter() {
     <Routes>
       <Route path="/addProduct" element={<AddProduct />} />
       <Route path="/updateProduct" element={<UpdateProduct />} />
-      <Route path="/products" element={<ProductsPage />} />
+      <Route path="/allProductSeller" element={<ProductsPage />} />
     </Routes>
   )
 }

@@ -10,6 +10,9 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `
 
 const HorizontalContainer = styled.div`
@@ -28,11 +31,15 @@ const VerticalContainer = styled.div`
 `
 
 const LeftContainer = styled.div`
+  margin: 12px;
   flex: 2;
 `
 
 const RightContainer = styled.div`
   flex: 9;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
 `
 
 function ProductsPage() {
