@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { FaTrashAlt } from 'react-icons/fa'
 import { FaRegEdit } from 'react-icons/fa'
+import RatingDisplay from '../ProductsPage_Customer/RatingDisplay'
 
 const Container = styled.div`
   padding: 15px 15px 0 15px;
@@ -24,13 +25,13 @@ const ButtonGroup = styled.button`
 `
 
 const Image = styled.div`
-  padding-bottom: 10px;
+  padding-bottom: 0px;
 `
 
 const Title = styled.label`
-  display: flex;
-  padding: 0px;
-  justify-content: center;
+  display: inline-block;
+  text-align: center;
+  padding: 15px;
   font-weight: 700;
 `
 
@@ -45,44 +46,46 @@ const Shape = styled.div`
   padding: ${props => (props.icon ? '7px 15px ' : '10px 20px')};
   color: white;
   border: none;
+  margin-top: ${props => (props.icon ? '0' : '20px')};
 `
 
 const IconGroup = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 10px;
+  padding: 0 10px;
   width: 150px;
-  margin-bottom: 5px;
+  margin-bottom: 25px;
+  position: absolute;
 `
 
 const Button = styled.button`
   cursor: pointer;
   border: none;
-  background-color: white;
+  background-color: 'white';
+  opacity: 100%;
+  padding: 5px 20px;
+  color: black;
+  margin-top: 45px;
 `
 
 function ProductCard() {
   return (
     <Container>
-      <ButtonGroup>
-        <Image>
-          <img src="images/products/product.png" alt="Product_Image" />
-        </Image>
-        <Title>Amila Zindagi Juice for hair Growth and stress reliever</Title>
-      </ButtonGroup>
+      <Image>
+        <img src="images/products/product.png" alt="Product_Image" />
+      </Image>
       <IconGroup>
         <Button>
-          <Shape icon>
-            <FaRegEdit />
-          </Shape>
+          <FaRegEdit />
         </Button>
         <Button>
-          <Shape icon>
-            <FaTrashAlt />
-          </Shape>
+          <FaTrashAlt />
         </Button>
       </IconGroup>
+      <Title>Amila Zindagi Juice for hair Growth and stress reliever</Title>
+
+      <RatingDisplay />
 
       <Shape>
         <Price>$28.88</Price>
