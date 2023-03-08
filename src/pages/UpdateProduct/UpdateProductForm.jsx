@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Dropdown from './DropDown'
-import ImageUpload from './ImageUpload'
+import Dropdown from '../AddProducts/DropDown'
+import ImageUpload from '../AddProducts/ImageUpload'
 
 const Container = styled.div`
   height: 100%;
@@ -91,7 +91,8 @@ const Label = styled.label`
 `
 
 const Button = styled.button`
-  background-color: ${props => (props.cancel ? '#767676' : '#729b0e')};
+  background-color: ${props =>
+    props.cancel ? '#767676' : props.update ? '#729b0e' : '#000000'};
   color: white;
   padding: 11px;
   margin-top: 20px;
@@ -106,7 +107,7 @@ const ButtonGroup = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-left: 250px;
+  margin-left: 150px;
   margin-top: 30px;
 `
 
@@ -125,7 +126,7 @@ const ErrorMessage = styled.span`
   margin-top: 0.25rem;
 `
 
-function AddProducts() {
+function UpdateProducts(props) {
   const [price, setPrice] = useState('')
   const [stockAmount, setStockAmount] = useState('')
 
@@ -214,11 +215,14 @@ function AddProducts() {
         </FormGroup>
         <ButtonGroup>
           <Button cancel>Cancel</Button>
-          <Button type="submit">Add Item</Button>
+          <Button>Delete</Button>
+          <Button update type="submit">
+            Update Item
+          </Button>
         </ButtonGroup>
       </Form>
     </Container>
   )
 }
 
-export default AddProducts
+export default UpdateProducts
