@@ -42,6 +42,10 @@ const SearchBarInput = styled.input`
     width: 16px;
     height: 16px;
   }
+
+  @media only screen and (max-width: 700px) {
+    width: 400px;
+  }
 `
 
 const SearchIcon = styled.button`

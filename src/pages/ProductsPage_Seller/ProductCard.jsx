@@ -17,13 +17,6 @@ const Container = styled.div`
   width: 250px;
 `
 
-const ButtonGroup = styled.button`
-  cursor: pointer;
-  border: none;
-  background-color: #ffffff;
-  padding-bottom: 0px;
-`
-
 const Image = styled.div`
   padding-bottom: 0px;
 `
@@ -62,10 +55,10 @@ const IconGroup = styled.div`
 const Button = styled.button`
   cursor: pointer;
   border: none;
-  background-color: 'white';
-  opacity: 100%;
+  background-color: black;
+  opacity: 63%;
   padding: 5px 20px;
-  color: black;
+  color: white;
   margin-top: 45px;
 `
 

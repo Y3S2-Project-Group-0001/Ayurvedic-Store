@@ -25,11 +25,21 @@ const VerticalContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 2;
+  @media only screen and (max-width: 500px) {
+    flex-direction: column;
+  }
 `
 
 const LeftContainer = styled.div`
   margin: 12px;
   flex: 2;
+
+  @media only screen and (max-width: 700px) {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 const RightContainer = styled.div`
