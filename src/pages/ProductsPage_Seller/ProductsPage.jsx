@@ -1,18 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import Category from './Category'
-import PriceRange from './PriceRange'
+import Category from '../ProductsPage_Customer/Category'
+import PriceRange from '../ProductsPage_Customer/PriceRange'
 import ProductsDisplay from './ProductsDisplay'
-import RatingsRange from './RatingsRange'
-import SearchBar from './SearchBar'
+import RatingsRange from '../ProductsPage_Customer/RatingsRange'
+import SearchBar from '../ProductsPage_Customer/SearchBar'
 
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  @media only screen and (max-width: 1000px) {
-    flex-direction: column;
-  }
 `
 
 const HorizontalContainer = styled.div`
@@ -37,9 +34,6 @@ const LeftContainer = styled.div`
 
 const RightContainer = styled.div`
   flex: 9;
-  @media only screen and (max-width: 1000px) {
-    flex-direction: column;
-  }
 `
 
 function ProductsPage() {

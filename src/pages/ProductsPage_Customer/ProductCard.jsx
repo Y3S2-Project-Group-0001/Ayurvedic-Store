@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import RatingDisplay from '../ProductsPage_Customer/RatingDisplay'
 
 const Container = styled.div`
   padding: 15px 15px 0 15px;
@@ -40,6 +41,7 @@ const Shape = styled.div`
   background-color: #3d5631;
   opacity: 100%;
   padding: 10px 20px;
+  margin-top: 40px;
 `
 
 function ProductCard() {
@@ -51,6 +53,7 @@ function ProductCard() {
         </Image>
         <Title>Amila Zindagi Juice for hair Growth and stress reliever</Title>
       </ButtonGroup>
+      <RatingDisplay />
       <Shape>
         <Price>$28.88</Price>
       </Shape>
