@@ -48,7 +48,7 @@ export default function Heading() {
           alt="AddProduct_Bg_Image"
         />
         <TitleContent>
-          <Title>Add New Product</Title>
+          <Title>Update Product</Title>
         </TitleContent>
       </Container>
     </>
