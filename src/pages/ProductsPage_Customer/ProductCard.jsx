@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import RatingDisplay from '../ProductsPage_Customer/RatingDisplay'
+import Category from './Category'
+import ProductList from '../products.json'
 
 const Container = styled.div`
   padding: 15px 15px 0 15px;
@@ -22,8 +24,9 @@ const ButtonGroup = styled.button`
   padding-bottom: 10px;
 `
 
-const Image = styled.div`
+const Image = styled.img`
   padding-bottom: 10px;
+  width: 240px;
 `
 
 const Title = styled.label`
@@ -44,20 +47,26 @@ const Shape = styled.div`
   margin-top: 40px;
 `
 
-function ProductCard() {
+function ProductCard({ products }) {
+  //const products = {}
+
   return (
-    <Container>
-      <ButtonGroup>
-        <Image>
-          <img src="images/products/product.png" alt="Product_Image" />
-        </Image>
-        <Title>Amila Zindagi Juice for hair Growth and stress reliever</Title>
-      </ButtonGroup>
-      <RatingDisplay />
-      <Shape>
-        <Price>$28.88</Price>
-      </Shape>
-    </Container>
+    <>
+      {products &&
+        products.map(pro => (
+          <Container>
+            <ButtonGroup>
+              <Image src={pro.image} alt="Product_Image" />
+
+              <Title>{pro.name}</Title>
+            </ButtonGroup>
+            <RatingDisplay parameter={pro.rating} />
+            <Shape>
+              <Price>{pro.price}</Price>
+            </Shape>
+          </Container>
+        ))}
+    </>
   )
 }
 
