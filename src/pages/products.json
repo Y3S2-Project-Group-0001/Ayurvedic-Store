@@ -5,9 +5,9 @@
     "description": "Chandanalepa",
     "M.F.D": "2023.03.15",
     "category": "personalCare",
-    "price": "LKR 480.00",
-    "stockAmount": "LKR 450.00",
-    "rating": 3.5,
+    "price": "480",
+    "stockAmount": "450",
+    "rating": 1.0,
     "image": "https://www.herbal.lk/sites/default/files/field/product/SANDALWOOD%20FACE%20WASH%20POWDER%20.jpg"
   },
   {
@@ -16,9 +16,9 @@
     "description": "Chandanalepa",
     "M.F.D": "2023.03.18",
     "category": "personalCare",
-    "price": "LKR 390.00",
-    "stockAmount": "LKR 350.00",
-    "rating": 3.0,
+    "price": "390",
+    "stockAmount": "350",
+    "rating": 1.0,
     "image": "https://www.herbal.lk/sites/default/files/field/product/Lemongrass%20Germ%20Killing%20Ba.jpg"
   },
   {
@@ -27,9 +27,9 @@
     "description": "Chandanalepa",
     "M.F.D": "2023.03.15",
     "category": "healthCare",
-    "price": "LKR 490.00",
-    "stockAmount": "LKR 450.00",
-    "rating": 2.8,
+    "price": "490",
+    "stockAmount": "450",
+    "rating": 1.0,
     "image": "https://www.herbal.lk/sites/default/files/field/product/HERBAL%20CREAM%20NEW%20PACK.jpg"
   },
   {
@@ -38,9 +38,9 @@
     "description": "Wisdom Extracts",
     "M.F.D": "2023.04.15",
     "category": "herbalFood",
-    "price": "LKR 2450.00",
-    "stockAmount": "LKR 2400.00",
-    "rating": 3.5,
+    "price": "2450",
+    "stockAmount": "2400",
+    "rating": 1.0,
     "image": "https://whoweare.lk/wp-content/uploads/2021/07/1-32.jpg"
   },
   {
@@ -49,9 +49,9 @@
     "description": "Chandanalepa",
     "M.F.D": "2023.04.15",
     "category": "lifeStyle",
-    "price": "LKR 480.00",
-    "stockAmount": "LKR 450.00",
-    "rating": 3.5,
+    "price": "480",
+    "stockAmount": "450",
+    "rating": 1.0,
     "image": "https://www.herbal.lk/sites/default/files/field/product/ALMOND%20OIL%20B%20LOTION%20.jpg"
   }
 ]

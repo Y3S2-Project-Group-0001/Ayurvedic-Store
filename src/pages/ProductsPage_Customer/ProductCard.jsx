@@ -48,8 +48,6 @@ const Shape = styled.div`
 `
 
 function ProductCard({ products }) {
-  //const products = {}
-
   return (
     <>
       {products &&
@@ -62,7 +60,7 @@ function ProductCard({ products }) {
             </ButtonGroup>
             <RatingDisplay parameter={pro.rating} />
             <Shape>
-              <Price>{pro.price}</Price>
+              <Price>LKR {pro.price}.00</Price>
             </Shape>
           </Container>
         ))}

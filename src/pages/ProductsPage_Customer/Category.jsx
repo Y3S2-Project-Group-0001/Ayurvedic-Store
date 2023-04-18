@@ -40,7 +40,7 @@ const RadioButton = ({ label, value, checked, onChange }) => {
   )
 }
 
-function Category({ onCategoryChange }) {
+function Category() {
   const [selectedValue, setSelectedValue] = useState(null)
 
   const handleRadioChange = event => {
@@ -50,11 +50,12 @@ function Category({ onCategoryChange }) {
     setSelectedValue(event.target.value)
   }
 
-  const filteredProducts = selectedValue
-    ? ProductList.filter(product => product.category === selectedValue)
-    : ProductList
+  // const filteredProducts = selectedValue
+  //   ? ProductList.filter(product => product.category === selectedValue)
+  //   : ProductList
 
-  console.log(filteredProducts)
+  console.log(selectedValue)
+  //console.log(filteredProducts)
 
   return (
     <>
@@ -85,7 +86,6 @@ function Category({ onCategoryChange }) {
           onChange={handleRadioChange}
         />
       </RadioGroup>
-      <ProductCard products={filteredProducts} />
     </>
   )
 }

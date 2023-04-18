@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { BsSearch } from 'react-icons/bs'
+import ProductList from '../products.json'
+import ProductCard from './ProductCard'
 
 const SearchBarContainer = styled.div`
   margin: 50px;
@@ -61,10 +63,24 @@ const SearchIcon = styled.button`
 `
 
 function SearchBar() {
+  const [query, setQuery] = useState(null)
+  const [products, setProducts] = useState([])
+
+  const handleInputChange = event => {
+    setQuery(event.target.value)
+  }
+
+  const handleSearch = () => {
+    const filteredProducts = ProductList.filter(product => {
+      return product.name.toLowerCase().includes(query.toLowerCase())
+    })
+    setProducts(filteredProducts)
+  }
+
   return (
     <div>
-      <SearchBarInput />
-      <SearchIcon>
+      <SearchBarInput value={query} onChange={handleInputChange} />
+      <SearchIcon onClick={handleSearch}>
         <BsSearch />
       </SearchIcon>
     </div>
