@@ -18,9 +18,9 @@ export default function CustomerRouter() {
       <Route path="/" element={<Home />}></Route>
       <Route path="/example/file-upload" element={<FileUpload />} />
       <Route path="/TestingPage" element={<PaymentSelect />} />
-      <Route path="/shoppingCart" element={<ShoppingCart />}></Route>
       <Route path="/allProductsCustomer" element={<ProductsPage />} />
       <Route path="/customer" element={<MainLayout />}>
+        <Route path="/customer/shoppingCart" element={<ShoppingCart />}></Route>
         <Route path="/customer/dashBoard" element={<DashboardLayout />}>
           <Route
             path="/customer/dashBoard/orderHistory"
