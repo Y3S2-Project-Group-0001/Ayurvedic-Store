@@ -4,8 +4,11 @@ const REDUCE_AMMOUNT = 1 //number of items to reduce in
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    items: {},
+    items: [],
     subTotal: 0,
+    shippingCost: 0,
+    customerID: undefined,
+    totalAmount: 0,
     totalQuantitiy: 0,
     changed: false,
   },
@@ -13,9 +16,13 @@ const cartSlice = createSlice({
     //this function is to replace cart at he first load. will replace the total amount, total quantitiiy,
     // action.payload should have total quanitity, items, totalAmount
     replaceCart(state: any, action: any) {
-      state.totalQuantitiy = action.payload.subTotal || 0
-      state.items = action.payload.items || {}
-      state.totalAmount = action.payload.totalAmount || 0
+      console.log('from slice', action.payload)
+      state.subTotal = action.payload.subTotal || 0
+      state.items = action.payload.products || []
+      state.totalAmount =
+        action.payload.subTotal + action.payload.shippingCost || 0
+      state.shippingCost = action.payload.shippingCost || 0
+      state.customerID = action.payload.customerId || undefined
     },
 
     //this function is for add item
