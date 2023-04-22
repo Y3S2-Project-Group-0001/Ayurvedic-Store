@@ -112,7 +112,7 @@ export default function Header(props) {
     })
       .then(res => res.json())
       .then(data => {
-        dispatch(cartActions.replaceCart(data))
+        dispatch(cartActions.replaceCart(data[0]))
         console.log(data)
       })
   }, [dispatch])
