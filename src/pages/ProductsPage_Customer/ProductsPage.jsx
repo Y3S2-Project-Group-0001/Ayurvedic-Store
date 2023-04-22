@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import Category from './Category'
-import PriceRange from './PriceRange'
-import ProductsDisplay from './ProductsDisplay'
-import RatingsRange from './RatingsRange'
-import SearchBar from './SearchBar'
 import ProductList from '../products.json'
 import ProductCard from './ProductCard'
+import { BsSearch } from 'react-icons/bs'
 
 const MainContainer = styled.div`
   display: flex;
@@ -136,10 +132,54 @@ const FilteredItems = styled.div`
   margin-top: 20px;
 `
 
+const SearchBarInput = styled.input`
+  border-color: #d9d9d9;
+  width: 500px;
+  height: 40px;
+  border-radius: 100px;
+  font-size: 16px;
+  margin: 60px 10px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &::after svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media only screen and (max-width: 700px) {
+    width: 400px;
+  }
+`
+
+const SearchIcon = styled.button`
+  clip-path: circle(50% at 50% 50%);
+  background-color: #3d5631;
+  color: white;
+  padding: 9px;
+  border: none;
+  margin: 2px;
+  border: 1px solid #3d5631;
+  border-radius: 50%;
+  cursor: pointer;
+`
+
 function ProductsPage() {
   /*
       filter products by radio buttons
   */
+
   const [selectedValue, setSelectedValue] = useState(null)
 
   const handleRadioChange = event => {
@@ -178,10 +218,37 @@ function ProductsPage() {
     item => item.price >= range.min && item.price <= range.max,
   )
 
+  /*
+    function search
+  */
+  const [query, setQuery] = useState(null)
+  const [product, setProducts] = useState(ProductList)
+
+  const handleInputChange = event => {
+    setQuery(event.target.value)
+  }
+
+  const handleSearch = () => {
+    if (query) {
+      const filteredProducts = ProductList.filter(product => {
+        return product.name.toLowerCase().includes(query.toLowerCase())
+      })
+      setProducts(filteredProducts)
+      console.log(filteredProducts)
+    } else {
+      setProducts(ProductList)
+    }
+  }
+
   return (
     <MainContainer>
       <HorizontalContainer>
-        <SearchBar />
+        <div>
+          <SearchBarInput value={query} onChange={handleInputChange} />
+          <SearchIcon onClick={handleSearch}>
+            <BsSearch />
+          </SearchIcon>
+        </div>
       </HorizontalContainer>
       <VerticalContainer>
         <LeftContainer>
@@ -252,7 +319,7 @@ function ProductsPage() {
         <RightContainer>
           <GridContainer>
             <ProductCard
-              products={filterProductsStars && filteredProductsRadio}
+              products={[...filteredProductsRadio, ...filterProductsStars]}
             />
           </GridContainer>
         </RightContainer>

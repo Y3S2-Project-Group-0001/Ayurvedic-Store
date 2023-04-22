@@ -64,17 +64,22 @@ const SearchIcon = styled.button`
 
 function SearchBar() {
   const [query, setQuery] = useState(null)
-  const [products, setProducts] = useState([])
+  const [product, setProducts] = useState(ProductList)
 
   const handleInputChange = event => {
     setQuery(event.target.value)
   }
 
   const handleSearch = () => {
-    const filteredProducts = ProductList.filter(product => {
-      return product.name.toLowerCase().includes(query.toLowerCase())
-    })
-    setProducts(filteredProducts)
+    if (query) {
+      const filteredProducts = ProductList.filter(product => {
+        return product.name.toLowerCase().includes(query.toLowerCase())
+      })
+      setProducts(filteredProducts)
+      console.log(filteredProducts)
+    } else {
+      setProducts(ProductList)
+    }
   }
 
   return (
@@ -83,6 +88,9 @@ function SearchBar() {
       <SearchIcon onClick={handleSearch}>
         <BsSearch />
       </SearchIcon>
+      {product.map(pro => (
+        <ProductCard key={pro.id} products={product} />
+      ))}
     </div>
   )
 }
