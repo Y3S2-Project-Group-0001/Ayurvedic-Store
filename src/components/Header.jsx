@@ -103,7 +103,7 @@ export default function Header(props) {
 
   // get cart by customer id from backend and set to redux state
   useEffect(() => {
-    fetch('http://localhost:3004/api/getCustomerCart', {
+    fetch('http://localhost:8000/order/api/getCustomerCart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
