@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import AyruvedicButton from '../common/AyruvedicButton'
-import { useNavigate } from 'react-router-dom'
-import { orderActions } from '../Store/order-slice'
+import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
+import { orderActions } from '../Store/order-slice'
 
 const OuterContainer = styled.div`
   margin-top: 100px;
@@ -76,21 +76,58 @@ const StyledAyruvedicButton = styled(AyruvedicButton)`
   margin: 0px 20px;
 `
 
+const DeclineButton = styled(StyledAyruvedicButton)`
+  background-color: rgba(61, 86, 49, 1);
+`
+
 const BoldText = styled.span`
   font-weight: 600;
   font-size: 20px;
   margin-right: 10px;
 `
+const StatusButtonList = styled.div`
+  display: flex;
+  flex-direction: row;
+`
 
-function OrderHistory() {
+const StatusButton = styled.div`
+  ${props => (props.active ? 'background-color: #0007;' : '')}
+  border: 1px solid #0007;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin: 0px 10px;
+`
+
+function Orders() {
   const [orderList, setOrderList] = useState([])
+  const [filterdOrderList, setFilterdOrderList] = useState([])
+  const [isOrdersLoading, setIsOrdersLoading] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [status, setStatus] = React.useState('all')
+
+  function handleChange(value) {
+    setStatus(value)
+  }
+
+  useEffect(() => {
+    if (status === 'all') {
+      setFilterdOrderList(orderList)
+    } else {
+      const newOrderList = orderList.filter(order => order.status === status)
+      setFilterdOrderList(newOrderList)
+    }
+  }, [orderList, status])
 
   // get order history from backend
   useEffect(() => {
     // fetch order history
-    fetch('http://localhost:8000/order/api/getCustomerOrders', {
+    fetchOrders()
+  }, [])
+
+  function fetchOrders() {
+    setIsOrdersLoading(true)
+    fetch('http://localhost:8000/order/api/getAdminOrders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,21 +139,81 @@ function OrderHistory() {
         setOrderList(data)
         console.log(data)
       })
-  }, [])
+      .finally(() => setIsOrdersLoading(false))
+  }
+
+  function onApproveClick(orderID) {
+    // send request to backend to approve order
+    fetch('http://localhost:8000/order/api/approveOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ orderId: orderID }),
+    }).then(res => {
+      if (res.ok) {
+        // fetch order history
+        fetchOrders()
+      }
+    })
+  }
+
+  function onDeclineClick(orderID) {
+    // send request to backend to approve order
+    fetch('http://localhost:8000/order/api/declineOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ orderId: orderID }),
+    }).then(res => {
+      if (res.ok) {
+        // fetch order history
+        fetchOrders()
+      }
+    })
+  }
 
   function handleViewOrder(order) {
     // Use the navigate function to navigate to the ViewOrderCustomer component
     dispatch(orderActions.replaceSelectedOrder({ order: order }))
-    navigate('/customer/dashBoard/viewOrder')
+    navigate('/admin/dashBoard/viewOrder')
   }
 
   return (
     <OuterContainer>
       <Container>
-        <Title>Order History</Title>
+        <Title>Orders</Title>
       </Container>
+      <StatusButtonList>
+        <StatusButton
+          active={status === 'pending'}
+          onClick={() => handleChange('pending')}
+        >
+          Pending
+        </StatusButton>
+        <StatusButton
+          active={status === 'approved'}
+          onClick={() => handleChange('approved')}
+        >
+          Approved
+        </StatusButton>
+        <StatusButton
+          active={status === 'declined'}
+          onClick={() => handleChange('declined')}
+        >
+          Declined
+        </StatusButton>
+        <StatusButton
+          active={status === 'all'}
+          onClick={() => handleChange('all')}
+        >
+          All
+        </StatusButton>
+      </StatusButtonList>
+
       <OrderListContainer>
-        {orderList.map(order => (
+        {filterdOrderList.map(order => (
           <OrderContainer>
             <OrderDetailsContainer>
               <OrderDetailContainer>
@@ -141,8 +238,18 @@ function OrderHistory() {
                 <StyledAyruvedicButton onClick={() => handleViewOrder(order)}>
                   View Order
                 </StyledAyruvedicButton>
-                <StyledAyruvedicButton>Inquiry</StyledAyruvedicButton>
-                <StyledAyruvedicButton>Add Review</StyledAyruvedicButton>
+                {order.status === 'pending' && (
+                  <>
+                    <StyledAyruvedicButton
+                      onClick={() => onApproveClick(order._id)}
+                    >
+                      Accept Order
+                    </StyledAyruvedicButton>
+                    <DeclineButton onClick={() => onDeclineClick(order._id)}>
+                      Decline
+                    </DeclineButton>
+                  </>
+                )}
               </OrderButtons>
             </OrderButtonsContainer>
           </OrderContainer>
@@ -152,4 +259,4 @@ function OrderHistory() {
   )
 }
 
-export default OrderHistory
+export default Orders

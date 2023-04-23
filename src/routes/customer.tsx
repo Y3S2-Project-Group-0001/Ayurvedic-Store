@@ -11,6 +11,7 @@ import OrderHistory from '../pages/OrderHistory'
 // import ShoppingCart from '../pages/ShoppingCart copy'
 
 import ProductsPage from '../pages/ProductsPage_Customer/ProductsPage'
+import ViewOrderCustomer from '../pages/ViewOrderCustomer/ViewOrderCustomer'
 
 export default function CustomerRouter() {
   return (
@@ -25,6 +26,10 @@ export default function CustomerRouter() {
           <Route
             path="/customer/dashBoard/orderHistory"
             element={<OrderHistory />}
+          ></Route>
+          <Route
+            path="/customer/dashBoard/viewOrder"
+            element={<ViewOrderCustomer />}
           ></Route>
         </Route>
       </Route>
