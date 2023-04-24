@@ -2,13 +2,13 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import AddProduct from '../pages/AddProducts/AddProduct'
 import ProductsPageSeller from '../pages/ProductsPage_Seller/ProductsPageSeller'
-import UpdateProduct from '../pages/UpdateProduct/UpdateProduct'
+import UpdateProductForm from '../pages/UpdateProduct/UpdateProductForm'
 
 export default function SellerRouter() {
   return (
     <Routes>
       <Route path="/addProduct" element={<AddProduct />} />
-      <Route path="/updateProduct" element={<UpdateProduct />} />
+      <Route path="/updateProduct/:id" element={<UpdateProductForm />} />
       <Route path="/allProductSeller" element={<ProductsPageSeller />} />
     </Routes>
   )

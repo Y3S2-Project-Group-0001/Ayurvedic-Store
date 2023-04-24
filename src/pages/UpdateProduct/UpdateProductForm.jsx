@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import axios from 'axios'
 import styled from 'styled-components'
 import Dropdown from '../AddProducts/DropDown'
 import ImageUpload from '../AddProducts/ImageUpload'
+import Heading from './Heading'
 
 const Container = styled.div`
   height: 100%;
@@ -125,16 +128,91 @@ const ErrorMessage = styled.span`
   font-size: 0.75rem;
   margin-top: 0.25rem;
 `
+const ContainerHeader = styled.div`
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
-function UpdateProducts(props) {
-  const [price, setPrice] = useState('')
+const TitleContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+`
+
+const Title = styled.h1`
+  color: white;
+  font-size: 50px;
+`
+
+const Shape = styled.div`
+  width: 100%;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  background-color: #223818;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 66%;
+`
+
+function UpdateProductForm(props) {
+  const [priceV, setPrice] = useState('')
   const [stockAmount, setStockAmount] = useState('')
 
   const [priceError, setPriceError] = useState('')
   const [stockAmountError, setStockAmountError] = useState('')
 
-  const handleSubmit = e => {
-    //form submission
+  const initialState = {
+    itemName: '',
+    description: '',
+    category: '',
+    price: '',
+  }
+
+  const [state, setState] = useState(initialState)
+
+  const { itemName, description, category, price } = state
+
+  const history = useNavigate()
+
+  //update
+  const { id } = useParams()
+
+  useEffect(() => {
+    axios
+      .post(`http://localhost:3004/api/item/getOneItem/${id}`)
+      .then(res => setState({ ...res.data[0] }))
+  }, [id])
+
+  const handleInputChange = e => {
+    const { name, value } = e.target
+    setState({ ...state, [name]: value })
+  }
+
+  const UpdateData = async e => {
+    e.preventDefault()
+
+    const data = {
+      itemName: itemName,
+      description: description,
+      category: category,
+      price: price,
+    }
+
+    await axios.post(`http://localhost:3004/api/item/updateItem/${id}`, data)
+
+    alert('Product updated successfully..')
+    history('/allProductSeller')
   }
 
   /*
@@ -175,54 +253,80 @@ function UpdateProducts(props) {
   }
 
   return (
-    <Container>
-      <Form onSubmit={handleSubmit}>
-        <Label> Add Images </Label>
-        <ImageUpload />
-        <Label> Product Name </Label>
-        <Input type="text" />
-        <Label> Product Description </Label>
-        <TextArea type="text" />
-        <FormGroup>
-          <LeftForm>
-            <Label> M.F.D </Label>
-            <LeftFormInput type="date" max={maxDate} />
-            <Label> Price (Rs.) </Label>
-            <LeftFormInput
-              id="price"
-              type="number"
-              value={price}
-              onChange={validatePrice}
-              error={priceError}
-            />
-            {priceError && <ErrorMessage>{priceError}</ErrorMessage>}
-          </LeftForm>
-          <RightForm>
-            <Label> Category </Label>
-            <Dropdown />
-            <Label> Stock Amount (Rs.) </Label>
-            <RightFormInput
-              id="stockAmount"
-              type="number"
-              value={stockAmount}
-              onChange={validateStockAmount}
-              error={stockAmountError}
-            />
-            {stockAmountError && (
-              <ErrorMessage>{stockAmountError}</ErrorMessage>
-            )}
-          </RightForm>
-        </FormGroup>
-        <ButtonGroup>
-          <Button cancel>Cancel</Button>
-          <Button>Delete</Button>
-          <Button update type="submit">
-            Update Item
-          </Button>
-        </ButtonGroup>
-      </Form>
-    </Container>
+    <>
+      <>
+        <ContainerHeader>
+          <Shape />
+          <img
+            src="images/products/addProduct_Bg.png"
+            alt="AddProduct_Bg_Image"
+          />
+          <TitleContent>
+            <Title>Update Product</Title>
+          </TitleContent>
+        </ContainerHeader>
+      </>
+      <Container>
+        <Form onSubmit={UpdateData}>
+          <Label> Add Images </Label>
+          <ImageUpload />
+          <Label> Product Name </Label>
+          <Input
+            type="text"
+            name="itemName"
+            id="itemName"
+            value={itemName || ''}
+            onChange={handleInputChange}
+          />
+          <Label> Product Description </Label>
+          <TextArea
+            type="text"
+            name="description"
+            id="description"
+            value={description || ''}
+            onChange={handleInputChange}
+          />
+          <FormGroup>
+            <LeftForm>
+              <Label> M.F.D </Label>
+              <LeftFormInput type="date" max={maxDate} />
+              <Label> Price (Rs.) </Label>
+              <LeftFormInput
+                id="price"
+                type="number"
+                value={price || ''}
+                onChange={handleInputChange}
+                error={priceError}
+              />
+              {priceError && <ErrorMessage>{priceError}</ErrorMessage>}
+            </LeftForm>
+            <RightForm>
+              <Label> Category </Label>
+              <Dropdown />
+              <Label> Stock Amount (Rs.) </Label>
+              <RightFormInput
+                id="stockAmount"
+                type="number"
+                value={stockAmount}
+                onChange={validateStockAmount}
+                error={stockAmountError}
+              />
+              {stockAmountError && (
+                <ErrorMessage>{stockAmountError}</ErrorMessage>
+              )}
+            </RightForm>
+          </FormGroup>
+          <ButtonGroup>
+            <Button cancel>Cancel</Button>
+            <Button>Delete</Button>
+            <Button update type="submit">
+              Update Item
+            </Button>
+          </ButtonGroup>
+        </Form>
+      </Container>
+    </>
   )
 }
 
-export default UpdateProducts
+export default UpdateProductForm

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import ProductCardSeller from './ProductCardSeller'
+import ProductCard from './ProductCardSeller'
 
 const Container = styled.div`
   height: 100%;
@@ -19,17 +19,16 @@ const GridContainer = styled.div`
   }
 `
 
-function ProductsDisplay() {
+function ProductsDisplaySeller() {
   return (
     <>
       <Container>
-        <h1>product display seller</h1>
         <GridContainer>
-          <ProductCardSeller />
+          <ProductCard />
         </GridContainer>
       </Container>
     </>
   )
 }
 
-export default ProductsDisplay
+export default ProductsDisplaySeller

@@ -65,37 +65,40 @@ function DropDown() {
   const toggle = () => setIsOpen(!isOpen)
 
   const onOptionClicked = item => () => {
-    setSelectedItem(item)
+    const i = setSelectedItem(item)
     setIsOpen(false)
+    console.log('i')
   }
 
   return (
-    <DropDownContainer>
-      <DropDownHeader onClick={toggle}>
-        {selectedItem ? selectedItem : 'Select an item'}
-        <DropDownIcon>
-          <FaAngleDown />
-        </DropDownIcon>
-      </DropDownHeader>
-      {isOpen && (
-        <DropDownListContainer>
-          <DropDownList>
-            <DropDownItem onClick={onOptionClicked('Health Care')}>
-              Health Care
-            </DropDownItem>
-            <DropDownItem onClick={onOptionClicked('Personal Care')}>
-              Personal Care
-            </DropDownItem>
-            <DropDownItem onClick={onOptionClicked('LifeStyle')}>
-              LifeStyle
-            </DropDownItem>
-            <DropDownItem onClick={onOptionClicked('Herbal Food')}>
-              Herbal Food
-            </DropDownItem>
-          </DropDownList>
-        </DropDownListContainer>
-      )}
-    </DropDownContainer>
+    <>
+      <DropDownContainer>
+        <DropDownHeader onClick={toggle}>
+          {selectedItem ? selectedItem : 'Select an item'}
+          <DropDownIcon>
+            <FaAngleDown />
+          </DropDownIcon>
+        </DropDownHeader>
+        {isOpen && (
+          <DropDownListContainer>
+            <DropDownList>
+              <DropDownItem onClick={onOptionClicked('Health Care')}>
+                Health Care
+              </DropDownItem>
+              <DropDownItem onClick={onOptionClicked('Personal Care')}>
+                Personal Care
+              </DropDownItem>
+              <DropDownItem onClick={onOptionClicked('LifeStyle')}>
+                LifeStyle
+              </DropDownItem>
+              <DropDownItem onClick={onOptionClicked('Herbal Food')}>
+                Herbal Food
+              </DropDownItem>
+            </DropDownList>
+          </DropDownListContainer>
+        )}
+      </DropDownContainer>
+    </>
   )
 }
 

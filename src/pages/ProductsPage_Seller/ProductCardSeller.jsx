@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { FaTrashAlt } from 'react-icons/fa'
 import { FaRegEdit } from 'react-icons/fa'
 import RatingDisplay from '../ProductsPage_Customer/RatingDisplay'
+import { Link } from 'react-router-dom'
 
 const Container = styled.div`
   padding: 15px 15px 0 15px;
@@ -18,8 +19,9 @@ const Container = styled.div`
   width: 250px;
 `
 
-const Image = styled.div`
-  padding-bottom: 0px;
+const Image = styled.img`
+  padding-bottom: 10px;
+  width: 240px;
 `
 
 const Title = styled.label`
@@ -62,34 +64,66 @@ const Button = styled.button`
   color: white;
   margin-top: 45px;
 `
+const ButtonGroup = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: #ffffff;
+  padding-bottom: 10px;
+`
 
-function ProductCard() {
+function ProductCardSeller() {
   const [ProductList, setProductList] = useState([])
 
   //read stock --> productList
   const data = async () => {
-    const response = await axios.get(
+    const response = await axios.post(
       'http://localhost:3004/api/item/getAllItems',
     )
     setProductList(response.data)
     console.log(data)
   }
 
+  function refresh() {
+    window.parent.location = window.parent.location.href
+  }
+
+  const deleteItem = id => {
+    alert('The item will delete permermenantly')
+    axios.post(`http://localhost:3004/api/item/deleteItem/${id}`)
+    refresh()
+  }
+
+  useEffect(() => {
+    data()
+  }, [])
+
   return (
     <>
       {ProductList.map(pro => (
         <Container>
-          <h1>product card seller</h1>
-          <Image src={pro.image} alt="Product_Image" />
+          <ButtonGroup>
+            <Image src="images/products/product.png" alt="Product_Image" />
+          </ButtonGroup>
+
           <IconGroup>
-            <Button>
-              <FaRegEdit />
-            </Button>
-            <Button>
+            <Link to={`/updateProduct/${pro._id}`}>
+              <Button>
+                <FaRegEdit />
+              </Button>
+            </Link>
+
+            <Button
+              as="button"
+              onClick={() => {
+                deleteItem(pro._id)
+              }}
+            >
               <FaTrashAlt />
             </Button>
           </IconGroup>
-          <Title>{pro.name}</Title>
+          <Title>{pro.itemName}</Title>
+
+          <Title>{pro.description}</Title>
           <RatingDisplay parameter={pro.rating} />
           <Shape>
             <Price>LKR {pro.price}.00</Price>
@@ -100,4 +134,4 @@ function ProductCard() {
   )
 }
 
-export default ProductCard
+export default ProductCardSeller

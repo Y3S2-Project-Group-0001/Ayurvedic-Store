@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Dropdown from './DropDown'
 import { FaAngleDown } from 'react-icons/fa'
@@ -206,7 +207,7 @@ const AddImgGroup = styled.div`
 
 const DropDownContainer = styled.div`
   position: relative;
-  width: 200px;
+  width: 500px;
 `
 
 const DropDownHeader = styled.div`
@@ -216,7 +217,7 @@ const DropDownHeader = styled.div`
   background-color: white;
   color: #333;
   cursor: pointer;
-  width: 200px;
+  width: 500px;
   height: 20px;
   padding: 10px;
   border: 1px solid #ccc;
@@ -237,12 +238,12 @@ const DropDownIcon = styled.div`
 const DropDownListContainer = styled.div`
   position: absolute;
   top: 44px;
-  width: 100%;
+  width: 500px;
   z-index: 1;
 `
 
 const DropDownList = styled.ul`
-  width: 200px;
+  width: 500px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -267,26 +268,7 @@ function AddProducts() {
   const [price, setPrice] = useState('')
   const [stockAmount, setStockAmount] = useState('')
 
-  // const formData = new FormData()
-
-  // formData.append('itemName', itemName)
-  // formData.append('description', description)
-  // formData.append('category', category)
-  // formData.append('price', price)
-  // formData.append('stockAmount', stockAmount)
-  // //formData.append('rating', rating)
-
-  // const handleSubmit = async e => {
-  //   e.preventDefault()
-
-  //   await axios
-  //     .post('http://localhost:3004/api/item/addItem', formData)
-  //     .then(() => {
-  //       alert('Product added successfully')
-  //     })
-
-  //   console.log(formData)
-  // }
+  const history = useNavigate()
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -294,7 +276,7 @@ function AddProducts() {
     const newItem = {
       itemName,
       description,
-      category,
+      category: selectedItem,
       price,
       stockAmount,
     }
@@ -303,6 +285,7 @@ function AddProducts() {
       .post('http://localhost:3004/api/item/addItem', newItem)
       .then(() => {
         alert('Item added')
+        history('/allProductSeller')
       })
       .catch(err => {
         alert(err)
@@ -314,15 +297,6 @@ function AddProducts() {
 
   const [images, setImages] = useState([])
   const [imageUpload, setImageUpload] = useState(null)
-
-  // const uploadImage = () => {
-  //   if(imageUpload == null) return;
-
-  //   const imageRef = ref(Storage, `products/${imageUpload.name + v4()}`);
-  //   uploadBytes(imageRef, imageUpload).then(() => {
-  //     alert("image uploaded");
-  //   });
-  // };
 
   const handleImageUpload = event => {
     const file = event.target.files[0]
@@ -374,15 +348,15 @@ function AddProducts() {
     return date.toISOString().split('T')[0]
   }
 
-  //drop down menu
   const [isOpen, setIsOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
 
   const toggle = () => setIsOpen(!isOpen)
 
   const onOptionClicked = item => () => {
-    setSelectedItem(item)
+    const i = setSelectedItem(item)
     setIsOpen(false)
+    console.log('i')
   }
 
   return (
@@ -396,6 +370,7 @@ function AddProducts() {
           id="itemName"
           value={itemName}
           onChange={e => setItemName(e.target.value)}
+          autoComplete="off"
         />
         <Label> Product Description </Label>
         <TextArea
@@ -403,59 +378,54 @@ function AddProducts() {
           id="description"
           value={description}
           onChange={e => setDescription(e.target.value)}
+          autoComplete="off"
         />
+        <Label> Category </Label>
+        <DropDownContainer>
+          <DropDownHeader value={category} onClick={toggle}>
+            {selectedItem ? selectedItem : 'Select an item'}
+            <DropDownIcon>
+              <FaAngleDown />
+            </DropDownIcon>
+          </DropDownHeader>
+          {isOpen && (
+            <DropDownListContainer>
+              <DropDownList>
+                <DropDownItem onClick={onOptionClicked('Health Care')}>
+                  Health Care
+                </DropDownItem>
+                <DropDownItem onClick={onOptionClicked('Personal Care')}>
+                  Personal Care
+                </DropDownItem>
+                <DropDownItem onClick={onOptionClicked('Life Style')}>
+                  LifeStyle
+                </DropDownItem>
+                <DropDownItem onClick={onOptionClicked('Herbal Food')}>
+                  Herbal Food
+                </DropDownItem>
+              </DropDownList>
+            </DropDownListContainer>
+          )}
+        </DropDownContainer>
         <FormGroup>
           <LeftForm>
-            <Label> M.F.D </Label>
-            <LeftFormInput type="date" max={maxDate} />
             <Label> Price (Rs.) </Label>
             <LeftFormInput
               id="price"
               type="number"
               value={price}
               onChange={e => setPrice(e.target.value)}
+              autoComplete="off"
             />
           </LeftForm>
           <RightForm>
-            <Label> Category </Label>
-            <>
-              <DropDownContainer>
-                <DropDownHeader
-                  value={category}
-                  onClick={toggle}
-                  onChange={e => setCategory(e.target.value)}
-                >
-                  {selectedItem ? selectedItem : 'Select an item'}
-                  <DropDownIcon>
-                    <FaAngleDown />
-                  </DropDownIcon>
-                </DropDownHeader>
-                {isOpen && (
-                  <DropDownListContainer>
-                    <DropDownList>
-                      <DropDownItem onClick={onOptionClicked('Health Care')}>
-                        Health Care
-                      </DropDownItem>
-                      <DropDownItem onClick={onOptionClicked('Personal Care')}>
-                        Personal Care
-                      </DropDownItem>
-                      <DropDownItem onClick={onOptionClicked('LifeStyle')}>
-                        LifeStyle
-                      </DropDownItem>
-                      <DropDownItem onClick={onOptionClicked('Herbal Food')}>
-                        Herbal Food
-                      </DropDownItem>
-                    </DropDownList>
-                  </DropDownListContainer>
-                )}
-              </DropDownContainer>
-            </>
             <Label> Stock Amount (Rs.) </Label>
             <RightFormInput
               id="stockAmount"
               type="number"
               value={stockAmount}
-              onChange={e => setDescription(e.target.value)}
+              onChange={e => setStockAmount(e.target.value)}
+              autoComplete="off"
             />
           </RightForm>
         </FormGroup>

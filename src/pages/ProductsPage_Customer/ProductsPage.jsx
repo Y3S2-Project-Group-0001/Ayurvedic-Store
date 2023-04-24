@@ -220,18 +220,6 @@ function ProductsPage() {
   )
 
   console.log(filterProductsStars)
-  /*
-     filter products by price range
-  */
-  const [range, setRange] = useState({ min: 0, max: 5000 })
-
-  const handleRangeChange = event => {
-    setRange({ ...range, [event.target.name]: event.target.value })
-  }
-
-  const filterProductsPrice = ProductList.filter(
-    item => item.price >= range.min && item.price <= range.max,
-  )
 
   /*
     function search
@@ -311,23 +299,6 @@ function ProductsPage() {
                   </Star>
                 ))}
               </Stars>
-            </Container>
-          </>
-          <hr />
-          <>
-            <Label> Price Range </Label>
-            <Container>
-              <RangeInput
-                type="range"
-                min="0"
-                max="5000"
-                name="min"
-                value={range.min}
-                onChange={handleRangeChange}
-              />
-              <div>
-                Price Range: {range.min} - {range.max}
-              </div>
             </Container>
           </>
         </LeftContainer>
