@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import useDebounce from '../hooks/debounce'
+import { cartActions } from '../Store/cart-slice'
 
 const MainContainer = styled.div`
   position: fixed;
@@ -74,6 +77,9 @@ export default function Header(props) {
   const [bgColor, setBgColor] = useState('rgba(61, 86, 49, 1)')
   const [login, setLogin] = useState('notLogged')
   const [scrolled, setScrolled] = useState(true)
+  const cart = useSelector(state => state.cart)
+  const dispatch = useDispatch()
+  let debouncedValue = useDebounce(cart, 1000)
 
   const changeBackground = () => {
     if (window.scrollY > 100) {
@@ -86,7 +92,7 @@ export default function Header(props) {
   window.addEventListener('scroll', changeBackground)
 
   useEffect(() => {
-    if (props.type == 'home' && scrolled) {
+    if (props.type === 'home' && scrolled) {
       setTextColor('black')
       setBgColor('rgba(0, 0, 0, 0)')
     } else {
@@ -94,6 +100,22 @@ export default function Header(props) {
       setBgColor('#3d5631ec')
     }
   }, [props, scrolled])
+
+  // get cart by customer id from backend and set to redux state
+  useEffect(() => {
+    fetch('http://localhost:8000/order/api/getCustomerCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ customerId: 12 }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        dispatch(cartActions.replaceCart(data[0]))
+        console.log(data)
+      })
+  }, [dispatch])
 
   return (
     <>

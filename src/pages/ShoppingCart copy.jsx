@@ -5,7 +5,6 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
 
 const OuterContainer = styled.div`
-  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,10 +13,11 @@ const OuterContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: left;
   width: 90%;
 `
 
-const Title = styled.span`
+const Title = styled.h1`
   font-size: 3rem;
   font-weight: 300;
   color: #333;
@@ -36,8 +36,8 @@ const ProductList = styled.div`
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   min-height: 800px;
-  shrink: 1;
 `
 
 const OrderSummary = styled.div`
@@ -75,7 +75,8 @@ const productList = [
   {
     id: 1,
     name: 'Herbal Oil 100ml Add a longer title ',
-    description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
+    description:
+      'Herbal Oil 100ml Add a longer title somt more descriptions and more',
     img: 'https://picsum.photos/300/300',
     price: 100,
     quantity: 1,
@@ -83,7 +84,8 @@ const productList = [
   {
     id: 2,
     name: 'Herbal Oil 100ml Add a longer title',
-    description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
+    description:
+      'Herbal Oil 100ml Add a longer title somt more descriptions and more',
     img: 'https://picsum.photos/300/300',
     price: 200,
     quantity: 1,
@@ -91,7 +93,8 @@ const productList = [
   {
     id: 3,
     name: 'Herbal Oil 100ml Add a longer title ',
-    description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
+    description:
+      'Herbal Oil 100ml Add a longer title somt more descriptions and more',
     img: 'https://picsum.photos/300/300',
     price: 300,
     quantity: 1,
@@ -99,7 +102,8 @@ const productList = [
   {
     id: 4,
     name: 'Herbal Oil 100ml Add a longer title ',
-    description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
+    description:
+      'Herbal Oil 100ml Add a longer title somt more descriptions and more',
     img: 'https://picsum.photos/300/300',
     price: 400,
     quantity: 1,
@@ -126,6 +130,7 @@ const ImageWithDetailsContainer = styled.div`
 
 const ProductNameQuantityContainer = styled.div`
   display: flex;
+  flex-grow: 0;
   flex-direction: column;
   justify-content: space-between;
   margin: 10px 20px;
@@ -134,45 +139,12 @@ const ProductNameQuantityContainer = styled.div`
   margin-left: 50px;
 `
 
-const StyledImage = styled.img`
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-`
+const StyledImage = styled.img``
 
-const StyledProductTitle = styled.span`
-  font-size: 20px;
-  font-weight: 700;
-  color: #333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`
+const StyledProductTitle = styled.span``
 
-const QuantityContainer = styled.div`
-  display: flex;
-`
-const QuentityHandler = styled.span`
-  border: 2px solid #a2a3b1;
-  font-size: 15px;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 5px;
-  *:last-child,
-  *:first-child {
-    cursor: pointer;
-  }
-`
-
-const QuantitySpan = styled.span`
-  width: 100px;
-  margin: 0px 20px;
-`
-
-const Description = styled.div`
-  white-space: nowrap;
-  width: 400px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+const QuantityContainer = styled.span`
+  border: 1px solid black;
 `
 
 function ShoppingCart() {
@@ -188,13 +160,11 @@ function ShoppingCart() {
                   <StyledImage src={product.img} alt={product.name} />
                   <ProductNameQuantityContainer>
                     <StyledProductTitle>{product.name}</StyledProductTitle>
-                    <Description>{product.description}</Description>
+                    <span>{product.description}</span>
                     <QuantityContainer>
-                      <QuentityHandler>
-                        <AiOutlinePlus />
-                        <QuantitySpan>{product.quantity}</QuantitySpan>
-                        <AiOutlineMinus />
-                      </QuentityHandler>
+                      <AiOutlinePlus />
+                      {product.quantity}
+                      <AiOutlineMinus />
                     </QuantityContainer>
                   </ProductNameQuantityContainer>
                 </ImageWithDetailsContainer>
