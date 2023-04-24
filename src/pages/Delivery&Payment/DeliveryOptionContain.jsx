@@ -13,13 +13,12 @@ function DeliveryContain({ address, streetName, city }) {
   return (
     <Container display="flex" dirrection="column" align="center">
       <Smallbox>
-        <DeliveryMiniBox></DeliveryMiniBox>
-        <DeliveryMiniBox></DeliveryMiniBox>
+        <DeliveryMiniBox name="UPS"></DeliveryMiniBox>
+        <DeliveryMiniBox name="FEDEX"></DeliveryMiniBox>
       </Smallbox>
-
       <Smallbox>
-        <DeliveryMiniBox></DeliveryMiniBox>
-        <DeliveryMiniBox></DeliveryMiniBox>
+        <DeliveryMiniBox name="NORMAL POSTAL"></DeliveryMiniBox>
+        <DeliveryMiniBox name="DHL"></DeliveryMiniBox>
       </Smallbox>
     </Container>
   )
