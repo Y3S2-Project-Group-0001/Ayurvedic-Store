@@ -17,14 +17,14 @@ const Smallbox = styled(Container)`
   }
 `
 
-function DeliveryMiniBox({ address, streetName, city }) {
+function DeliveryMiniBox({ name }) {
   return (
     <Smallbox>
       <link
         href="https://fonts.googleapis.com/css?family=Quicksand"
         rel="stylesheet"
       ></link>
-      d
+      {name}
     </Smallbox>
   )
 }
