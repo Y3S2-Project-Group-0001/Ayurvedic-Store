@@ -6,6 +6,9 @@ import SaveLocationBox from './SaveLocationBox'
 const Smallbox = styled(Container)`
   background-color: #cfd7bc;
   padding: 16px;
+  margin: 20px;
+  height: 100px;
+  width: 100px;
   font-family: 'Quicksand';
   &:hover {
     background-color: #97a96f;
@@ -14,33 +17,16 @@ const Smallbox = styled(Container)`
   }
 `
 
-function NewLocation({ address, streetName, city, savedLocation = false }) {
+function DeliveryMiniBox({ address, streetName, city }) {
   return (
     <Smallbox>
       <link
         href="https://fonts.googleapis.com/css?family=Quicksand"
         rel="stylesheet"
       ></link>
-      {savedLocation ? (
-        <span>
-          Saved
-          <br />
-          Location
-        </span>
-      ) : (
-        <span>
-          New
-          <br />
-          Location
-        </span>
-      )}
-      {savedLocation && (
-        <div style={{ paddingTop: 10 }}>
-          <SaveLocationBox savedLocation={savedLocation}></SaveLocationBox>
-        </div>
-      )}
+      d
     </Smallbox>
   )
 }
 
-export default NewLocation
+export default DeliveryMiniBox

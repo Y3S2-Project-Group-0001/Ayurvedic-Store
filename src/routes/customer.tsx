@@ -14,15 +14,13 @@ import DeliveryPayment from '../pages/Delivery&Payment/Delivery&Payment'
 import ProductsPage from '../pages/ProductsPage_Customer/ProductsPage'
 import ViewOrderCustomer from '../pages/ViewOrderCustomer/ViewOrderCustomer'
 
-
 export default function CustomerRouter() {
   return (
     <Routes>
       <Route path="/" element={<Home />}></Route>
       <Route path="/example/file-upload" element={<FileUpload />} />
 
-      <Route path="/TestingPage" element={<PaymentSelect />} />
-       {/* <Route path="/TestingPage" element={<PaymentSelect />} /> */}
+      {/* <Route path="/TestingPage" element={<PaymentSelect />} /> */}
       <Route path="/TestingPage" element={<DeliveryPayment />} />
       <Route path="/allProductsCustomer" element={<ProductsPage />} />
       <Route path="/customer" element={<MainLayout />}>

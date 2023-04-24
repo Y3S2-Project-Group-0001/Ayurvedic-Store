@@ -4,24 +4,27 @@ import Container from '../../common/Container'
 import Text from '../../common/Text'
 import Button from '../../common/Button'
 import NewLocation from './NewLocation'
+import DeliveryMiniBox from './DeliveryOption'
+import DeliveryContain from './DeliveryOptionContain'
 
 export default function DeliveryPayment() {
-  const [cardNumber, setCardNumber] = useState(null)
-  const [nameOnCard, setNameOnCard] = useState(null)
-  const [expOnCard, setExpOnCard] = useState(null)
-  const [cvc, setCvc] = useState(null)
-  const [addAmount, setAddAmount] = useState(null)
-
   return (
     <>
       <Container display="flex" align="center" justify="center">
-        <Container bgColor="gray" w="80%" padding="5px">
+        <Container bgColor="#EAEAEA" w="80%" padding="5px">
           <Container display="flex" m="50px">
-            <Container bgColor="red" w="50%" h="500px">
+            <Container borderRight="solid" w="50%" h="500px">
               Select your Delivery Address
+              <Container mb="20px" m="20px">
+                <NewLocation savedLocation="test"></NewLocation>
+              </Container>
+              <Container mb="20px" m="20px">
+                <NewLocation></NewLocation>
+              </Container>
             </Container>
-            <Container bgColor="orange" w="50%">
+            <Container w="50%">
               Select Delivery Option
+              <DeliveryContain />
             </Container>
           </Container>
         </Container>
