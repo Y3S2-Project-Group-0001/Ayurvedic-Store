@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Storage, uploadFile } from '../../firebase'
+import { ref, uploadBytes } from 'firebase/storage'
+import { v4 } from 'uuid'
 
 const UploadImage = styled.div`
   display: flex;
@@ -79,9 +82,19 @@ const AddImgGroup = styled.div`
 
 function ImageUpload() {
   const [images, setImages] = useState([])
+  const [imageUpload, setImageUpload] = useState(null)
 
-  const handleImageUpload = e => {
-    const file = e.target.files[0]
+  // const uploadImage = () => {
+  //   if(imageUpload == null) return;
+
+  //   const imageRef = ref(Storage, `products/${imageUpload.name + v4()}`);
+  //   uploadBytes(imageRef, imageUpload).then(() => {
+  //     alert("image uploaded");
+  //   });
+  // };
+
+  const handleImageUpload = event => {
+    const file = event.target.files[0]
     const reader = new FileReader()
     reader.onload = () => {
       setImages([...images, reader.result])
@@ -96,7 +109,11 @@ function ImageUpload() {
   return (
     <UploadImage>
       <AddImgGroup>
-        <UploadButton id="image-upload" onChange={handleImageUpload} />
+        <UploadButton
+          id="image-upload"
+          onClick={uploadFile}
+          onChange={handleImageUpload}
+        />
         <UploadLabel htmlFor="image-upload">
           <img src="images/products/addImageBtn.png" alt="AddImage_Image" />
           <UploadImage />

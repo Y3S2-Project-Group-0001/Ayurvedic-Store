@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import ProductList from '../products.json'
+//import ProductList from '../products.json'
 import ProductCard from './ProductCard'
 import { BsSearch } from 'react-icons/bs'
+import axios from 'axios'
 
 const MainContainer = styled.div`
   display: flex;
@@ -176,6 +177,20 @@ const SearchIcon = styled.button`
 `
 
 function ProductsPage() {
+  const [ProductList, setProductList] = useState([])
+
+  //read stock --> productList
+  // const data = async () => {
+  //   const response = await axios.post(
+  //     'http://localhost:3004/api/item/getAllItems',
+  //   )
+  //   setProductList(response.data)
+  //   console.log(data);
+  // }
+
+  // useEffect(() => {
+  //   data();
+  // })
   /*
       filter products by radio buttons
   */
@@ -200,7 +215,7 @@ function ProductsPage() {
     setSelectedStars(index + 1)
   }
 
-  const filterProductsStars = ProductList.filter(
+  const filterProductsStars = filteredProductsRadio.filter(
     item => item.rating === selectedStars,
   )
 
@@ -318,9 +333,7 @@ function ProductsPage() {
         </LeftContainer>
         <RightContainer>
           <GridContainer>
-            <ProductCard
-              products={[...filteredProductsRadio, ...filterProductsStars]}
-            />
+            <ProductCard products={filteredProductsRadio} />
           </GridContainer>
         </RightContainer>
       </VerticalContainer>

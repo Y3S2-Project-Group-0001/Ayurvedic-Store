@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 import { FaTrashAlt } from 'react-icons/fa'
 import { FaRegEdit } from 'react-icons/fa'
@@ -63,27 +64,39 @@ const Button = styled.button`
 `
 
 function ProductCard() {
+  const [ProductList, setProductList] = useState([])
+
+  //read stock --> productList
+  const data = async () => {
+    const response = await axios.get(
+      'http://localhost:3004/api/item/getAllItems',
+    )
+    setProductList(response.data)
+    console.log(data)
+  }
+
   return (
-    <Container>
-      <Image>
-        <img src="images/products/product.png" alt="Product_Image" />
-      </Image>
-      <IconGroup>
-        <Button>
-          <FaRegEdit />
-        </Button>
-        <Button>
-          <FaTrashAlt />
-        </Button>
-      </IconGroup>
-      <Title>Amila Zindagi Juice for hair Growth and stress reliever</Title>
-
-      <RatingDisplay />
-
-      <Shape>
-        <Price>$28.88</Price>
-      </Shape>
-    </Container>
+    <>
+      {ProductList.map(pro => (
+        <Container>
+          <h1>product card seller</h1>
+          <Image src={pro.image} alt="Product_Image" />
+          <IconGroup>
+            <Button>
+              <FaRegEdit />
+            </Button>
+            <Button>
+              <FaTrashAlt />
+            </Button>
+          </IconGroup>
+          <Title>{pro.name}</Title>
+          <RatingDisplay parameter={pro.rating} />
+          <Shape>
+            <Price>LKR {pro.price}.00</Price>
+          </Shape>
+        </Container>
+      ))}
+    </>
   )
 }
 

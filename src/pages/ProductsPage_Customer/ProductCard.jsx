@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import RatingDisplay from '../ProductsPage_Customer/RatingDisplay'
+import axios from 'axios'
 import Category from './Category'
-import ProductList from '../products.json'
+//import ProductList from '../products.json'
 
 const Container = styled.div`
   padding: 15px 15px 0 15px;
@@ -47,23 +48,38 @@ const Shape = styled.div`
   margin-top: 40px;
 `
 
-function ProductCard({ products }) {
+function ProductCard(products) {
+  const [ProductList, setProductList] = useState([])
+
+  //read stock --> productList
+  const data = async () => {
+    const response = await axios.post(
+      'http://localhost:3004/api/item/getAllItems',
+    )
+    setProductList(response.data)
+    console.log(data)
+  }
+
+  useEffect(() => {
+    data()
+  }, [])
+
   return (
     <>
-      {products &&
-        products.map(pro => (
-          <Container>
-            <ButtonGroup>
-              <Image src={pro.image} alt="Product_Image" />
+      {ProductList.map(pro => (
+        <Container>
+          <ButtonGroup>
+            <Image src="images/products/product.png" alt="Product_Image" />
 
-              <Title>{pro.name}</Title>
-            </ButtonGroup>
-            <RatingDisplay parameter={pro.rating} />
-            <Shape>
-              <Price>LKR {pro.price}.00</Price>
-            </Shape>
-          </Container>
-        ))}
+            <Title>{pro.itemName}</Title>
+          </ButtonGroup>
+          <Title>{pro.description}</Title>
+          <RatingDisplay parameter={pro.rating} />
+          <Shape>
+            <Price>LKR {pro.price}.00</Price>
+          </Shape>
+        </Container>
+      ))}
     </>
   )
 }

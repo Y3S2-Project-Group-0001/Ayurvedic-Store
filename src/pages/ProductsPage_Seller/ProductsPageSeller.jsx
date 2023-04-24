@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Category from '../ProductsPage_Customer/Category'
 import PriceRange from '../ProductsPage_Customer/PriceRange'
-import ProductsDisplay from './ProductsDisplay'
+import ProductsDisplaySeller from './ProductsDisplaySeller'
 import RatingsRange from '../ProductsPage_Customer/RatingsRange'
 import SearchBar from '../ProductsPage_Customer/SearchBar'
 
@@ -46,26 +46,21 @@ const RightContainer = styled.div`
   flex: 9;
 `
 
-function ProductsPage() {
+function ProductsPageSeller() {
   return (
     <MainContainer>
+      <h1>product page seller</h1>
       <HorizontalContainer>
         <SearchBar />
       </HorizontalContainer>
       <VerticalContainer>
-        <LeftContainer>
-          <Category />
-          <hr />
-          <RatingsRange />
-          <hr />
-          <PriceRange />
-        </LeftContainer>
+        <LeftContainer></LeftContainer>
         <RightContainer>
-          <ProductsDisplay />
+          <ProductsDisplaySeller />
         </RightContainer>
       </VerticalContainer>
     </MainContainer>
   )
 }
 
-export default ProductsPage
+export default ProductsPageSeller

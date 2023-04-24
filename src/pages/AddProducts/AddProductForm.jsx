@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Dropdown from './DropDown'
+import { FaAngleDown } from 'react-icons/fa'
 import ImageUpload from './ImageUpload'
+import axios from 'axios'
+// import { Storage, uploadFile } from '../../firebase'
+// import { ref, uploadBytes } from 'firebase/storage'
 
 const Container = styled.div`
   height: 100%;
@@ -124,16 +128,213 @@ const ErrorMessage = styled.span`
   font-size: 0.75rem;
   margin-top: 0.25rem;
 `
+const UploadImage = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const ImagePreview = styled.img`
+  max-width: 100%;
+  margin-top: 1rem;
+`
+
+const UploadButton = styled.input.attrs({
+  type: 'file',
+  accept: 'image/*',
+})`
+  display: none;
+`
+
+const UploadLabel = styled.label`
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+  user-select: none;
+  width: 100px;
+
+  &:hover {
+    background-color: white;
+  }
+`
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+`
+
+const UploadedImage = ({ src, onRemove }) => {
+  const handleRemove = () => {
+    onRemove(src)
+  }
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <ImagePreview src={src} width="100px" height="100px" />
+      <RemoveButton onClick={handleRemove}>&times;</RemoveButton>
+    </div>
+  )
+}
+
+const RemoveButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  font-size: 20px;
+  clip-path: circle(50% at 50% 50%);
+  background-color: red;
+
+  &:hover {
+    color: #990000;
+  }
+`
+
+const AddImgGroup = styled.div`
+  display: flex;
+  width: 500px;
+  justify-content: space-between;
+
+  @media only screen and (max-width: 1000px) {
+    width: 450px;
+  }
+`
+
+const DropDownContainer = styled.div`
+  position: relative;
+  width: 200px;
+`
+
+const DropDownHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  width: 200px;
+  height: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  @media only screen and (max-width: 1000px) {
+    width: 450px;
+  }
+`
+
+const DropDownIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+`
+
+const DropDownListContainer = styled.div`
+  position: absolute;
+  top: 44px;
+  width: 100%;
+  z-index: 1;
+`
+
+const DropDownList = styled.ul`
+  width: 200px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+`
+
+const DropDownItem = styled.li`
+  padding: 8px 12px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+`
 
 function AddProducts() {
+  const [itemName, setItemName] = useState()
+  const [description, setDescription] = useState()
+  const [category, setCategory] = useState('')
   const [price, setPrice] = useState('')
   const [stockAmount, setStockAmount] = useState('')
+
+  // const formData = new FormData()
+
+  // formData.append('itemName', itemName)
+  // formData.append('description', description)
+  // formData.append('category', category)
+  // formData.append('price', price)
+  // formData.append('stockAmount', stockAmount)
+  // //formData.append('rating', rating)
+
+  // const handleSubmit = async e => {
+  //   e.preventDefault()
+
+  //   await axios
+  //     .post('http://localhost:3004/api/item/addItem', formData)
+  //     .then(() => {
+  //       alert('Product added successfully')
+  //     })
+
+  //   console.log(formData)
+  // }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    const newItem = {
+      itemName,
+      description,
+      category,
+      price,
+      stockAmount,
+    }
+
+    axios
+      .post('http://localhost:3004/api/item/addItem', newItem)
+      .then(() => {
+        alert('Item added')
+      })
+      .catch(err => {
+        alert(err)
+      })
+  }
 
   const [priceError, setPriceError] = useState('')
   const [stockAmountError, setStockAmountError] = useState('')
 
-  const handleSubmit = e => {
-    //form submission
+  const [images, setImages] = useState([])
+  const [imageUpload, setImageUpload] = useState(null)
+
+  // const uploadImage = () => {
+  //   if(imageUpload == null) return;
+
+  //   const imageRef = ref(Storage, `products/${imageUpload.name + v4()}`);
+  //   uploadBytes(imageRef, imageUpload).then(() => {
+  //     alert("image uploaded");
+  //   });
+  // };
+
+  const handleImageUpload = event => {
+    const file = event.target.files[0]
+    const reader = new FileReader()
+    reader.onload = () => {
+      setImages([...images, reader.result])
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleRemoveImage = src => {
+    setImages(images.filter(imageSrc => imageSrc !== src))
   }
 
   /*
@@ -173,15 +374,36 @@ function AddProducts() {
     return date.toISOString().split('T')[0]
   }
 
+  //drop down menu
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState(null)
+
+  const toggle = () => setIsOpen(!isOpen)
+
+  const onOptionClicked = item => () => {
+    setSelectedItem(item)
+    setIsOpen(false)
+  }
+
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
         <Label> Add Images </Label>
         <ImageUpload />
         <Label> Product Name </Label>
-        <Input type="text" />
+        <Input
+          type="text"
+          id="itemName"
+          value={itemName}
+          onChange={e => setItemName(e.target.value)}
+        />
         <Label> Product Description </Label>
-        <TextArea type="text" />
+        <TextArea
+          type="text"
+          id="description"
+          value={description}
+          onChange={e => setDescription(e.target.value)}
+        />
         <FormGroup>
           <LeftForm>
             <Label> M.F.D </Label>
@@ -191,25 +413,50 @@ function AddProducts() {
               id="price"
               type="number"
               value={price}
-              onChange={validatePrice}
-              error={priceError}
+              onChange={e => setPrice(e.target.value)}
             />
-            {priceError && <ErrorMessage>{priceError}</ErrorMessage>}
           </LeftForm>
           <RightForm>
             <Label> Category </Label>
-            <Dropdown />
+            <>
+              <DropDownContainer>
+                <DropDownHeader
+                  value={category}
+                  onClick={toggle}
+                  onChange={e => setCategory(e.target.value)}
+                >
+                  {selectedItem ? selectedItem : 'Select an item'}
+                  <DropDownIcon>
+                    <FaAngleDown />
+                  </DropDownIcon>
+                </DropDownHeader>
+                {isOpen && (
+                  <DropDownListContainer>
+                    <DropDownList>
+                      <DropDownItem onClick={onOptionClicked('Health Care')}>
+                        Health Care
+                      </DropDownItem>
+                      <DropDownItem onClick={onOptionClicked('Personal Care')}>
+                        Personal Care
+                      </DropDownItem>
+                      <DropDownItem onClick={onOptionClicked('LifeStyle')}>
+                        LifeStyle
+                      </DropDownItem>
+                      <DropDownItem onClick={onOptionClicked('Herbal Food')}>
+                        Herbal Food
+                      </DropDownItem>
+                    </DropDownList>
+                  </DropDownListContainer>
+                )}
+              </DropDownContainer>
+            </>
             <Label> Stock Amount (Rs.) </Label>
             <RightFormInput
               id="stockAmount"
               type="number"
               value={stockAmount}
-              onChange={validateStockAmount}
-              error={stockAmountError}
+              onChange={e => setDescription(e.target.value)}
             />
-            {stockAmountError && (
-              <ErrorMessage>{stockAmountError}</ErrorMessage>
-            )}
           </RightForm>
         </FormGroup>
         <ButtonGroup>
