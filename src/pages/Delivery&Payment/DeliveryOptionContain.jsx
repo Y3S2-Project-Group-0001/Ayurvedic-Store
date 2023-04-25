@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Container from '../../common/Container'
 import SaveLocationBox from './SaveLocationBox'
@@ -10,16 +10,35 @@ const Smallbox = styled(Container)`
 `
 
 function DeliveryContain({ address, streetName, city }) {
+  const [selected, setSelected] = useState('Select something')
+
   return (
     <Container display="flex" dirrection="column" align="center">
       <Smallbox>
-        <DeliveryMiniBox name="UPS"></DeliveryMiniBox>
-        <DeliveryMiniBox name="FEDEX"></DeliveryMiniBox>
+        <DeliveryMiniBox
+          selected={selected}
+          name="UPS"
+          setSelected={setSelected}
+        ></DeliveryMiniBox>
+        <DeliveryMiniBox
+          name="FEDEX"
+          selected={selected}
+          setSelected={setSelected}
+        ></DeliveryMiniBox>
       </Smallbox>
       <Smallbox>
-        <DeliveryMiniBox name="NORMAL POSTAL"></DeliveryMiniBox>
-        <DeliveryMiniBox name="DHL"></DeliveryMiniBox>
+        <DeliveryMiniBox
+          name="NORMAL POSTAL"
+          selected={selected}
+          setSelected={setSelected}
+        ></DeliveryMiniBox>
+        <DeliveryMiniBox
+          name="DHL"
+          selected={selected}
+          setSelected={setSelected}
+        ></DeliveryMiniBox>
       </Smallbox>
+      {selected}
     </Container>
   )
 }

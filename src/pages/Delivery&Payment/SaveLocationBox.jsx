@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Container from '../../common/Container'
+import ModifyAddressModel from './ModifyAddressModel'
+import { useState } from 'react'
 
 const Smallbox = styled(Container)`
   background-color: #bed496;
@@ -33,7 +35,16 @@ const Button = styled.div`
   }
 `
 
-function SaveLocationBox({ savedLocation }) {
+function SaveLocationBox({ savedLocation, modifyModel, setOnCloseD }) {
+  function open(e) {
+    e.preventDefault()
+    modifyModel(true)
+  }
+
+  function openDelete(e) {
+    e.preventDefault()
+    setOnCloseD(true)
+  }
   return (
     <Smallbox display="flex" w="100%">
       <link
@@ -42,10 +53,12 @@ function SaveLocationBox({ savedLocation }) {
       ></link>
       {savedLocation}
       <Container w="100%" display="flex" align="end" justify="end">
-        <Button bgColor="gray" hColor="#626262">
+        <Button bgColor="gray" hColor="#626262" onClick={open}>
           Modify
         </Button>
-        <Button bgColor="red">Delete</Button>
+        <Button bgColor="red" onClick={openDelete}>
+          Delete
+        </Button>
       </Container>
     </Smallbox>
   )

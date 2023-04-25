@@ -13,19 +13,49 @@ const Smallbox = styled(Container)`
     transition: 0.2s;
   }
 `
+const Button = styled.div`
+  align-items: center;
+  display: flex;
+  padding: 10px;
+  font-family: 'Quicksand';
+  background-color: ${props => props.bgColor};
+  cursor: pointer;
+  div {
+    margin-left: 1rem;
+    a {
+      color: ${props => props.color};
+      transition: 0.5s;
+      text-decoration: none;
+      font-weight: 400;
+      font-family: 'Quicksand';
+    }
+  }
+`
 
-function NewLocation({ address, streetName, city, savedLocation = false }) {
+function NewLocation({
+  address,
+  streetName,
+  city,
+  setOnClose,
+  savedLocation = false,
+  savedModel,
+  setOnCloseD,
+  modifyModel,
+}) {
+  function opener() {
+    setOnClose(true)
+  }
   return (
     <Smallbox>
       <link
         href="https://fonts.googleapis.com/css?family=Quicksand"
         rel="stylesheet"
       ></link>
-      {savedLocation ? (
+      {savedModel ? (
         <span>
-          Saved
-          <br />
-          Location
+          <Button bgColor="#bed496" onClick={opener}>
+            Saved Location
+          </Button>
         </span>
       ) : (
         <span>
@@ -34,9 +64,13 @@ function NewLocation({ address, streetName, city, savedLocation = false }) {
           Location
         </span>
       )}
-      {savedLocation && (
+      {savedModel && (
         <div style={{ paddingTop: 10 }}>
-          <SaveLocationBox savedLocation={savedLocation}></SaveLocationBox>
+          <SaveLocationBox
+            modifyModel={modifyModel}
+            savedLocation={savedLocation}
+            setOnCloseD={setOnCloseD}
+          ></SaveLocationBox>
         </div>
       )}
     </Smallbox>
