@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
 import CustomerRouter from './routes/customer'
 import SellerRouter from './routes/seller'
+import AuthRouter from './routes/auth'
+import RatingRouter from './routes/rating'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -13,6 +15,8 @@ root.render(
     <BrowserRouter>
       <CustomerRouter />
       <SellerRouter />
+      <AuthRouter />
+      <RatingRouter />
     </BrowserRouter>
   </React.StrictMode>,
 )
