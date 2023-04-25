@@ -228,10 +228,7 @@ function ProductsPage() {
               {ProductList.map(pro => (
                 <CardContainer>
                   <ButtonGroup>
-                    <Image
-                      src="images/products/product.png"
-                      alt="Product_Image"
-                    />
+                    <Image src={pro.image[1]} alt="Product_Image" />
 
                     <Title>{pro.itemName}</Title>
                   </ButtonGroup>

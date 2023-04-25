@@ -2,10 +2,10 @@ import React, { useRef, useState } from 'react'
 import { uploadFile } from '../../firebase'
 
 export function FileUpload() {
-  const file_input_ref = useRef < HTMLInputElement > null
+  const file_input_ref = useRef(null)
   const [state, setState] = useState('Ready.')
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = async e => {
     e.preventDefault()
     setState('Uploading...')
     if (file_input_ref.current) {
@@ -50,7 +50,6 @@ export function FileUpload() {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <input type="file" ref={file_input_ref} />
         <button type="submit">Upload</button>
       </form>
       <div>{state}</div>

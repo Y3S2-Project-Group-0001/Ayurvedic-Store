@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import Dropdown from './DropDown'
@@ -6,7 +6,7 @@ import { FaAngleDown } from 'react-icons/fa'
 import ImageUpload from './ImageUpload'
 import axios from 'axios'
 import { FileUpload } from '../examples/file-upload'
-// import { Storage, uploadFile } from '../../firebase'
+import { uploadFile } from '../../firebase'
 // import { ref, uploadBytes } from 'firebase/storage'
 
 const Container = styled.div`
@@ -263,6 +263,9 @@ const DropDownItem = styled.li`
 `
 
 function AddProducts() {
+  const file_input_ref = useRef(null)
+  const [state, setState] = useState('Ready.')
+
   const [itemName, setItemName] = useState()
   const [description, setDescription] = useState()
   const [category, setCategory] = useState('')
@@ -275,24 +278,63 @@ function AddProducts() {
   function handleSubmit(e) {
     e.preventDefault()
 
-    const newItem = {
-      itemName,
-      description,
-      category: selectedItem,
-      price,
-      stockAmount,
-      //image,
-    }
+    setState('Uploading...')
+    if (file_input_ref.current) {
+      // Get the file dom reference
+      let file_input = file_input_ref.current
 
-    axios
-      .post('http://localhost:3004/api/item/addItem', newItem)
-      .then(() => {
-        alert('Item added')
-        history('/allProductSeller')
-      })
-      .catch(err => {
-        alert(err)
-      })
+      // Check if file is set
+      if (!file_input.files || file_input.files.length <= 0) {
+        setState("You don't have a file selected.")
+        return
+      }
+      // Get file object
+      let file = file_input.files[0]
+      console.log(file)
+      // Check the image size - 2MB for example
+      if (file.size > 2 * 1024 * 1024) {
+        setState(
+          'You exceed the max file size. ' +
+            'Consider learning IT' +
+            'So you can learn yourself how to code a image scaler. ' +
+            'Do it in C++ with web assembly, ' +
+            'So you can run it on a browser. ' +
+            'Now you can scale this image' +
+            'To fit the requirement. ' +
+            'If you figure it out, ' +
+            'Hatsune miku will personally come to your home and' +
+            'Give you a kiss. ',
+        )
+        return
+      }
+
+      // Finally upload it
+      try {
+        uploadFile(file).then(res => {
+          console.log('this is respose', res)
+          const newItem = {
+            itemName,
+            description,
+            category: selectedItem,
+            price,
+            stockAmount,
+            image: res,
+          }
+
+          axios
+            .post('http://localhost:3004/api/item/addItem', newItem)
+            .then(() => {
+              alert('Item added')
+              history('/allProductSeller')
+            })
+            .catch(err => {
+              alert('save failed')
+            })
+        })
+      } catch (e) {
+        alert('save failed in firebase')
+      }
+    }
   }
 
   const [isOpen, setIsOpen] = useState(false)
@@ -309,8 +351,7 @@ function AddProducts() {
     <Container>
       <Form as="form" onSubmit={handleSubmit} encType="multipart/form-data">
         <Label> Add Images </Label>
-        <FileUpload />
-
+        <input type="file" ref={file_input_ref} />
         <Label> Product Name </Label>
         <Input
           type="text"

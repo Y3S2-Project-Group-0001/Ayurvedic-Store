@@ -3,6 +3,8 @@ import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { BsSearch } from 'react-icons/bs'
+import { FaTrashAlt } from 'react-icons/fa'
+import { FaRegEdit } from 'react-icons/fa'
 
 const MainContainer = styled.div`
   display: flex;
@@ -113,6 +115,12 @@ const CardContainer = styled.div`
   flex-direction: column;
   width: 250px;
 `
+const CardTitle = styled.label`
+  display: inline-block;
+  text-align: center;
+  padding: 0px;
+  font-weight: 700;
+`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns */
@@ -161,6 +169,25 @@ const Shape = styled.div`
   padding: 10px 20px;
   margin-top: 40px;
 `
+const IconGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 45px;
+  width: 150px;
+  margin-bottom: 5px;
+
+  position: absolute;
+`
+const ButtonIcon = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: black;
+  opacity: 63%;
+  padding: 5px 20px;
+  color: white;
+  margin-top: 45px;
+`
 
 function ProductsPage() {
   const [ProductList, setProductList] = useState([])
@@ -176,6 +203,16 @@ function ProductsPage() {
   useEffect(() => {
     data()
   }, [])
+
+  function refresh() {
+    window.parent.location = window.parent.location.href
+  }
+
+  const deleteItem = id => {
+    alert('The item will delete permermenantly')
+    axios.post(`http://localhost:3004/api/item/deleteItem/${id}`)
+    refresh()
+  }
 
   /*
       filter products by buttons
@@ -245,14 +282,26 @@ function ProductsPage() {
               {ProductList.map(pro => (
                 <CardContainer>
                   <ButtonGroup>
-                    <Image
-                      src="images/products/product.png"
-                      alt="Product_Image"
-                    />
+                    <Image src={pro.image[1]} alt="Product_Image" />
+                    <IconGroup>
+                      <Link to={`/updateProduct/${pro._id}`}>
+                        <ButtonIcon>
+                          <FaRegEdit />
+                        </ButtonIcon>
+                      </Link>
 
-                    <Title>{pro.itemName}</Title>
+                      <ButtonIcon
+                        as="button"
+                        onClick={() => {
+                          deleteItem(pro._id)
+                        }}
+                      >
+                        <FaTrashAlt />
+                      </ButtonIcon>
+                    </IconGroup>
+                    <CardTitle>{pro.itemName}</CardTitle>
                   </ButtonGroup>
-                  <Title>{pro.description}</Title>
+                  <CardTitle>{pro.description}</CardTitle>
                   <Shape>
                     <Price>LKR {pro.price}.00</Price>
                   </Shape>
