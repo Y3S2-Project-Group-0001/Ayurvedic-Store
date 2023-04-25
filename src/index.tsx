@@ -7,6 +7,8 @@ import CustomerRouter from './routes/customer'
 import SellerRouter from './routes/seller'
 import AuthRouter from './routes/auth'
 import RatingRouter from './routes/rating'
+import { Provider } from 'react-redux'
+import Store from './Store/Index'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -18,6 +20,12 @@ root.render(
       <AuthRouter />
       <RatingRouter />
     </BrowserRouter>
+    {/* <Provider store={Store}>
+      <BrowserRouter>
+        <CustomerRouter />
+        <SellerRouter />
+      </BrowserRouter>
+    </Provider> */}
   </React.StrictMode>,
 )
 

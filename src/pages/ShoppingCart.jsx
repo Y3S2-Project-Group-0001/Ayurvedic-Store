@@ -36,8 +36,8 @@ const ProductList = styled.div`
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   min-height: 800px;
+  shrink: 1;
 `
 
 const OrderSummary = styled.div`
@@ -75,8 +75,7 @@ const productList = [
   {
     id: 1,
     name: 'Herbal Oil 100ml Add a longer title ',
-    description:
-      'Herbal Oil 100ml Add a longer title somt more descriptions and more',
+    description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
     img: 'https://picsum.photos/300/300',
     price: 100,
     quantity: 1,
@@ -84,8 +83,7 @@ const productList = [
   {
     id: 2,
     name: 'Herbal Oil 100ml Add a longer title',
-    description:
-      'Herbal Oil 100ml Add a longer title somt more descriptions and more',
+    description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
     img: 'https://picsum.photos/300/300',
     price: 200,
     quantity: 1,
@@ -93,8 +91,7 @@ const productList = [
   {
     id: 3,
     name: 'Herbal Oil 100ml Add a longer title ',
-    description:
-      'Herbal Oil 100ml Add a longer title somt more descriptions and more',
+    description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
     img: 'https://picsum.photos/300/300',
     price: 300,
     quantity: 1,
@@ -102,8 +99,7 @@ const productList = [
   {
     id: 4,
     name: 'Herbal Oil 100ml Add a longer title ',
-    description:
-      'Herbal Oil 100ml Add a longer title somt more descriptions and more',
+    description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
     img: 'https://picsum.photos/300/300',
     price: 400,
     quantity: 1,
@@ -172,6 +168,13 @@ const QuantitySpan = styled.span`
   margin: 0px 20px;
 `
 
+const Description = styled.div`
+  white-space: nowrap;
+  width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
 function ShoppingCart() {
   return (
     <OuterContainer>
@@ -185,7 +188,7 @@ function ShoppingCart() {
                   <StyledImage src={product.img} alt={product.name} />
                   <ProductNameQuantityContainer>
                     <StyledProductTitle>{product.name}</StyledProductTitle>
-                    <span>{product.description}</span>
+                    <Description>{product.description}</Description>
                     <QuantityContainer>
                       <QuentityHandler>
                         <AiOutlinePlus />
