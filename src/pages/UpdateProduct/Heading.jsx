@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Container = styled.div`
+const ContainerHeader = styled.div`
   width: 100%;
   background-position: center;
   background-size: cover;
@@ -41,7 +41,7 @@ const Shape = styled.div`
 export default function Heading() {
   return (
     <>
-      <Container>
+      <ContainerHeader>
         <Shape />
         <img
           src="images/products/addProduct_Bg.png"
@@ -50,7 +50,7 @@ export default function Heading() {
         <TitleContent>
           <Title>Update Product</Title>
         </TitleContent>
-      </Container>
+      </ContainerHeader>
     </>
   )
 }

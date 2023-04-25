@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import ProductList from '../products.json'
+import ProductCard from './ProductCard'
 
 const Container = styled.div`
   display: flex;
@@ -41,13 +43,13 @@ const Label = styled.label`
   font-weight: 700;
 `
 
-const data = [
-  { id: 1, name: 'Item 1', rating: 3 },
-  { id: 2, name: 'Item 2', rating: 5 },
-  { id: 3, name: 'Item 3', rating: 4 },
-  { id: 4, name: 'Item 4', rating: 2 },
-  { id: 5, name: 'Item 5', rating: 1 },
-]
+// const data = [
+//   { id: 1, name: 'Item 1', rating: 3 },
+//   { id: 2, name: 'Item 2', rating: 5 },
+//   { id: 3, name: 'Item 3', rating: 4 },
+//   { id: 4, name: 'Item 4', rating: 2 },
+//   { id: 5, name: 'Item 5', rating: 1 },
+// ]
 
 const FilteredItems = () => {
   const [selectedStars, setSelectedStars] = useState(0)
@@ -56,7 +58,9 @@ const FilteredItems = () => {
     setSelectedStars(index + 1)
   }
 
-  const filteredItems = data.filter(item => item.rating === selectedStars)
+  const filteredItems = ProductList.filter(
+    item => item.rating === selectedStars,
+  )
 
   return (
     <>
@@ -74,9 +78,7 @@ const FilteredItems = () => {
           ))}
         </Stars>
         <ItemsList>
-          {filteredItems.map(item => (
-            <Item key={item.id}>{item.name}</Item>
-          ))}
+          <ProductCard products={filteredItems} />
         </ItemsList>
       </Container>
     </>
