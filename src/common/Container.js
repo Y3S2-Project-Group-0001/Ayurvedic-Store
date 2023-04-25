@@ -23,6 +23,7 @@ const Container = styled.div`
     padding-top: ${props => props.smallPaddingTop};
   }
   padding: ${props => props.padding};
+  margin: ${props => props.m};
   margin-top: ${props => props.mt};
   margin-bottom: ${props => props.mb};
   margin-left: ${props => props.ml};

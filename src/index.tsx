@@ -5,15 +5,19 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
 import CustomerRouter from './routes/customer'
 import SellerRouter from './routes/seller'
+import { Provider } from 'react-redux'
+import Store from './Store/Index'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <CustomerRouter />
-      <SellerRouter />
-    </BrowserRouter>
+    <Provider store={Store}>
+      <BrowserRouter>
+        <CustomerRouter />
+        <SellerRouter />
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
 )
 
