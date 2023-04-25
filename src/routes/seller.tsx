@@ -12,12 +12,10 @@ import DashboardLayout from '../pages/DashboardLayout'
 import Orders from '../pages/Orders'
 import ViewOrderAdmin from '../pages/VIewOrderAdmin/ViewOrderAdmin'
 
-
 export default function SellerRouter() {
   return (
     <Routes>
       <Route path="/addProduct" element={<AddProduct />} />
-
 
       <Route path="/allProductSeller" element={<ProductsPageSeller />} />
 
@@ -34,7 +32,6 @@ export default function SellerRouter() {
           ></Route>
         </Route>
       </Route>
-
     </Routes>
   )
 }
