@@ -117,7 +117,7 @@ function OrderHistory() {
       </Container>
       <OrderListContainer>
         {orderList.map(order => (
-          <OrderContainer>
+          <OrderContainer key={order._id}>
             <OrderDetailsContainer>
               <OrderDetailContainer>
                 <BoldText>Order ID: </BoldText>
