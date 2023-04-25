@@ -110,7 +110,7 @@ export default function Header(props) {
             <Nav color={textColor}>
               <span>
                 {' '}
-                <a href="#">Home</a>{' '}
+                <a href="/">Home</a>{' '}
               </span>
               <span>
                 {' '}
@@ -118,7 +118,7 @@ export default function Header(props) {
               </span>
               <span>
                 {' '}
-                <a href="#">About us</a>{' '}
+                <a href="/rating">Reviews</a>{' '}
               </span>
               <span>
                 {' '}
@@ -135,9 +135,9 @@ export default function Header(props) {
                 </div>
               ) : (
                 <div>
-                  <a href="#">Login</a>
+                  <a href="http://localhost:3000/login">Login</a>
                   <span> | </span>
-                  <a href="#">Signup</a>
+                  <a href="http://localhost:3000/register">Signup</a>
                 </div>
               )}
             </Login>
