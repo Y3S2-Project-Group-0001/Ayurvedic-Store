@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { FileUpload } from '../pages/examples/file-upload'
 import Home from '../pages/Home/Home'
-import ShoppingCart from '../pages/ShoppingCart'
+import ShoppingCart from '../pages/ShoppingCart/ShoppingCart'
 import PaymentSelect from '../pages/PaymentSelect/PaymentSelect'
 
 import MainLayout from '../pages/MainLayout'

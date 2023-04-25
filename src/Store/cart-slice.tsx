@@ -4,6 +4,7 @@ const REDUCE_AMMOUNT = 1 //number of items to reduce in
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
+    cartId: undefined,
     items: [],
     subTotal: 0,
     shippingCost: 0,
@@ -17,42 +18,62 @@ const cartSlice = createSlice({
     // action.payload should have total quanitity, items, totalAmount
     replaceCart(state: any, action: any) {
       console.log('from slice', action.payload)
+      state.cartId = action.payload._id || undefined
       state.subTotal = action.payload.subTotal || 0
       state.items = action.payload.products || []
       state.totalAmount =
         action.payload.subTotal + action.payload.shippingCost || 0
       state.shippingCost = action.payload.shippingCost || 0
       state.customerID = action.payload.customerId || undefined
+      state.totalQuantitiy = action.payload.products.reduce(
+        (acc: any, item: any) => acc + item.quantity,
+        0,
+      )
     },
 
     //this function is for add item
     //requiers a object with item details. for payload.item a item with amount. payload.amount is amount to increase
     //return void
     addItem(state: any, action: any) {
-      state.totalAmount += action.payload.item.price * action.payload.amount
-      state.totalQuantitiy += action.payload.amount
+      state.totalAmount += action.payload.price
+      state.subTotal += action.payload.price
+      state.totalQuantitiy += 1
       state.changed = true
-      if (action.payload.item.id in state.items) {
-        state.items[action.payload.item.id].amount += action.payload.amount
-      } else {
-        state.items[action.payload.item.id] = action.payload
+      let found = false
+      for (let i = 0; i < state.items.length; i++) {
+        if (state.items[i].productId === action.payload.id) {
+          state.items[i].quantity += 1
+          found = true
+          return
+        }
+      }
+
+      if (!found) {
+        state.items.push({ productId: action.payload.id, quantity: 1 })
       }
     },
     removeItem(state: any, action: any) {
       //payload=itme that needs to change
-
-      //if condition will run only if there is a item with the id
-      if (state.items[action.payload]) {
-        state.totalAmount -= state.items[action.payload].item.price
-        state.totalQuantitiy -= REDUCE_AMMOUNT
-
-        if (state.items[action.payload].amount > 1) {
-          state.items[action.payload].amount -= REDUCE_AMMOUNT
-        } else if (state.items[action.payload].amount === 1) {
-          delete state.items[action.payload]
+      state.totalAmount -= action.payload.price
+      state.subTotal -= action.payload.price
+      state.totalQuantitiy -= 1
+      state.changed = true
+      let isZero = false
+      for (let i = 0; i < state.items.length; i++) {
+        if (state.items[i].productId === action.payload.id) {
+          state.items[i].quantity -= 1
+          console.log('this ran')
+          if (state.items[i].quantity === 0) {
+            isZero = true
+          }
+          return
         }
       }
-      if (state.totalQuantitiy === 0) state.totalAmount = 0
+      if (isZero) {
+        state.items = state.items.filter(
+          (item: any) => item.productId !== action.payload.id,
+        )
+      }
     },
   },
 })

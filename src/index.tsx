@@ -20,12 +20,13 @@ root.render(
       <AuthRouter />
       <RatingRouter />
     </BrowserRouter>
-    {/* <Provider store={Store}>
+
+    <Provider store={Store}>
       <BrowserRouter>
         <CustomerRouter />
         <SellerRouter />
       </BrowserRouter>
-    </Provider> */}
+    </Provider>
   </React.StrictMode>,
 )
 

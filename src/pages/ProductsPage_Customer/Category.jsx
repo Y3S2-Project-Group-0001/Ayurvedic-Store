@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import ProductList from '../products.json'
+import ProductCard from './ProductCard'
 
 const Label = styled.label`
   padding: 15px 15px 0px 55px;
@@ -39,11 +41,21 @@ const RadioButton = ({ label, value, checked, onChange }) => {
 }
 
 function Category() {
-  const [selectedValue, setSelectedValue] = useState('')
+  const [selectedValue, setSelectedValue] = useState(null)
 
   const handleRadioChange = event => {
+    //const filterProducts = event.target.value === selectedValue ? null : event.target.value;
+    //setSelectedValue(filterProducts);
+    //onCategoryChange(filterProducts);
     setSelectedValue(event.target.value)
   }
+
+  // const filteredProducts = selectedValue
+  //   ? ProductList.filter(product => product.category === selectedValue)
+  //   : ProductList
+
+  console.log(selectedValue)
+  //console.log(filteredProducts)
 
   return (
     <>

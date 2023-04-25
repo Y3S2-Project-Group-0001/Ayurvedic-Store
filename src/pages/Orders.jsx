@@ -214,7 +214,7 @@ function Orders() {
 
       <OrderListContainer>
         {filterdOrderList.map(order => (
-          <OrderContainer>
+          <OrderContainer key={order._id}>
             <OrderDetailsContainer>
               <OrderDetailContainer>
                 <BoldText>Order ID: </BoldText>
