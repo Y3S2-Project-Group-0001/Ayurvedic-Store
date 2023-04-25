@@ -8,8 +8,10 @@ export default function SellerRouter() {
   return (
     <Routes>
       <Route path="/addProduct" element={<AddProduct />} />
-      <Route path="/updateProduct/:id" element={<UpdateProductForm />} />
+
       <Route path="/allProductSeller" element={<ProductsPageSeller />} />
+
+      <Route path="/updateProduct/:id" element={<UpdateProductForm />} />
     </Routes>
   )
 }

@@ -1,137 +1,59 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { Storage, uploadFile } from '../../firebase'
-import { ref, uploadBytes } from 'firebase/storage'
-import { v4 } from 'uuid'
+import React, { useRef, useState } from 'react'
+import { uploadFile } from '../../firebase'
 
-const UploadImage = styled.div`
-  display: flex;
-  flex-direction: column;
-`
+export function FileUpload() {
+  const file_input_ref = useRef < HTMLInputElement > null
+  const [state, setState] = useState('Ready.')
 
-const ImagePreview = styled.img`
-  max-width: 100%;
-  margin-top: 1rem;
-`
+  const onSubmit = async (e: any) => {
+    e.preventDefault()
+    setState('Uploading...')
+    if (file_input_ref.current) {
+      // Get the file dom reference
+      let file_input = file_input_ref.current
 
-const UploadButton = styled.input.attrs({
-  type: 'file',
-  accept: 'image/*',
-})`
-  display: none;
-`
+      // Check if file is set
+      if (!file_input.files || file_input.files.length <= 0) {
+        setState("You don't have a file selected.")
+        return
+      }
+      // Get file object
+      let file = file_input.files[0]
+      console.log(file)
+      // Check the image size - 2MB for example
+      if (file.size > 2 * 1024 * 1024) {
+        setState(
+          'You exceed the max file size. ' +
+            'Consider learning IT' +
+            'So you can learn yourself how to code a image scaler. ' +
+            'Do it in C++ with web assembly, ' +
+            'So you can run it on a browser. ' +
+            'Now you can scale this image' +
+            'To fit the requirement. ' +
+            'If you figure it out, ' +
+            'Hatsune miku will personally come to your home and' +
+            'Give you a kiss. ',
+        )
+        return
+      }
 
-const UploadLabel = styled.label`
-  background-color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-block;
-  user-select: none;
-  width: 100px;
-
-  &:hover {
-    background-color: white;
-  }
-`
-
-const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
-`
-
-const UploadedImage = ({ src, onRemove }) => {
-  const handleRemove = () => {
-    onRemove(src)
-  }
-
-  return (
-    <div style={{ position: 'relative' }}>
-      <ImagePreview src={src} width="100px" height="100px" />
-      <RemoveButton onClick={handleRemove}>&times;</RemoveButton>
-    </div>
-  )
-}
-
-const RemoveButton = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 10px;
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  color: white;
-  font-size: 20px;
-  clip-path: circle(50% at 50% 50%);
-  background-color: red;
-
-  &:hover {
-    color: #990000;
-  }
-`
-
-const AddImgGroup = styled.div`
-  display: flex;
-  width: 500px;
-  justify-content: space-between;
-
-  @media only screen and (max-width: 1000px) {
-    width: 450px;
-  }
-`
-
-function ImageUpload() {
-  const [images, setImages] = useState([])
-  const [imageUpload, setImageUpload] = useState(null)
-
-  // const uploadImage = () => {
-  //   if(imageUpload == null) return;
-
-  //   const imageRef = ref(Storage, `products/${imageUpload.name + v4()}`);
-  //   uploadBytes(imageRef, imageUpload).then(() => {
-  //     alert("image uploaded");
-  //   });
-  // };
-
-  const handleImageUpload = event => {
-    const file = event.target.files[0]
-    const reader = new FileReader()
-    reader.onload = () => {
-      setImages([...images, reader.result])
+      // Finally upload it
+      try {
+        let [file_name, url] = await uploadFile(file)
+        setState(`Uploaded file with name ${file_name} and URL is ${url}`)
+      } catch (e) {
+        setState('Some error here. Did you set firebase .env s?')
+      }
     }
-    reader.readAsDataURL(file)
-  }
-
-  const handleRemoveImage = src => {
-    setImages(images.filter(imageSrc => imageSrc !== src))
   }
 
   return (
-    <UploadImage>
-      <AddImgGroup>
-        <UploadButton
-          id="image-upload"
-          onClick={uploadFile}
-          onChange={handleImageUpload}
-        />
-        <UploadLabel htmlFor="image-upload">
-          <img src="images/products/addImageBtn.png" alt="AddImage_Image" />
-          <UploadImage />
-        </UploadLabel>
-        <ul>
-          <li>Add at least one Image</li>
-          <li>All must be Image format</li>
-          <li>Max size per image is 2MB</li>
-        </ul>
-      </AddImgGroup>
-
-      <GridContainer>
-        {images.map(src => (
-          <UploadedImage key={src} src={src} onRemove={handleRemoveImage} />
-        ))}
-      </GridContainer>
-    </UploadImage>
+    <>
+      <form onSubmit={onSubmit}>
+        <input type="file" ref={file_input_ref} />
+        <button type="submit">Upload</button>
+      </form>
+      <div>{state}</div>
+    </>
   )
 }
-
-export default ImageUpload

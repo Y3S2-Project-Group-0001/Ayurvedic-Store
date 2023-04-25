@@ -3,8 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
 import Dropdown from '../AddProducts/DropDown'
-import ImageUpload from '../AddProducts/ImageUpload'
 import Heading from './Heading'
+import { FaAngleDown } from 'react-icons/fa'
 
 const Container = styled.div`
   height: 100%;
@@ -141,6 +141,7 @@ const ContainerHeader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 50px;
 `
 
 const TitleContent = styled.div`
@@ -164,10 +165,64 @@ const Shape = styled.div`
   left: 0;
   opacity: 66%;
 `
+const DropDownContainer = styled.div`
+  position: relative;
+  width: 500px;
+`
 
+const DropDownHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  width: 500px;
+  height: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  @media only screen and (max-width: 1000px) {
+    width: 450px;
+  }
+`
+
+const DropDownIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+`
+
+const DropDownListContainer = styled.div`
+  position: absolute;
+  top: 44px;
+  width: 500px;
+  z-index: 1;
+`
+
+const DropDownList = styled.ul`
+  width: 500px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+`
+
+const DropDownItem = styled.li`
+  padding: 8px 12px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+`
 function UpdateProductForm(props) {
-  const [priceV, setPrice] = useState('')
-  const [stockAmount, setStockAmount] = useState('')
+  //const [priceV, setPrice] = useState('')
+  //const [stockAmount, setStockAmount] = useState('')
 
   const [priceError, setPriceError] = useState('')
   const [stockAmountError, setStockAmountError] = useState('')
@@ -177,11 +232,12 @@ function UpdateProductForm(props) {
     description: '',
     category: '',
     price: '',
+    stockAmount: '',
   }
 
   const [state, setState] = useState(initialState)
 
-  const { itemName, description, category, price } = state
+  const { itemName, description, category, price, stockAmount } = state
 
   const history = useNavigate()
 
@@ -218,58 +274,52 @@ function UpdateProductForm(props) {
   /*
       validate price
   */
-  const validatePrice = e => {
-    const priceValue = e.target.value
+  // const validatePrice = e => {
+  //   const priceValue = e.target.value
 
-    if (priceValue < 0) {
-      setPriceError('Please enter a valid price')
-    } else {
-      setPriceError('')
-    }
-    setPrice(priceValue)
-  }
+  //   if (priceValue < 0) {
+  //     setPriceError('Please enter a valid price')
+  //   } else {
+  //     setPriceError('')
+  //   }
+  //   setPrice(priceValue)
+  // }
 
   /*
       validate stock amount
   */
-  const validateStockAmount = e => {
-    const stockAmountValue = e.target.value
+  // const validateStockAmount = e => {
+  //   const stockAmountValue = e.target.value
 
-    if (stockAmountValue < 0) {
-      setStockAmountError('Please enter a valid price')
-    } else {
-      setStockAmountError('')
-    }
-    setStockAmount(stockAmountValue)
-  }
+  //   if (stockAmountValue < 0) {
+  //     setStockAmountError('Please enter a valid price')
+  //   } else {
+  //     setStockAmountError('')
+  //   }
+  //   setStockAmount(stockAmountValue)
+  // }
 
-  //make upcoming dates invisible
-  const [maxDate, setMaxDate] = useState(getMaxDate())
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState(null)
 
-  function getMaxDate() {
-    const date = new Date()
-    date.setDate(date.getDate())
-    return date.toISOString().split('T')[0]
+  const toggle = () => setIsOpen(!isOpen)
+
+  const onOptionClicked = item => () => {
+    setSelectedItem(item)
+    setIsOpen(false)
   }
 
   return (
     <>
       <>
         <ContainerHeader>
-          <Shape />
-          <img
-            src="images/products/addProduct_Bg.png"
-            alt="AddProduct_Bg_Image"
-          />
           <TitleContent>
-            <Title>Update Product</Title>
+            <h1>Update Product</h1>
           </TitleContent>
         </ContainerHeader>
       </>
       <Container>
         <Form onSubmit={UpdateData}>
-          <Label> Add Images </Label>
-          <ImageUpload />
           <Label> Product Name </Label>
           <Input
             type="text"
@@ -286,10 +336,35 @@ function UpdateProductForm(props) {
             value={description || ''}
             onChange={handleInputChange}
           />
+          <Label> Category </Label>
+          <DropDownContainer>
+            <DropDownHeader value={category} onClick={toggle}>
+              {selectedItem ? selectedItem : 'Select an item'}
+              <DropDownIcon>
+                <FaAngleDown />
+              </DropDownIcon>
+            </DropDownHeader>
+            {isOpen && (
+              <DropDownListContainer>
+                <DropDownList>
+                  <DropDownItem onClick={onOptionClicked('Health Care')}>
+                    Health Care
+                  </DropDownItem>
+                  <DropDownItem onClick={onOptionClicked('Personal Care')}>
+                    Personal Care
+                  </DropDownItem>
+                  <DropDownItem onClick={onOptionClicked('Life Style')}>
+                    LifeStyle
+                  </DropDownItem>
+                  <DropDownItem onClick={onOptionClicked('Herbal Food')}>
+                    Herbal Food
+                  </DropDownItem>
+                </DropDownList>
+              </DropDownListContainer>
+            )}
+          </DropDownContainer>
           <FormGroup>
             <LeftForm>
-              <Label> M.F.D </Label>
-              <LeftFormInput type="date" max={maxDate} />
               <Label> Price (Rs.) </Label>
               <LeftFormInput
                 id="price"
@@ -301,14 +376,12 @@ function UpdateProductForm(props) {
               {priceError && <ErrorMessage>{priceError}</ErrorMessage>}
             </LeftForm>
             <RightForm>
-              <Label> Category </Label>
-              <Dropdown />
               <Label> Stock Amount (Rs.) </Label>
               <RightFormInput
                 id="stockAmount"
                 type="number"
                 value={stockAmount}
-                onChange={validateStockAmount}
+                onChange={handleInputChange}
                 error={stockAmountError}
               />
               {stockAmountError && (

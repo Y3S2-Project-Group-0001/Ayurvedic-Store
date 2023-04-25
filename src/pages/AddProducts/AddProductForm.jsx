@@ -5,6 +5,7 @@ import Dropdown from './DropDown'
 import { FaAngleDown } from 'react-icons/fa'
 import ImageUpload from './ImageUpload'
 import axios from 'axios'
+import { FileUpload } from '../examples/file-upload'
 // import { Storage, uploadFile } from '../../firebase'
 // import { ref, uploadBytes } from 'firebase/storage'
 
@@ -267,6 +268,7 @@ function AddProducts() {
   const [category, setCategory] = useState('')
   const [price, setPrice] = useState('')
   const [stockAmount, setStockAmount] = useState('')
+  //const [image, setImage] = useState(null)
 
   const history = useNavigate()
 
@@ -279,6 +281,7 @@ function AddProducts() {
       category: selectedItem,
       price,
       stockAmount,
+      //image,
     }
 
     axios
@@ -292,78 +295,22 @@ function AddProducts() {
       })
   }
 
-  const [priceError, setPriceError] = useState('')
-  const [stockAmountError, setStockAmountError] = useState('')
-
-  const [images, setImages] = useState([])
-  const [imageUpload, setImageUpload] = useState(null)
-
-  const handleImageUpload = event => {
-    const file = event.target.files[0]
-    const reader = new FileReader()
-    reader.onload = () => {
-      setImages([...images, reader.result])
-    }
-    reader.readAsDataURL(file)
-  }
-
-  const handleRemoveImage = src => {
-    setImages(images.filter(imageSrc => imageSrc !== src))
-  }
-
-  /*
-      validate price
-  */
-  const validatePrice = e => {
-    const priceValue = e.target.value
-
-    if (priceValue < 0) {
-      setPriceError('Please enter a valid price')
-    } else {
-      setPriceError('')
-    }
-    setPrice(priceValue)
-  }
-
-  /*
-      validate stock amount
-  */
-  const validateStockAmount = e => {
-    const stockAmountValue = e.target.value
-
-    if (stockAmountValue < 0) {
-      setStockAmountError('Please enter a valid price')
-    } else {
-      setStockAmountError('')
-    }
-    setStockAmount(stockAmountValue)
-  }
-
-  //make upcoming dates invisible
-  const [maxDate, setMaxDate] = useState(getMaxDate())
-
-  function getMaxDate() {
-    const date = new Date()
-    date.setDate(date.getDate())
-    return date.toISOString().split('T')[0]
-  }
-
   const [isOpen, setIsOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
 
   const toggle = () => setIsOpen(!isOpen)
 
   const onOptionClicked = item => () => {
-    const i = setSelectedItem(item)
+    setSelectedItem(item)
     setIsOpen(false)
-    console.log('i')
   }
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form as="form" onSubmit={handleSubmit} encType="multipart/form-data">
         <Label> Add Images </Label>
-        <ImageUpload />
+        <FileUpload />
+
         <Label> Product Name </Label>
         <Input
           type="text"

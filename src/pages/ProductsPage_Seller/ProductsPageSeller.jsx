@@ -1,12 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import Category from '../ProductsPage_Customer/Category'
-import PriceRange from '../ProductsPage_Customer/PriceRange'
-import ProductsDisplay from './ProductsDisplaySeller'
 import { BsSearch } from 'react-icons/bs'
-import RatingsRange from '../ProductsPage_Customer/RatingsRange'
-import SearchBar from '../ProductsPage_Customer/SearchBar'
 
 const MainContainer = styled.div`
   display: flex;
@@ -89,6 +85,64 @@ const SearchIcon = styled.button`
   border-radius: 50%;
   cursor: pointer;
 `
+const ButtonAdd = styled.button`
+  background-color: ${props => (props.cancel ? '#767676' : '#729b0e')};
+  color: white;
+  padding: 11px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 2.5px;
+  cursor: pointer;
+  font-size: ${props => (props.update ? '13px' : '15px')};
+  width: 200px;
+  margin-left: 950px;
+
+  @media only screen and (max-width: 1500px) {
+    margin-left: 50px;
+  }
+`
+const CardContainer = styled.div`
+  padding: 15px 15px 0 15px;
+  -webkit-box-shadow: 0px 0px 17px -11px rgba(0, 0, 0, 0.58);
+  box-shadow: 0px 0px 17px -11px rgba(0, 0, 0, 0.58);
+  background-color: white;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+`
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  grid-gap: 20px; /* spacing between grid items */
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`
+
+const ButtonGroup = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: #ffffff;
+  padding-bottom: 10px;
+`
+
+const Image = styled.img`
+  padding-bottom: 10px;
+  width: 240px;
+`
+
+const Title = styled.label`
+  padding: 0px;
+  justify-content: center;
+  font-weight: 700;
+`
+
+const Price = styled.label`
+  color: white;
+`
 const Button = styled.button`
   background-color: ${props => (props.cancel ? '#767676' : '#729b0e')};
   color: white;
@@ -98,19 +152,50 @@ const Button = styled.button`
   border-radius: 2.5px;
   cursor: pointer;
   font-size: ${props => (props.update ? '13px' : '15px')};
-  width: 200px;
-
-  margin-left: 950px;
+  width: 300px;
+`
+const Shape = styled.div`
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
+  background-color: #3d5631;
+  opacity: 100%;
+  padding: 10px 20px;
+  margin-top: 40px;
 `
 
 function ProductsPage() {
   const [ProductList, setProductList] = useState([])
 
+  const data = async () => {
+    const response = await axios.post(
+      'http://localhost:3004/api/item/getAllItems',
+    )
+    setProductList(response.data)
+    console.log(data)
+  }
+
+  useEffect(() => {
+    data()
+  }, [])
+
+  /*
+      filter products by buttons
+  */
+
+  const [filterItems, setFilterItems] = useState(ProductList)
+
+  const filterResult = cateItem => {
+    const result = ProductList.filter(currentData => {
+      return currentData.category === cateItem
+    })
+    setFilterItems(result)
+    console.log(result)
+  }
+
   /*
     function search
   */
   const [query, setQuery] = useState(null)
-  const [product, setProducts] = useState(ProductList)
+  // const [product, setProducts] = useState(ProductList)
 
   const handleInputChange = event => {
     setQuery(event.target.value)
@@ -119,12 +204,12 @@ function ProductsPage() {
   const handleSearch = () => {
     if (query) {
       const filteredProducts = ProductList.filter(product => {
-        return product.name.toLowerCase().includes(query.toLowerCase())
+        return product.itemName.toLowerCase().includes(query.toLowerCase())
       })
-      setProducts(filteredProducts)
+      setProductList(filteredProducts)
       console.log(filteredProducts)
     } else {
-      setProducts(ProductList)
+      setProductList(ProductList)
     }
   }
 
@@ -139,13 +224,42 @@ function ProductsPage() {
         </div>
       </HorizontalContainer>
       <VerticalContainer>
-        <LeftContainer></LeftContainer>
+        <LeftContainer>
+          <>
+            <hr />
+            <Button>All</Button>
+            <Button as="button" onClick={() => filterResult('health care')}>
+              Health Care
+            </Button>
+            <Button>Personal Care</Button>
+            <Button>LifeStyle</Button>
+            <Button>Herbal Food</Button>
+          </>
+        </LeftContainer>
         <RightContainer>
           <Link to="/addProduct">
-            <Button>Add Item</Button>
+            <ButtonAdd>Add Item</ButtonAdd>
           </Link>
+          <GridContainer>
+            <>
+              {ProductList.map(pro => (
+                <CardContainer>
+                  <ButtonGroup>
+                    <Image
+                      src="images/products/product.png"
+                      alt="Product_Image"
+                    />
 
-          <ProductsDisplay />
+                    <Title>{pro.itemName}</Title>
+                  </ButtonGroup>
+                  <Title>{pro.description}</Title>
+                  <Shape>
+                    <Price>LKR {pro.price}.00</Price>
+                  </Shape>
+                </CardContainer>
+              ))}
+            </>
+          </GridContainer>
         </RightContainer>
       </VerticalContainer>
     </MainContainer>

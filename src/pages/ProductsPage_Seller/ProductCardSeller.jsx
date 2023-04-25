@@ -5,6 +5,7 @@ import { FaTrashAlt } from 'react-icons/fa'
 import { FaRegEdit } from 'react-icons/fa'
 import RatingDisplay from '../ProductsPage_Customer/RatingDisplay'
 import { Link } from 'react-router-dom'
+import { Buffer } from 'buffers'
 
 const Container = styled.div`
   padding: 15px 15px 0 15px;

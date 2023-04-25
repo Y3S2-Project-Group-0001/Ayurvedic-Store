@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-//import ProductList from '../products.json'
-import ProductCard from './ProductCard'
 import { BsSearch } from 'react-icons/bs'
 import axios from 'axios'
 
@@ -45,28 +43,7 @@ const LeftContainer = styled.div`
 const RightContainer = styled.div`
   flex: 9;
 `
-const Label = styled.label`
-  padding: 15px 15px 0px 55px;
-  justify-content: center;
-  font-weight: 700;
-`
 
-const RadioGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 15px;
-  color: gray;
-  padding: 10px 20px 20px 30px;
-`
-const RadioLabel = styled.label`
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-`
-
-const RadioInput = styled.input`
-  margin-right: 8px;
-`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 columns */
@@ -74,63 +51,6 @@ const GridContainer = styled.div`
   @media only screen and (max-width: 1000px) {
     grid-template-columns: repeat(1, 1fr);
   }
-`
-
-const RadioButton = ({ label, value, checked, onChange }) => {
-  return (
-    <RadioLabel>
-      <RadioInput
-        type="radio"
-        value={value}
-        checked={checked}
-        onChange={onChange}
-      />
-      {label}
-    </RadioLabel>
-  )
-}
-
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100px;
-`
-
-const Stars = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-`
-
-const Star = styled.button`
-  font-size: 2rem;
-  color: ${({ selected }) => (selected ? '#ffc700' : '#A9A9A9')};
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-`
-
-const ItemsList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`
-
-const Item = styled.li`
-  margin-bottom: 0.5rem;
-`
-
-const RangeInput = styled.input`
-  width: 250px;
-  padding: 20px 5px;
-`
-
-const FilteredItems = styled.div`
-  margin-top: 20px;
 `
 
 const SearchBarInput = styled.input`
@@ -175,57 +95,93 @@ const SearchIcon = styled.button`
   border-radius: 50%;
   cursor: pointer;
 `
+const ButtonGroup = styled.button`
+  cursor: pointer;
+  border: none;
+  background-color: #ffffff;
+  padding-bottom: 10px;
+`
+
+const Image = styled.img`
+  padding-bottom: 10px;
+  width: 240px;
+`
+
+const Title = styled.label`
+  padding: 0px;
+  justify-content: center;
+  font-weight: 700;
+`
+
+const Price = styled.label`
+  color: white;
+`
+const Shape = styled.div`
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
+  background-color: #3d5631;
+  opacity: 100%;
+  padding: 10px 20px;
+  margin-top: 40px;
+`
+const CardContainer = styled.div`
+  padding: 15px 15px 0 15px;
+  -webkit-box-shadow: 0px 0px 17px -11px rgba(0, 0, 0, 0.58);
+  box-shadow: 0px 0px 17px -11px rgba(0, 0, 0, 0.58);
+  background-color: white;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+`
+
+const Button = styled.button`
+  background-color: ${props => (props.cancel ? '#767676' : '#729b0e')};
+  color: white;
+  padding: 11px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 2.5px;
+  cursor: pointer;
+  font-size: ${props => (props.update ? '13px' : '15px')};
+  width: 300px;
+`
 
 function ProductsPage() {
   const [ProductList, setProductList] = useState([])
 
-  //read stock --> productList
-  // const data = async () => {
-  //   const response = await axios.post(
-  //     'http://localhost:3004/api/item/getAllItems',
-  //   )
-  //   setProductList(response.data)
-  //   console.log(data);
-  // }
-
-  // useEffect(() => {
-  //   data();
-  // })
-  /*
-      filter products by radio buttons
-  */
-
-  const [selectedValue, setSelectedValue] = useState(null)
-
-  const handleRadioChange = event => {
-    setSelectedValue(event.target.value)
+  const data = async () => {
+    const response = await axios.post(
+      'http://localhost:3004/api/item/getAllItems',
+    )
+    setProductList(response.data)
+    console.log(data)
   }
 
-  const filteredProductsRadio = selectedValue
-    ? ProductList.filter(product => product.category === selectedValue)
-    : ProductList
+  useEffect(() => {
+    data()
+  }, [])
 
-  console.log(filteredProductsRadio)
   /*
-      filter products by rating stars
+      filter products by buttons
   */
-  const [selectedStars, setSelectedStars] = useState(0)
 
-  const handleStarClick = index => {
-    setSelectedStars(index + 1)
+  const [filterItems, setFilterItems] = useState(ProductList)
+
+  const filterResult = cateItem => {
+    const result = ProductList.filter(currentData => {
+      return currentData.category === cateItem
+    })
+    setFilterItems(result)
+    console.log(result)
   }
-
-  const filterProductsStars = filteredProductsRadio.filter(
-    item => item.rating === selectedStars,
-  )
-
-  console.log(filterProductsStars)
 
   /*
     function search
   */
   const [query, setQuery] = useState(null)
-  const [product, setProducts] = useState(ProductList)
+  // const [product, setProducts] = useState(ProductList)
 
   const handleInputChange = event => {
     setQuery(event.target.value)
@@ -234,12 +190,12 @@ function ProductsPage() {
   const handleSearch = () => {
     if (query) {
       const filteredProducts = ProductList.filter(product => {
-        return product.name.toLowerCase().includes(query.toLowerCase())
+        return product.itemName.toLowerCase().includes(query.toLowerCase())
       })
-      setProducts(filteredProducts)
+      setProductList(filteredProducts)
       console.log(filteredProducts)
     } else {
-      setProducts(ProductList)
+      setProductList(ProductList)
     }
   }
 
@@ -256,55 +212,36 @@ function ProductsPage() {
       <VerticalContainer>
         <LeftContainer>
           <>
-            <Label> Category </Label>
-            <RadioGroup>
-              <RadioButton
-                label="HEALTH CARE"
-                value="healthCare"
-                checked={selectedValue === 'healthCare'}
-                onChange={handleRadioChange}
-              />
-              <RadioButton
-                label="PERSONAL CARE"
-                value="personalCare"
-                checked={selectedValue === 'personalCare'}
-                onChange={handleRadioChange}
-              />
-              <RadioButton
-                label="LIFESTYLE"
-                value="lifeStyle"
-                checked={selectedValue === 'lifeStyle'}
-                onChange={handleRadioChange}
-              />
-              <RadioButton
-                label="HERBAL FOOD"
-                value="herbalFood"
-                checked={selectedValue === 'herbalFood'}
-                onChange={handleRadioChange}
-              />
-            </RadioGroup>
-          </>
-          <hr />
-          <>
-            <Label> Ratings </Label>
-            <Container>
-              <Stars>
-                {[...Array(5)].map((_, index) => (
-                  <Star
-                    key={index}
-                    selected={index < selectedStars}
-                    onClick={() => handleStarClick(index)}
-                  >
-                    &#9733;
-                  </Star>
-                ))}
-              </Stars>
-            </Container>
+            <hr />
+            <Button>All</Button>
+            <Button as="button" onClick={() => filterResult('health care')}>
+              Health Care
+            </Button>
+            <Button>Personal Care</Button>
+            <Button>LifeStyle</Button>
+            <Button>Herbal Food</Button>
           </>
         </LeftContainer>
         <RightContainer>
           <GridContainer>
-            <ProductCard products={filteredProductsRadio} />
+            <>
+              {ProductList.map(pro => (
+                <CardContainer>
+                  <ButtonGroup>
+                    <Image
+                      src="images/products/product.png"
+                      alt="Product_Image"
+                    />
+
+                    <Title>{pro.itemName}</Title>
+                  </ButtonGroup>
+                  <Title>{pro.description}</Title>
+                  <Shape>
+                    <Price>LKR {pro.price}.00</Price>
+                  </Shape>
+                </CardContainer>
+              ))}
+            </>
           </GridContainer>
         </RightContainer>
       </VerticalContainer>
