@@ -5,6 +5,7 @@ import SaveLocationBox from './SaveLocationBox'
 
 const Smallbox = styled(Container)`
   background-color: #cfd7bc;
+  background-color: ${props => props.select};
   padding: 16px;
   margin: 20px;
   height: 100px;
@@ -17,9 +18,12 @@ const Smallbox = styled(Container)`
   }
 `
 
-function DeliveryMiniBox({ name }) {
+function DeliveryMiniBox({ name, setSelected }) {
+  function selected() {
+    setSelected(name)
+  }
   return (
-    <Smallbox>
+    <Smallbox onClick={selected}>
       <link
         href="https://fonts.googleapis.com/css?family=Quicksand"
         rel="stylesheet"
