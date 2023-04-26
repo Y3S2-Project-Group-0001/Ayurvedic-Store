@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEffect } from 'react'
+const axios = require('axios')
 
 const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -38,21 +39,41 @@ const ModalButton = styled.button`
   cursor: pointer;
 `
 
-const ModifyAddressModel = ({ setOnCloseA }) => {
-  const [title, setTitle] = useState(null)
-  const [address, setAddress] = useState(null)
-  const [country, setCountry] = useState(null)
+const UpdateModel = ({ setUpdateModel, Title, Address, AID, CID, Country }) => {
+  const [title, setTitle] = useState(Title)
+  const [address, setAddress] = useState(Address)
+  const [country, setCountry] = useState(Country)
 
   function closer(e) {
     e.preventDefault()
-    setOnCloseA(false)
+    setUpdateModel(false)
   }
 
   function adder(e) {
     e.preventDefault()
-    //add data do somethoing
-    console.log(title, address, country)
-    setOnCloseA(false)
+    setUpdateModel(false)
+  }
+
+  const updateAddress = async () => {
+    const array = {
+      _id: AID,
+      Title: title,
+      Address: address,
+      country: country,
+    }
+    const data = {
+      CID: CID,
+      Addresses: array,
+    }
+    try {
+      const response = await axios.put(
+        'http://localhost:8000/delivery/api/updateAddress',
+        data,
+      )
+      return response.data
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -64,6 +85,7 @@ const ModifyAddressModel = ({ setOnCloseA }) => {
             Title:
             <ModalInput
               type="text"
+              value={title}
               onChange={event => setTitle(event.target.value)}
             />
           </label>
@@ -71,6 +93,7 @@ const ModifyAddressModel = ({ setOnCloseA }) => {
             Address:
             <ModalInput
               type="text"
+              value={address}
               onChange={event => setAddress(event.target.value)}
             />
           </label>
@@ -78,13 +101,14 @@ const ModifyAddressModel = ({ setOnCloseA }) => {
             Country:
             <ModalInput
               type="text"
+              value={country}
               onChange={event => setCountry(event.target.value)}
             />
           </label>
           <ModalButton c="gray" onClick={closer}>
             Close
           </ModalButton>
-          <ModalButton c="#729b0e" onClick={adder}>
+          <ModalButton c="#729b0e" onClick={updateAddress}>
             Update
           </ModalButton>
         </form>
@@ -93,4 +117,4 @@ const ModifyAddressModel = ({ setOnCloseA }) => {
   )
 }
 
-export default ModifyAddressModel
+export default UpdateModel

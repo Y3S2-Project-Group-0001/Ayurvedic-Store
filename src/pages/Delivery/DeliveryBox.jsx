@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Container from '../../common/Container'
-import SaveLocationBox from './SaveLocationBox'
 
 const Smallbox = styled(Container)`
   background-color: #cfd7bc;
@@ -18,7 +17,7 @@ const Smallbox = styled(Container)`
   }
 `
 
-function DeliveryMiniBox({ name, setSelected }) {
+function DeliveryBox({ name, setSelected }) {
   function selected() {
     setSelected(name)
   }
@@ -33,4 +32,4 @@ function DeliveryMiniBox({ name, setSelected }) {
   )
 }
 
-export default DeliveryMiniBox
+export default DeliveryBox

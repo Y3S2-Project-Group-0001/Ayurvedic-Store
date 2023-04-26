@@ -10,10 +10,13 @@ import DashboardLayout from '../pages/DashboardLayout'
 import OrderHistory from '../pages/OrderHistory'
 // import CustomerDashBoard from "../pages/customer-dashboard/dashboard";
 // import ShoppingCart from '../pages/ShoppingCart copy'
-import DeliveryPayment from '../pages/Delivery&Payment/Delivery&Payment'
+
 import ProductsPage from '../pages/ProductsPage_Customer/ProductsPage'
 import ViewOrderCustomer from '../pages/ViewOrderCustomer/ViewOrderCustomer'
+
+import Delivery from '../pages/Delivery/Delivery'
 import SingleProduct from '../pages/ProductsPage_Customer/SingleProduct'
+
 
 export default function CustomerRouter() {
   return (
@@ -21,11 +24,15 @@ export default function CustomerRouter() {
       <Route path="/" element={<Home />}></Route>
       <Route path="/example/file-upload" element={<FileUpload />} />
 
+
+      <Route path="/TestingPage" element={<PaymentSelect />} />
+
+      <Route path="/TestingPage2" element={<Delivery />} />
+
       {/* <Route path="/TestingPage" element={<PaymentSelect />} /> */}
 
       <Route path="/singleProduct/:_id" element={<SingleProduct />} />
 
-      <Route path="/TestingPage" element={<DeliveryPayment />} />
       <Route path="/allProductsCustomer" element={<ProductsPage />} />
       <Route path="/customer" element={<MainLayout />}>
         <Route path="/customer/shoppingCart" element={<ShoppingCart />}></Route>
