@@ -220,6 +220,12 @@ const DropDownItem = styled.li`
     background-color: #f2f2f2;
   }
 `
+
+/*
+  update the selected product
+    get an item and store the values in relevant column 
+      and update the values as user entered
+*/
 function UpdateProductForm(props) {
   //const [priceV, setPrice] = useState('')
   //const [stockAmount, setStockAmount] = useState('')
@@ -242,19 +248,28 @@ function UpdateProductForm(props) {
   const history = useNavigate()
 
   //update
-  const { id } = useParams()
+
+  const { _id } = useParams()
+
+  //get one item
+  const data = async () => {
+    const response = await axios.post(
+      `http://localhost:8000/api/item/getOneItem/${_id}`,
+    )
+    setState([response.data])
+    console.log([response.data])
+  }
 
   useEffect(() => {
-    axios
-      .post(`http://localhost:3004/api/item/getOneItem/${id}`)
-      .then(res => setState({ ...res.data[0] }))
-  }, [id])
+    data()
+  }, [])
 
   const handleInputChange = e => {
     const { name, value } = e.target
     setState({ ...state, [name]: value })
   }
 
+  //update data
   const UpdateData = async e => {
     e.preventDefault()
 
@@ -265,7 +280,8 @@ function UpdateProductForm(props) {
       price: price,
     }
 
-    await axios.post(`http://localhost:3004/api/item/updateItem/${id}`, data)
+    //update the item
+    await axios.post(`http://localhost:8000/api/item/updateItem/${_id}`, data)
 
     alert('Product updated successfully..')
     history('/allProductSeller')
@@ -299,6 +315,7 @@ function UpdateProductForm(props) {
   //   setStockAmount(stockAmountValue)
   // }
 
+  //drop down menu functions
   const [isOpen, setIsOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
 
@@ -369,7 +386,7 @@ function UpdateProductForm(props) {
               <LeftFormInput
                 id="price"
                 type="number"
-                value={price || ''}
+                value={price}
                 onChange={handleInputChange}
                 error={priceError}
               />

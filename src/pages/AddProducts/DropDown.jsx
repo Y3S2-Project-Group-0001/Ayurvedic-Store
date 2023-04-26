@@ -65,9 +65,8 @@ function DropDown() {
   const toggle = () => setIsOpen(!isOpen)
 
   const onOptionClicked = item => () => {
-    const i = setSelectedItem(item)
+    setSelectedItem(item)
     setIsOpen(false)
-    console.log('i')
   }
 
   return (

@@ -188,13 +188,20 @@ const ButtonIcon = styled.button`
   color: white;
   margin-top: 45px;
 `
+/*
+  This component displays all the products(Seller View)
+    Search function is available
+    Delete function is available 
+    Navigate to the update page
+*/
 
 function ProductsPage() {
   const [ProductList, setProductList] = useState([])
 
+  //get all the items
   const data = async () => {
     const response = await axios.post(
-      'http://localhost:3004/api/item/getAllItems',
+      'http://localhost:8003/api/item/getAllItems',
     )
     setProductList(response.data)
     console.log(data)
@@ -208,16 +215,17 @@ function ProductsPage() {
     window.parent.location = window.parent.location.href
   }
 
-  const deleteItem = id => {
+  //delete the item
+  //identify the item by id
+  const deleteItem = _id => {
     alert('The item will delete permermenantly')
-    axios.post(`http://localhost:3004/api/item/deleteItem/${id}`)
+    axios.post(`http://localhost:8000/api/item/deleteItem/${_id}`)
     refresh()
   }
 
   /*
       filter products by buttons
   */
-
   const [filterItems, setFilterItems] = useState(ProductList)
 
   const filterResult = cateItem => {

@@ -276,6 +276,7 @@ function AddProducts() {
   const history = useNavigate()
 
   function handleSubmit(e) {
+    //Upload images
     e.preventDefault()
 
     setState('Uploading...')
@@ -321,10 +322,12 @@ function AddProducts() {
             image: res,
           }
 
+          //add new product
+          //display all the products after adding the new item
           axios
-            .post('http://localhost:3004/api/item/addItem', newItem)
+            .post('http://localhost:8000/api/item/addItem', newItem)
             .then(() => {
-              alert('Item added')
+              alert('Item added Successfully')
               history('/allProductSeller')
             })
             .catch(err => {
@@ -337,6 +340,7 @@ function AddProducts() {
     }
   }
 
+  //drop down menu functions
   const [isOpen, setIsOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
 
@@ -347,6 +351,7 @@ function AddProducts() {
     setIsOpen(false)
   }
 
+  //form --> addProduct
   return (
     <Container>
       <Form as="form" onSubmit={handleSubmit} encType="multipart/form-data">
