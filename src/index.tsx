@@ -14,17 +14,12 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <CustomerRouter />
-      <SellerRouter />
-      <AuthRouter />
-      <RatingRouter />
-    </BrowserRouter>
-
     <Provider store={Store}>
       <BrowserRouter>
         <CustomerRouter />
         <SellerRouter />
+        <AuthRouter />
+        <RatingRouter />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
