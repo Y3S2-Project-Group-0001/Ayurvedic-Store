@@ -6,6 +6,7 @@ import Button from '../../common/Button'
 import axios from 'axios'
 import { useEffect } from 'react'
 import PaymentSuccessModal from './Success'
+import StripContainer from './StripeContainer'
 
 const InText = styled(Container)`
   font-family: 'Quicksand';
@@ -185,7 +186,8 @@ export default function Cards() {
           ))}
         </Container>
 
-        <Container
+        <StripContainer></StripContainer>
+        {/* <Container
           bgColor="#ebd7c0"
           borderR="10px"
           pl="50px"
@@ -255,7 +257,7 @@ export default function Cards() {
               Add Card
             </Buttons>
           </Container>
-        </Container>
+        </Container> */}
         {successModel && (
           <PaymentSuccessModal
             successModel={setSuccessModel}
