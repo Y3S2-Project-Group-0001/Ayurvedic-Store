@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { BsSearch } from 'react-icons/bs'
 import axios from 'axios'
+import { cartActions } from '../../Store/cart-slice'
+import { useDispatch } from 'react-redux'
 
 const MainContainer = styled.div`
   display: flex;
@@ -150,13 +152,14 @@ const Button = styled.button`
 
 function ProductsPage() {
   const [ProductList, setProductList] = useState([])
+  const dispatch = useDispatch()
 
   const data = async () => {
     const response = await axios.post(
       'http://localhost:3004/api/item/getAllItems',
     )
     setProductList(response.data)
-    console.log(data)
+    console.log(response.data)
   }
 
   useEffect(() => {
@@ -198,6 +201,14 @@ function ProductsPage() {
       setProductList(ProductList)
     }
   }
+  function addProductHandler(id, price) {
+    dispatch(
+      cartActions.addItem({
+        id: id,
+        price: price,
+      }),
+    )
+  }
 
   return (
     <MainContainer>
@@ -234,7 +245,11 @@ function ProductsPage() {
                   </ButtonGroup>
                   <Title>{pro.description}</Title>
                   <Shape>
-                    <Price>LKR {pro.price}.00</Price>
+                    <Price
+                      onClick={() => addProductHandler(pro._id, pro.price)}
+                    >
+                      LKR {pro.price}.00
+                    </Price>
                   </Shape>
                 </CardContainer>
               ))}
