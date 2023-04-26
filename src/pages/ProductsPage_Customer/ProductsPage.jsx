@@ -155,9 +155,10 @@ function ProductsPage() {
   const [ProductList, setProductList] = useState([])
   const dispatch = useDispatch()
 
+  //get all products
   const data = async () => {
     const response = await axios.post(
-      'http://localhost:3004/api/item/getAllItems',
+      'http://localhost:8000/api/item/getAllItems',
     )
     setProductList(response.data)
     console.log(response.data)
@@ -170,7 +171,6 @@ function ProductsPage() {
   /*
       filter products by buttons
   */
-
   const [filterItems, setFilterItems] = useState(ProductList)
 
   const filterResult = cateItem => {
