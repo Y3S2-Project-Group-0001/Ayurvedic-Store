@@ -17,12 +17,7 @@ export default function SellerRouter() {
 
       <Route path="/allProductSeller" element={<ProductsPageSeller />} />
 
-
       <Route path="/updateProduct/:_id" element={<UpdateProductForm />} />
-
-      
-
-      <Route path="/updateProduct" element={<UpdateProduct />} />
 
       <Route path="/allProductSeller" element={<ProductsPageSeller />} />
 

@@ -95,7 +95,7 @@ function SingleProduct() {
 
   const data = async () => {
     const response = await axios.post(
-      `http://localhost:3004/api/item/getOneItem/${_id}`,
+      `http://localhost:8000/api/item/getOneItem/${_id}`,
     )
     setProductList([response.data])
     console.log([response.data])
