@@ -254,7 +254,7 @@ function UpdateProductForm(props) {
   //get one item
   const data = async () => {
     const response = await axios.post(
-      `http://localhost:8000/api/item/getOneItem/${_id}`,
+      `http://localhost:8000/item/api/item/getOneItem/${_id}`,
     )
     setState([response.data])
     console.log([response.data])
@@ -281,7 +281,10 @@ function UpdateProductForm(props) {
     }
 
     //update the item
-    await axios.post(`http://localhost:8000/api/item/updateItem/${_id}`, data)
+    await axios.post(
+      `http://localhost:8000/item/api/item/updateItem/${_id}`,
+      data,
+    )
 
     alert('Product updated successfully..')
     history('/allProductSeller')

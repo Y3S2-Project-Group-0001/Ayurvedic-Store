@@ -158,7 +158,7 @@ function ProductsPage() {
   //get all products
   const data = async () => {
     const response = await axios.post(
-      'http://localhost:8000/api/item/getAllItems',
+      'http://localhost:8000/item/api/item/getAllItems',
     )
     setProductList(response.data)
     console.log(response.data)
