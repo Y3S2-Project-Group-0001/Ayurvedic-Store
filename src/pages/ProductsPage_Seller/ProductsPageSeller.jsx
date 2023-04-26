@@ -201,7 +201,7 @@ function ProductsPage() {
   //get all the items
   const data = async () => {
     const response = await axios.post(
-      'http://localhost:8003/api/item/getAllItems',
+      'http://localhost:8000/item/api/item/getAllItems',
     )
     setProductList(response.data)
     console.log(data)
@@ -219,7 +219,7 @@ function ProductsPage() {
   //identify the item by id
   const deleteItem = _id => {
     alert('The item will delete permermenantly')
-    axios.post(`http://localhost:8000/api/item/deleteItem/${_id}`)
+    axios.post(`http://localhost:8000/item/api/item/deleteItem/${_id}`)
     refresh()
   }
 

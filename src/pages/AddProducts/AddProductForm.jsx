@@ -325,7 +325,7 @@ function AddProducts() {
           //add new product
           //display all the products after adding the new item
           axios
-            .post('http://localhost:8000/api/item/addItem', newItem)
+            .post('http://localhost:8000/item/api/item/addItem', newItem)
             .then(() => {
               alert('Item added Successfully')
               history('/allProductSeller')
