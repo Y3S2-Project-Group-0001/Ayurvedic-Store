@@ -17,15 +17,13 @@ import ViewOrderCustomer from '../pages/ViewOrderCustomer/ViewOrderCustomer'
 import Delivery from '../pages/Delivery/Delivery'
 import SingleProduct from '../pages/ProductsPage_Customer/SingleProduct'
 
-
 export default function CustomerRouter() {
   return (
     <Routes>
       <Route path="/" element={<Home />}></Route>
       <Route path="/example/file-upload" element={<FileUpload />} />
 
-
-      <Route path="/TestingPage" element={<PaymentSelect />} />
+      <Route path="/payment" element={<PaymentSelect />} />
 
       <Route path="/TestingPage2" element={<Delivery />} />
 
