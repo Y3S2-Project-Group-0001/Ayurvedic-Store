@@ -78,29 +78,27 @@ function Products({ product: productOuter }) {
   const dispatch = useDispatch()
   const [product, setProduct] = React.useState({ ...productOuter })
   const [isLoading, setIsLoading] = React.useState(true)
+  const _id = productOuter.productId
 
   useEffect(() => {
     // fetch product by id
     setIsLoading(true)
-    fetch(
-      `http://localhost:3004/api/item/getOneItem/id:${productOuter.productId}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: productOuter.productId }),
+    fetch(`http://localhost:3004/api/item/getOneItem/${_id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    )
+      body: JSON.stringify({}),
+    })
       .then(res => res.json())
       .then(data => {
-        console.log('data', data.item)
-        setProduct({ ...productOuter, ...data.item })
+        console.log('data', data)
+        setProduct({ ...productOuter, ...data })
       })
       .finally(() => {
         setIsLoading(false)
       })
-  }, [productOuter.productId])
+  }, [_id, productOuter])
 
   // TODO: add prodct fetch function and only get product id and quantity from props
 
