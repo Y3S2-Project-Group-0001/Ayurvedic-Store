@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { FaStar } from 'react-icons/fa'
 import { FaStarHalf } from 'react-icons/fa'
 import { FaRegStar } from 'react-icons/fa'
+import ProductList from '../products.json'
 
 const StarContainer = styled.div`
   display: inline-block;
@@ -14,7 +15,7 @@ const StarContainer = styled.div`
   width: 200px;
 `
 
-function RatingDisplay({ rating }) {
+function RatingDisplay(rating) {
   rating = 2.5
   const numStars = 5
   const filledStars = Math.floor(rating)
