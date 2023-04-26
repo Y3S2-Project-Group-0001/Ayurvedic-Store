@@ -28,11 +28,16 @@ export default function CustomerRouter() {
       <Route path="/TestingPage2" element={<Delivery />} />
 
       {/* <Route path="/TestingPage" element={<PaymentSelect />} /> */}
+      {/* <Route path="/TestingPage" element={<DeliveryPayment />} /> */}
 
       <Route path="/singleProduct/:_id" element={<SingleProduct />} />
 
       <Route path="/allProductsCustomer" element={<ProductsPage />} />
       <Route path="/customer" element={<MainLayout />}>
+        <Route
+          path="/customer/allProductsCustomer"
+          element={<ProductsPage />}
+        />
         <Route path="/customer/shoppingCart" element={<ShoppingCart />}></Route>
         <Route path="/customer/dashBoard" element={<DashboardLayout />}>
           <Route

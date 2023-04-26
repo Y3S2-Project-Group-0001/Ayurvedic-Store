@@ -4,6 +4,42 @@ import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import useDebounce from '../hooks/debounce'
 import { cartActions } from '../Store/cart-slice'
+import { FaShoppingCart } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+
+const ShoppingCartContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-right: 20px;
+  margin-left: 20px;
+  &:hover {
+    opacity: 0.9;
+  }
+`
+
+const ShoppingCartCount = styled.span`
+  cursor: pointer;
+  position: absolute;
+  top: -10px;
+  right: -20px;
+  background-color: #333;
+  color: #fff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const ShoppingCartIcon = styled(FaShoppingCart)`
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+`
 
 const MainContainer = styled.div`
   position: fixed;
@@ -24,11 +60,10 @@ const Container = styled.div`
 const Nav = styled.div`
   span {
     margin-left: 2rem;
-    a {
+    span {
       color: ${props => props.color};
       transition: 0.5s;
-      text-decoration: none;
-      font-weight: 400;
+      cursor: pointer;
       font-family: 'Quicksand';
     }
   }
@@ -72,6 +107,7 @@ const ButtonDash = styled.div`
   padding-right: 20px;
 `
 
+let isInitial = true
 export default function Header(props) {
   const [textColor, setTextColor] = useState('white')
   const [bgColor, setBgColor] = useState('rgba(61, 86, 49, 1)')
@@ -79,7 +115,8 @@ export default function Header(props) {
   const [scrolled, setScrolled] = useState(true)
   const cart = useSelector(state => state.cart)
   const dispatch = useDispatch()
-  let debouncedValue = useDebounce(cart, 1000)
+  const navigate = useNavigate()
+  const debouncedValue = useDebounce(cart, 1000)
 
   const changeBackground = () => {
     if (window.scrollY > 100) {
@@ -117,6 +154,49 @@ export default function Header(props) {
       })
   }, [dispatch])
 
+  useEffect(() => {
+    console.log(debouncedValue)
+    if (isInitial || !debouncedValue.changed) {
+      isInitial = false
+      return
+    }
+    console.log('in', debouncedValue)
+    fetch('http://localhost:8000/order/api/updateCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cartId: debouncedValue.cartId,
+        products: debouncedValue.items,
+        subTotal: debouncedValue.subTotal,
+        shippingCost: debouncedValue.shippingCost,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+      })
+  }, [
+    dispatch,
+    debouncedValue,
+    debouncedValue.items,
+    debouncedValue.subTotal,
+    debouncedValue.shippingCost,
+  ])
+
+  function navigateToCart() {
+    navigate('/customer/shoppingCart')
+  }
+
+  function navigateToHome() {
+    navigate('/')
+  }
+
+  function navigateToCategory() {
+    navigate('/customer/allProductsCustomer')
+  }
+
   return (
     <>
       <MainContainer>
@@ -132,21 +212,28 @@ export default function Header(props) {
             <Nav color={textColor}>
               <span>
                 {' '}
-                <a href="/">Home</a>{' '}
+                <span onClick={() => navigateToHome()}>Home</span>{' '}
               </span>
               <span>
                 {' '}
-                <a href="#">Categories</a>{' '}
+                <span onClick={() => navigateToCategory()}>
+                  Categories
+                </span>{' '}
               </span>
               <span>
                 {' '}
-                <a href="/rating">Reviews</a>{' '}
+                <span href="#">About us</span>{' '}
               </span>
               <span>
                 {' '}
-                <a href="#">More</a>{' '}
+                <span href="#">More</span>{' '}
               </span>
             </Nav>
+
+            <ShoppingCartContainer onClick={() => navigateToCart()}>
+              <ShoppingCartIcon />
+              <ShoppingCartCount>{cart.totalQuantitiy}</ShoppingCartCount>
+            </ShoppingCartContainer>
 
             <Login color={textColor}>
               <ButtonDash>Seller Dash</ButtonDash>
@@ -157,9 +244,9 @@ export default function Header(props) {
                 </div>
               ) : (
                 <div>
-                  <a href="http://localhost:3000/login">Login</a>
+                  <a href="#">Login</a>
                   <span> | </span>
-                  <a href="http://localhost:3000/register">Signup</a>
+                  <a href="#">Signup</a>
                 </div>
               )}
             </Login>
