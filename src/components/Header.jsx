@@ -6,6 +6,7 @@ import useDebounce from '../hooks/debounce'
 import { cartActions } from '../Store/cart-slice'
 import { FaShoppingCart } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import GetCurrentUser from '../hooks/getCurrentUser'
 
 const ShoppingCartContainer = styled.div`
   position: relative;
@@ -117,6 +118,8 @@ export default function Header(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const debouncedValue = useDebounce(cart, 1000)
+  const user = GetCurrentUser()
+  console.log('current user', user)
 
   const changeBackground = () => {
     if (window.scrollY > 100) {

@@ -83,7 +83,7 @@ function Products({ product: productOuter }) {
   useEffect(() => {
     // fetch product by id
     setIsLoading(true)
-    fetch(`http://localhost:3004/api/item/getOneItem/${_id}`, {
+    fetch(`http://localhost:8000/item/api/item/getOneItem/${_id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ function Products({ product: productOuter }) {
       .finally(() => {
         setIsLoading(false)
       })
-  }, [_id, productOuter])
+  }, [_id])
 
   // TODO: add prodct fetch function and only get product id and quantity from props
 
