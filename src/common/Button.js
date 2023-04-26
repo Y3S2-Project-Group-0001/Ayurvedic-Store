@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const Button = styled.button`
   background: #729b0e;
   background: ${props => props.bgc};
+  margin-top: ${props => props.mt};
   color: white;
   border: none;
   cursor: pointer;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEffect } from 'react'
+const axios = require('axios')
 
 const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -38,23 +39,43 @@ const ModalButton = styled.button`
   cursor: pointer;
 `
 
-const SavedLocationModel = ({ setOnCloseA }) => {
+const DeleteModel = ({ setDeleteModel, CID, AID }) => {
   function closer(e) {
     e.preventDefault()
-    setOnCloseA(false)
+    setDeleteModel(false)
+  }
+
+  function deleted(e) {
+    e.preventDefault()
+
+    // DELETE A SINGLE ADDRESS
+    axios
+      .delete(
+        `http://localhost:8000/delivery/api/deleteOneAddress?CID=${CID}&AID=${AID}`,
+      )
+      .then(response => {
+        console.log('Address deleted successfully')
+      })
+      .catch(error => {
+        console.error('Error deleting address:', error)
+      })
+
+    setDeleteModel(false)
   }
 
   return (
     <ModalWrapper>
       <ModalContent>
-        <h2>Select your Location</h2>
-
+        <h2>You sure you want to delete?</h2>
         <ModalButton c="gray" onClick={closer}>
           Close
+        </ModalButton>
+        <ModalButton c="Red" onClick={deleted}>
+          Delete
         </ModalButton>
       </ModalContent>
     </ModalWrapper>
   )
 }
 
-export default SavedLocationModel
+export default DeleteModel
