@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEffect } from 'react'
+const axios = require('axios')
 
 const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -38,31 +39,22 @@ const ModalButton = styled.button`
   cursor: pointer;
 `
 
-const DeleteModel = ({ setOnCloseA }) => {
-  function closer(e) {
+const PaymentSuccessModal = ({ successModel }) => {
+  function action(e) {
     e.preventDefault()
-    setOnCloseA(false)
-  }
-
-  function adder(e) {
-    e.preventDefault()
-    setOnCloseA(false)
+    successModel(false)
   }
 
   return (
     <ModalWrapper>
       <ModalContent>
-        <h2>You sure you want to delete?</h2>
-
-        <ModalButton c="gray" onClick={closer}>
-          Close
-        </ModalButton>
-        <ModalButton c="Red" onClick={adder}>
-          Delete
+        <h2>Your Payment is Successfull!</h2>
+        <ModalButton c="lime" onClick={action}>
+          Nice!
         </ModalButton>
       </ModalContent>
     </ModalWrapper>
   )
 }
 
-export default DeleteModel
+export default PaymentSuccessModal
