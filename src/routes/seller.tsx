@@ -5,7 +5,6 @@ import AddProduct from '../pages/AddProducts/AddProduct'
 import ProductsPageSeller from '../pages/ProductsPage_Seller/ProductsPageSeller'
 import UpdateProductForm from '../pages/UpdateProduct/UpdateProductForm'
 
-import ProductsPage from '../pages/ProductsPage_Seller/ProductsPage'
 import UpdateProduct from '../pages/UpdateProduct/UpdateProduct'
 import MainLayout from '../pages/MainLayout'
 import DashboardLayout from '../pages/DashboardLayout'
@@ -22,7 +21,7 @@ export default function SellerRouter() {
       <Route path="/updateProduct/:id" element={<UpdateProductForm />} />
 
       <Route path="/updateProduct" element={<UpdateProduct />} />
-      <Route path="/allProductSeller" element={<ProductsPage />} />
+      <Route path="/allProductSeller" element={<ProductsPageSeller />} />
       <Route path="/admin" element={<MainLayout />}>
         <Route path="/admin/dashBoard" element={<DashboardLayout />}>
           <Route path="/admin/dashBoard/orders" element={<Orders />}></Route>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { BsSearch } from 'react-icons/bs'
 import axios from 'axios'
@@ -156,7 +157,7 @@ function ProductsPage() {
       'http://localhost:3004/api/item/getAllItems',
     )
     setProductList(response.data)
-    console.log(data)
+    console.log(response.data)
   }
 
   useEffect(() => {
@@ -227,11 +228,13 @@ function ProductsPage() {
             <>
               {ProductList.map(pro => (
                 <CardContainer>
-                  <ButtonGroup>
-                    <Image src={pro.image[1]} alt="Product_Image" />
+                  <Link to={`/singleProduct/${pro._id}`}>
+                    <ButtonGroup>
+                      <Image src={pro.image[1]} alt="Product_Image" />
 
-                    <Title>{pro.itemName}</Title>
-                  </ButtonGroup>
+                      <Title>{pro.itemName}</Title>
+                    </ButtonGroup>
+                  </Link>
                   <Title>{pro.description}</Title>
                   <Shape>
                     <Price>LKR {pro.price}.00</Price>
