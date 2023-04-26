@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { AiOutlineMinus } from 'react-icons/ai'
@@ -76,51 +76,72 @@ const QuantitySpan = styled.span`
 
 function Products({ product: productOuter }) {
   const dispatch = useDispatch()
+  const [product, setProduct] = React.useState({ ...productOuter })
+  const [isLoading, setIsLoading] = React.useState(true)
+
+  useEffect(() => {
+    // fetch product by id
+    setIsLoading(true)
+    fetch(
+      `http://localhost:3004/api/item/getOneItem/id:${productOuter.productId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: productOuter.productId }),
+      },
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log('data', data.item)
+        setProduct({ ...productOuter, ...data.item })
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [productOuter.productId])
 
   // TODO: add prodct fetch function and only get product id and quantity from props
-  const product = {
-    ...{
-      name: 'Herbal Oil 100ml Add a longer title ',
-      description: 'Herbal Oil 100ml Add a longer title somt more descriptions',
-      img: 'https://picsum.photos/300/300',
-      price: 100,
-      quantity: 1,
-    },
-    ...productOuter,
-  }
 
   function addProductHandler() {
     dispatch(
       cartActions.addItem({
-        id: product.productId,
-        price: product.price,
+        id: product?._id,
+        price: product?.price,
       }),
     )
   }
 
   function removeProductHandler() {
     dispatch(
-      cartActions.removeItem({ id: product.productId, price: product.price }),
+      cartActions.removeItem({ id: product?._id, price: product?.price }),
     )
   }
 
   return (
-    <ProductContainer key={product.id}>
-      <ImageWithDetailsContainer>
-        <StyledImage src={product.img} alt={product.name} />
-        <ProductNameQuantityContainer>
-          <StyledProductTitle>{product.name}</StyledProductTitle>
-          <Description>{product.description}</Description>
-          <QuantityContainer>
-            <QuentityHandler>
-              <AiOutlinePlus onClick={() => addProductHandler()} />
-              <QuantitySpan>{product.quantity}</QuantitySpan>
-              <AiOutlineMinus onClick={() => removeProductHandler()} />
-            </QuentityHandler>
-          </QuantityContainer>
-        </ProductNameQuantityContainer>
-      </ImageWithDetailsContainer>
-      <p>Rs.{product.price}</p>
+    <ProductContainer key={product?._id}>
+      {isLoading ? (
+        'Loading...'
+      ) : (
+        <>
+          <ImageWithDetailsContainer>
+            <StyledImage src={product?.image[1]} alt={product?.itemName} />
+            <ProductNameQuantityContainer>
+              <StyledProductTitle>{product?.itemName}</StyledProductTitle>
+              <Description>{product?.description}</Description>
+              <QuantityContainer>
+                <QuentityHandler>
+                  <AiOutlinePlus onClick={() => addProductHandler()} />
+                  <QuantitySpan>{productOuter?.quantity}</QuantitySpan>
+                  <AiOutlineMinus onClick={() => removeProductHandler()} />
+                </QuentityHandler>
+              </QuantityContainer>
+            </ProductNameQuantityContainer>
+          </ImageWithDetailsContainer>
+          <p>Rs.{product?.price}</p>
+        </>
+      )}
     </ProductContainer>
   )
 }

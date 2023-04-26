@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEffect } from 'react'
+import axios from 'axios'
 
 const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -38,22 +39,44 @@ const ModalButton = styled.button`
   cursor: pointer;
 `
 
-const AddAddressModel = ({ setOnCloseA }) => {
-  const [title, setTitle] = useState(null)
-  const [address, setAddress] = useState(null)
-  const [country, setCountry] = useState(null)
+const AddNewModel = ({ setAddNewModel }) => {
+  const [title, setTitle] = useState('')
+  const [address, setAddress] = useState('')
+  const [country, setCountry] = useState('')
+  const cid = 'sefwesf'
 
   function closer(e) {
     e.preventDefault()
-    setOnCloseA(false)
+    setAddNewModel(false)
   }
 
-  function adder(e) {
-    e.preventDefault()
-    //add data do somethoing
-    console.log(title, address, country)
-    setOnCloseA(false)
+  const adder = async () => {
+    const array = {
+      Title: title,
+      Address: address,
+      country: country,
+    }
+    const data = {
+      CID: cid,
+      Addresses: array,
+    }
+    console.log(data)
+    try {
+      const response = await axios.post(
+        'http://localhost:8000/delivery/api/addAddress',
+        data,
+      )
+      console.log(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+    setAddNewModel(false)
   }
+
+  // function adder(e) {
+  //   e.preventDefault()
+  //   setAddNewModel(false)
+  // }
 
   return (
     <ModalWrapper>
@@ -93,4 +116,4 @@ const AddAddressModel = ({ setOnCloseA }) => {
   )
 }
 
-export default AddAddressModel
+export default AddNewModel

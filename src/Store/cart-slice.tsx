@@ -63,16 +63,14 @@ const cartSlice = createSlice({
         if (state.items[i].productId === action.payload.id) {
           state.items[i].quantity -= 1
           console.log('this ran')
-          if (state.items[i].quantity === 0) {
+          if (state.items[i].quantity < 1) {
             isZero = true
           }
-          return
+          break
         }
       }
       if (isZero) {
-        state.items = state.items.filter(
-          (item: any) => item.productId !== action.payload.id,
-        )
+        state.items = state.items.filter((item: any) => item.quantity > 0)
       }
     },
   },

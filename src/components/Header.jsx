@@ -155,10 +155,12 @@ export default function Header(props) {
   }, [dispatch])
 
   useEffect(() => {
+    console.log(debouncedValue)
     if (isInitial || !debouncedValue.changed) {
       isInitial = false
       return
     }
+    console.log('in', debouncedValue)
     fetch('http://localhost:8000/order/api/updateCart', {
       method: 'POST',
       headers: {
@@ -191,8 +193,8 @@ export default function Header(props) {
     navigate('/')
   }
 
-  function navigateToHome() {
-    navigate('/')
+  function navigateToCategory() {
+    navigate('/customer/allProductsCustomer')
   }
 
   return (
@@ -214,7 +216,9 @@ export default function Header(props) {
               </span>
               <span>
                 {' '}
-                <span href="#">Categories</span>{' '}
+                <span onClick={() => navigateToCategory()}>
+                  Categories
+                </span>{' '}
               </span>
               <span>
                 {' '}

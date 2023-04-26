@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals'
 import { BrowserRouter } from 'react-router-dom'
 import CustomerRouter from './routes/customer'
 import SellerRouter from './routes/seller'
+import AuthRouter from './routes/auth'
+import RatingRouter from './routes/rating'
 import { Provider } from 'react-redux'
 import Store from './Store/Index'
 
@@ -16,6 +18,8 @@ root.render(
       <BrowserRouter>
         <CustomerRouter />
         <SellerRouter />
+        <AuthRouter />
+        <RatingRouter />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
