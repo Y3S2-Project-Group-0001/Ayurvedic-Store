@@ -16,6 +16,7 @@ import ViewOrderCustomer from '../pages/ViewOrderCustomer/ViewOrderCustomer'
 
 import Delivery from '../pages/Delivery/Delivery'
 import SingleProduct from '../pages/ProductsPage_Customer/SingleProduct'
+//import SingleProduct from '../pages/ProductsPage_Customer/SingleProduct'
 
 export default function CustomerRouter() {
   return (
