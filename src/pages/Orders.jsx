@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import AyruvedicButton from '../common/AyruvedicButton'
 import { useNavigate } from 'react-router'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { orderActions } from '../Store/order-slice'
+import GetCurrentUser from '../hooks/getCurrentUser'
 
 const OuterContainer = styled.div`
   margin-top: 100px;
@@ -96,6 +97,7 @@ const StatusButton = styled.div`
   border-radius: 10px;
   padding: 10px 20px;
   margin: 0px 10px;
+  cursor: pointer;
 `
 
 function Orders() {
@@ -132,7 +134,6 @@ function Orders() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ customerId: 12 }),
     })
       .then(res => res.json())
       .then(data => {

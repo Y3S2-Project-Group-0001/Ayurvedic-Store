@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import AyruvedicButton from '../common/AyruvedicButton'
 import { useNavigate } from 'react-router-dom'
 import { orderActions } from '../Store/order-slice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import GetCurrentUser from '../hooks/getCurrentUser'
 
 const OuterContainer = styled.div`
   margin-top: 100px;
@@ -86,6 +87,8 @@ function OrderHistory() {
   const [orderList, setOrderList] = useState([])
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const user = GetCurrentUser()
+  const userDetails = useSelector(state => state.user)
 
   // get order history from backend
   useEffect(() => {
@@ -95,14 +98,17 @@ function OrderHistory() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ customerId: 12 }),
+      body: JSON.stringify({
+        customerId:
+          userDetails?.customer?._id.toString() || '12643f6267192ae5493bd709a4',
+      }),
     })
       .then(res => res.json())
       .then(data => {
         setOrderList(data)
-        console.log(data)
+        console.log('orders', data)
       })
-  }, [])
+  }, [user, userDetails])
 
   function handleViewOrder(order) {
     // Use the navigate function to navigate to the ViewOrderCustomer component

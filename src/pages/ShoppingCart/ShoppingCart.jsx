@@ -89,7 +89,7 @@ function ShoppingCart() {
         <ProductListAndOrderSummary>
           <ProductList>
             {cartDetails.items.map(product => (
-              <Products product={product} />
+              <Products key={product.productId} product={product} />
             ))}
           </ProductList>
           <OrderSummary>
