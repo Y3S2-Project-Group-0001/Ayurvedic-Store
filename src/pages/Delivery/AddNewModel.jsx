@@ -39,11 +39,10 @@ const ModalButton = styled.button`
   cursor: pointer;
 `
 
-const AddNewModel = ({ setAddNewModel }) => {
+const AddNewModel = ({ setAddNewModel, cid }) => {
   const [title, setTitle] = useState('')
   const [address, setAddress] = useState('')
   const [country, setCountry] = useState('')
-  const cid = 'sefwesf'
 
   function closer(e) {
     e.preventDefault()

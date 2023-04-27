@@ -26,10 +26,9 @@ export default function CustomerRouter() {
 
       <Route path="/payment" element={<PaymentSelect />} />
 
-      <Route path="/TestingPage2" element={<Delivery />} />
+      <Route path="/delivery" element={<Delivery />} />
 
       {/* <Route path="/TestingPage" element={<PaymentSelect />} /> */}
-      {/* <Route path="/TestingPage" element={<DeliveryPayment />} /> */}
 
       <Route path="/singleProduct/:_id" element={<SingleProduct />} />
 
