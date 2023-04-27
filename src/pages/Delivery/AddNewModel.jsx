@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEffect } from 'react'
 import axios from 'axios'
+import GetCurrentUser from '../../hooks/getCurrentUser'
 
 const ModalWrapper = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
@@ -40,6 +41,8 @@ const ModalButton = styled.button`
 `
 
 const AddNewModel = ({ setAddNewModel, cid }) => {
+  const user = GetCurrentUser()
+  const userID = user?._id
   const [title, setTitle] = useState('')
   const [address, setAddress] = useState('')
   const [country, setCountry] = useState('')
@@ -56,7 +59,7 @@ const AddNewModel = ({ setAddNewModel, cid }) => {
       country: country,
     }
     const data = {
-      CID: cid,
+      CID: userID,
       Addresses: array,
     }
     console.log(data)
