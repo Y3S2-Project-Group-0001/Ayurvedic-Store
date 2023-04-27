@@ -23,18 +23,19 @@ export default function PaymentInfo({
 }) {
   const [items, setItems] = useState(24)
   const [priceItems, setPriceItems] = useState(24500)
-  const [delivery, setDelivery] = useState(220)
+  const [delivery, setDelivery] = useState(188)
   const [service, setService] = useState(250)
   const [total, setTotal] = useState(0)
   const [update, setUpdate] = useState(0)
   const location = useLocation()
   const addThisAddress = location.state.address
   const addThisPrice = location.state.price
+  const customerId = location.state.cid
   setSaveAddress(addThisAddress)
   setSavePrice(addThisPrice)
   // const [subTotal, setSubTotal] = useState(0)
   const [cartTot, setCartTot] = useState('no data yet')
-  const customerId = '543f6267192ae5493bd709a4'
+  // const customerId = '543f6267192ae5493bd709a4'
 
   useEffect(() => {
     axios
@@ -44,8 +45,8 @@ export default function PaymentInfo({
         setCart(response.data[0])
         console.log(response.data[0])
         setItems(cartTot.products.length)
-        setTotal(cartTot.subTotal + service + delivery)
-        setSubTotal(cartTot.subTotal + service + delivery)
+        setTotal(cartTot.subTotal + service + +addThisPrice)
+        setSubTotal(cartTot.subTotal + service + +addThisPrice)
         setUpdate(2)
       })
       .catch(error => {
@@ -87,7 +88,7 @@ export default function PaymentInfo({
           <Text>Payment Summery </Text>
           <Text ml="40px">Number of Items : {items}</Text>
           <Text ml="40px">Price for Total Items : {cartTot.subTotal}</Text>
-          <Text ml="40px">Delivery Fees : {delivery}</Text>
+          <Text ml="40px">Delivery Fees : {addThisPrice}</Text>
           <Text ml="40px">Service Charges : {service}</Text>
         </Container>
         <Container

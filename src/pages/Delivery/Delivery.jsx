@@ -13,6 +13,7 @@ import UpdateModel from './UpdateModel'
 import axios from 'axios'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import GetCurrentUser from '../../hooks/getCurrentUser'
 
 const Smallbox = styled(Container)`
   background-color: #cfd7bc;
@@ -44,21 +45,29 @@ export default function Delivery() {
   const [setDeleteModel, setSetDeleteModel] = useState(false)
   const [setUpdateModel, setSetUpdateModel] = useState(false)
   const [cart, setCart] = useState('')
+  const user = GetCurrentUser()
 
-  const cid = '543f6267192ae5493bd709a4'
-  const customerId = '543f6267192ae5493bd709a4'
+  const cid = user?._id
+  // const [customerId, setCusID] = useState('')
+  // setCusID(user?._id)
+
+  const customerId = user?._id
+
+  // if (!user) {
+  //   navigate('/login')
+  // }
 
   // View all addresses.
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/delivery/api/getAddresses/?CID=${cid}`)
+      .get(`http://localhost:8000/delivery/api/getAddresses/?CID=${customerId}`)
       .then(response => {
         setAddresses(response.data[0].Addresses)
       })
       .catch(error => {
         console.log(error)
       })
-  }, [])
+  }, [setSelectAddrModel])
 
   useEffect(() => {
     axios
@@ -76,7 +85,7 @@ export default function Delivery() {
     console.log(title, addresss, country, selectedPrice)
     const address = addresss + ',' + country
     navigate('/payment', {
-      state: { address: addresss, price: selectedPrice },
+      state: { address: addresss, price: selectedPrice, cid: cid },
     })
   }
 

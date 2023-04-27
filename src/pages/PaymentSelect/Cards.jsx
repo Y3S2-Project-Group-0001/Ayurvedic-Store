@@ -7,6 +7,7 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import PaymentSuccessModal from './Success'
 import StripContainer from './StripeContainer'
+import GetCurrentUser from '../../hooks/getCurrentUser'
 
 const InText = styled(Container)`
   font-family: 'Quicksand';
@@ -36,6 +37,7 @@ const Input = styled.input`
 
 export default function Cards({ subTotal, saveAddress, savePrice, cart }) {
   const [card, setCard] = useState('2334')
+  const user = GetCurrentUser()
   // const [email, setEmail] = useState("");
   const [amount, setAmount] = useState('634893')
   const [name, setName] = useState('Pedro pascal')
@@ -50,7 +52,7 @@ export default function Cards({ subTotal, saveAddress, savePrice, cart }) {
   const [cards, setCards] = useState([])
   const [count, setCount] = useState(0)
   const [successModel, setSuccessModel] = useState(false)
-  const cid = 'sefwesf'
+  const cid = user?._id
 
   // View all cards.
   useEffect(() => {
