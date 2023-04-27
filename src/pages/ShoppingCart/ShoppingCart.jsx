@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import AyruvedicButton from '../../common/AyruvedicButton'
 import { useSelector } from 'react-redux'
 import Products from './Products'
+import { useNavigate } from 'react-router-dom'
 
 const OuterContainer = styled.div`
   margin-top: 100px;
@@ -72,6 +73,13 @@ const StyledAyruvedicButton = styled(AyruvedicButton)`
 `
 
 function ShoppingCart() {
+  const navigate = useNavigate()
+
+  function NavToDelivery() {
+    navigate('/delivery')
+    console.log('Navigating to delivery selector...')
+  }
+
   const cartDetails = useSelector(state => state.cart)
   console.log(cartDetails)
   return (
@@ -98,7 +106,7 @@ function ShoppingCart() {
               <span>Total</span>
               <span>Rs.{cartDetails.shippingCost + cartDetails.subTotal}</span>
             </OrderSummaryRecord>
-            <StyledAyruvedicButton>
+            <StyledAyruvedicButton onClick={() => NavToDelivery()}>
               <span>Proceed to Checkout</span>
             </StyledAyruvedicButton>
           </OrderSummary>
