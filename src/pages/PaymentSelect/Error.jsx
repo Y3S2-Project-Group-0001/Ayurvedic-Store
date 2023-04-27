@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 const axios = require('axios')
 
 const ModalWrapper = styled.div`
@@ -40,24 +39,22 @@ const ModalButton = styled.button`
   cursor: pointer;
 `
 
-const PaymentSuccessModal = ({ successModel }) => {
-  const navigate = useNavigate()
+const PaymentErrorModal = ({ closeModel, message }) => {
   function action(e) {
     e.preventDefault()
-    navigate('/')
-    successModel(false)
+    closeModel(null)
   }
 
   return (
     <ModalWrapper>
       <ModalContent>
-        <h2>Your Payment is Successfull!</h2>
-        <ModalButton c="#729b0e" onClick={action}>
-          Nice!
+        <h2>{message}</h2>
+        <ModalButton c="red" onClick={action}>
+          omg!
         </ModalButton>
       </ModalContent>
     </ModalWrapper>
   )
 }
 
-export default PaymentSuccessModal
+export default PaymentErrorModal

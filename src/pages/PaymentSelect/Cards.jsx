@@ -34,7 +34,7 @@ const Input = styled.input`
   box-sizing: border-box;
 `
 
-export default function Cards() {
+export default function Cards({ subTotal, saveAddress, savePrice, cart }) {
   const [card, setCard] = useState('2334')
   // const [email, setEmail] = useState("");
   const [amount, setAmount] = useState('634893')
@@ -104,7 +104,7 @@ export default function Cards() {
   }
 
   async function Remove(cardID) {
-    // DELETE A SINGLE ADDRESS
+    // DELETE A SINGLE card
     setCount(3)
     await axios
       .delete(
@@ -136,7 +136,7 @@ export default function Cards() {
           mr="85px"
         >
           <Container display="flex" justify="center" pt="20px">
-            <InText>Credit Card</InText>
+            <InText>Add your Credit Card Details</InText>
           </Container>
           {console.log(cards)}
 
@@ -186,7 +186,13 @@ export default function Cards() {
           ))}
         </Container>
 
-        <StripContainer></StripContainer>
+        <StripContainer
+          subTotal={subTotal}
+          saveAddress={saveAddress}
+          savePrice={savePrice}
+          cid={cid}
+          cart={cart}
+        ></StripContainer>
         {/* <Container
           bgColor="#ebd7c0"
           borderR="10px"
