@@ -2,6 +2,7 @@ import React from 'react'
 import { Element, Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import PaymentForm from './PaymentForm'
+import './style.css'
 // import CheckoutForm from './CheckoutForm'
 
 const PUBLIC_KEY =

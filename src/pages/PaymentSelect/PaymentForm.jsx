@@ -3,6 +3,7 @@ import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import axios from 'axios'
 import PaymentSuccessModal from './Success'
 import PaymentErrorModal from './Error'
+import './style.css'
 
 const CARD_OPTIONS = {
   iconStyle: 'solid',
