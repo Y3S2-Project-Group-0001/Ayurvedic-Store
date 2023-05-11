@@ -6,6 +6,7 @@ import useDebounce from '../hooks/debounce'
 import { cartActions } from '../Store/cart-slice'
 import { FaShoppingCart } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import GetCurrentUser from '../hooks/getCurrentUser'
 
 const ShoppingCartContainer = styled.div`
   position: relative;
@@ -105,6 +106,7 @@ const ButtonDash = styled.div`
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
+  cursor: pointer;
 `
 
 let isInitial = true
@@ -117,6 +119,8 @@ export default function Header(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const debouncedValue = useDebounce(cart, 1000)
+  const user = GetCurrentUser()
+  console.log('current user', user)
 
   const changeBackground = () => {
     if (window.scrollY > 100) {
@@ -145,14 +149,14 @@ export default function Header(props) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ customerId: 12 }),
+      body: JSON.stringify({ customerId: user?._id.toString() || '' }),
     })
       .then(res => res.json())
       .then(data => {
         dispatch(cartActions.replaceCart(data[0]))
         console.log(data)
       })
-  }, [dispatch])
+  }, [dispatch, user])
 
   useEffect(() => {
     console.log(debouncedValue)
@@ -197,6 +201,26 @@ export default function Header(props) {
     navigate('/customer/allProductsCustomer')
   }
 
+  function navigateToUserDashboard() {
+    navigate('/customer/dashBoard/orderHistory')
+  }
+
+  function navigateToSellerDashboard() {
+    navigate('/customer/shoppingCart')
+  }
+
+  function navigateToAdminDashboard() {
+    navigate('/admin/dashBoard/orders')
+  }
+
+  function navigateToLogin() {
+    navigate('/login')
+  }
+
+  function navigateToRegister() {
+    navigate('/register')
+  }
+
   return (
     <>
       <MainContainer>
@@ -230,23 +254,39 @@ export default function Header(props) {
               </span>
             </Nav>
 
-            <ShoppingCartContainer onClick={() => navigateToCart()}>
-              <ShoppingCartIcon />
-              <ShoppingCartCount>{cart.totalQuantitiy}</ShoppingCartCount>
-            </ShoppingCartContainer>
+            {user?.type === 'user' && (
+              <ShoppingCartContainer onClick={() => navigateToCart()}>
+                <ShoppingCartIcon />
+                <ShoppingCartCount>{cart.totalQuantitiy}</ShoppingCartCount>
+              </ShoppingCartContainer>
+            )}
 
             <Login color={textColor}>
-              <ButtonDash>Seller Dash</ButtonDash>
+              {user?.type === 'seller' && (
+                <ButtonDash onClick={() => navigateToSellerDashboard()}>
+                  Seller Dashboard
+                </ButtonDash>
+              )}
+              {user?.type === 'admin' && (
+                <ButtonDash onClick={() => navigateToAdminDashboard()}>
+                  Admin Dashboard
+                </ButtonDash>
+              )}
+              {user?.type === 'user' && (
+                <ButtonDash onClick={() => navigateToUserDashboard()}>
+                  User Dashboard
+                </ButtonDash>
+              )}
 
-              {login == 'Logged' ? (
+              {user ? (
                 <div>
-                  <a href="#">Logout </a>
+                  <span onClick={() => navigateToLogin()}>Logout </span>
                 </div>
               ) : (
                 <div>
-                  <a href="#">Login</a>
+                  <span onClick={() => navigateToLogin()}>Login</span>
                   <span> | </span>
-                  <a href="#">Signup</a>
+                  <span onClick={() => navigateToRegister()}>Signup</span>
                 </div>
               )}
             </Login>

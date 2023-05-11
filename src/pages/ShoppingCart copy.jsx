@@ -147,6 +147,10 @@ const QuantityContainer = styled.span`
   border: 1px solid black;
 `
 
+function NavToDelivery() {
+  console.log('Nav works ')
+}
+
 function ShoppingCart() {
   return (
     <OuterContainer>
@@ -186,7 +190,7 @@ function ShoppingCart() {
               <span>Total</span>
               <span>Rs.1290</span>
             </OrderSummaryRecord>
-            <StyledAyruvedicButton>
+            <StyledAyruvedicButton onClick={() => NavToDelivery()}>
               <span>Proceed to Checkout</span>
             </StyledAyruvedicButton>
           </OrderSummary>

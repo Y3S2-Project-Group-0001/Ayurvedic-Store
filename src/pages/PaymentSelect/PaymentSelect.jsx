@@ -16,7 +16,11 @@ const Trans = styled.div`
 
 export default function PaymentSelect() {
   const [method, setMethod] = useState('none')
-  console.log('yo ' + method)
+  const [subTotal, setSubTotal] = useState(0)
+  const [saveAddress, setSaveAddress] = useState('')
+  const [savePrice, setSavePrice] = useState(0)
+  const [cart, setCart] = useState('')
+  console.log('yo ' + subTotal)
 
   return (
     <>
@@ -30,11 +34,25 @@ export default function PaymentSelect() {
           justify="center"
         >
           <Container display="grid">
-            <PaymentInfo></PaymentInfo>
+            <PaymentInfo
+              setSubTotal={setSubTotal}
+              setSaveAddress={setSaveAddress}
+              setSavePrice={setSavePrice}
+              setCart={setCart}
+            ></PaymentInfo>
             <PaymentOptions setTheMethod={setMethod} />
             {method == 'gpay' ? <GooglePay /> : ''}
             {method == 'paypal' ? <Paypal /> : ''}
-            {method == 'card' ? <Cards /> : ''}
+            {method == 'card' ? (
+              <Cards
+                subTotal={subTotal}
+                saveAddress={saveAddress}
+                savePrice={savePrice}
+                cart={cart}
+              />
+            ) : (
+              ''
+            )}
           </Container>
         </Container>
       </Container>

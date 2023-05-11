@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import { FileUpload } from '../pages/examples/file-upload'
 import Home from '../pages/Home/Home'
 import ShoppingCart from '../pages/ShoppingCart/ShoppingCart'
@@ -26,10 +26,9 @@ export default function CustomerRouter() {
 
       <Route path="/payment" element={<PaymentSelect />} />
 
-      <Route path="/TestingPage2" element={<Delivery />} />
+      <Route path="/delivery" element={<Delivery />} />
 
       {/* <Route path="/TestingPage" element={<PaymentSelect />} /> */}
-      {/* <Route path="/TestingPage" element={<DeliveryPayment />} /> */}
 
       <Route path="/singleProduct/:_id" element={<SingleProduct />} />
 

@@ -17,9 +17,10 @@ const Smallbox = styled(Container)`
   }
 `
 
-function DeliveryBox({ name, setSelected }) {
+function DeliveryBox({ name, setSelected, price, setPrice }) {
   function selected() {
     setSelected(name)
+    setPrice(price)
   }
   return (
     <Smallbox onClick={selected}>

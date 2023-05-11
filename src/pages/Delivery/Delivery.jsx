@@ -12,6 +12,8 @@ import DeleteModel from './DeleteModel'
 import UpdateModel from './UpdateModel'
 import axios from 'axios'
 import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import GetCurrentUser from '../../hooks/getCurrentUser'
 
 const Smallbox = styled(Container)`
   background-color: #cfd7bc;
@@ -29,32 +31,63 @@ const Smallbox = styled(Container)`
 `
 
 export default function Delivery() {
+  const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [address, setAddress] = useState('')
   const [country, setCountry] = useState('')
   const [AID, setAID] = useState('')
   const [addresses, setAddresses] = useState([])
   const [selectedDelivery, setSelectedDelivery] = useState('Not Selected')
+  const [selectedPrice, setPrice] = useState(0)
 
   const [setAddNewModel, setSetAddNewModel] = useState(false)
   const [setSelectAddrModel, setSetSelectAddrModel] = useState(false)
   const [setDeleteModel, setSetDeleteModel] = useState(false)
   const [setUpdateModel, setSetUpdateModel] = useState(false)
+  const [cart, setCart] = useState('')
+  const user = GetCurrentUser()
 
-  const cid = 'sefwesf'
+  const cid = user?._id
+  // const [customerId, setCusID] = useState('')
+  // setCusID(user?._id)
+
+  const customerId = user?._id
+
+  // if (!user) {
+  //   navigate('/login')
+  // }
 
   // View all addresses.
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/delivery/api/getAddresses/?CID=${cid}`)
+      .get(`http://localhost:8000/delivery/api/getAddresses/?CID=${customerId}`)
       .then(response => {
         setAddresses(response.data[0].Addresses)
-        // console.log(response.data[0].Addresses)
       })
       .catch(error => {
         console.log(error)
       })
+  }, [setSelectAddrModel])
+
+  useEffect(() => {
+    axios
+      .post('http://localhost:8000/order/api/getCustomerCart', { customerId })
+      .then(response => {
+        console.log('DATA semora')
+        setCart(response.data[0])
+      })
+      .catch(error => {
+        console.error(error)
+      })
   }, [])
+
+  function CContinue(title, addresss, country, selectedPrice) {
+    console.log(title, addresss, country, selectedPrice)
+    const address = addresss + ',' + country
+    navigate('/payment', {
+      state: { address: addresss, price: selectedPrice, cid: cid },
+    })
+  }
 
   return (
     <>
@@ -123,30 +156,37 @@ export default function Delivery() {
               )}
             </Container>
             <Container w="50%">
-              Select Delivery Option
               <br />
               <Container display="flex" dirrection="column" align="center">
                 <Container display="flex" dirrection="row">
                   <DeliveryBox
                     selected={selectedDelivery}
+                    setPrice={setPrice}
                     name="POSTAL"
+                    price="100"
                     setSelected={setSelectedDelivery}
                   ></DeliveryBox>
                   <DeliveryBox
                     selected={selectedDelivery}
+                    setPrice={setPrice}
                     name="UPS"
+                    price="250"
                     setSelected={setSelectedDelivery}
                   ></DeliveryBox>
                 </Container>
                 <Container display="flex" dirrection="row">
                   <DeliveryBox
                     selected={selectedDelivery}
+                    setPrice={setPrice}
                     name="DHL"
+                    price="300"
                     setSelected={setSelectedDelivery}
                   ></DeliveryBox>
                   <DeliveryBox
                     selected={selectedDelivery}
+                    setPrice={setPrice}
                     name="FEDEX"
+                    price="430"
                     setSelected={setSelectedDelivery}
                   ></DeliveryBox>
                 </Container>
@@ -157,7 +197,14 @@ export default function Delivery() {
           </Container>
 
           <Container display="flex" justify="center" align="center">
-            <Button w="150px" mt="5px" h="40px" bgc="gray" hbc="gray">
+            <Button
+              w="150px"
+              mt="5px"
+              h="40px"
+              bgc="gray"
+              hbc="gray"
+              onClick={() => CContinue(title, address, country, selectedPrice)}
+            >
               Continue
             </Button>
           </Container>
@@ -176,7 +223,7 @@ export default function Delivery() {
       )}
 
       {setAddNewModel && (
-        <AddNewModel setAddNewModel={setSetAddNewModel}></AddNewModel>
+        <AddNewModel setAddNewModel={setSetAddNewModel} cid={cid}></AddNewModel>
       )}
 
       {setUpdateModel && (

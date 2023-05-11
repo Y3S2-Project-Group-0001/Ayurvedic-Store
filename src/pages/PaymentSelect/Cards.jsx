@@ -6,6 +6,8 @@ import Button from '../../common/Button'
 import axios from 'axios'
 import { useEffect } from 'react'
 import PaymentSuccessModal from './Success'
+import StripContainer from './StripeContainer'
+import GetCurrentUser from '../../hooks/getCurrentUser'
 
 const InText = styled(Container)`
   font-family: 'Quicksand';
@@ -33,8 +35,9 @@ const Input = styled.input`
   box-sizing: border-box;
 `
 
-export default function Cards() {
+export default function Cards({ subTotal, saveAddress, savePrice, cart }) {
   const [card, setCard] = useState('2334')
+  const user = GetCurrentUser()
   // const [email, setEmail] = useState("");
   const [amount, setAmount] = useState('634893')
   const [name, setName] = useState('Pedro pascal')
@@ -49,7 +52,7 @@ export default function Cards() {
   const [cards, setCards] = useState([])
   const [count, setCount] = useState(0)
   const [successModel, setSuccessModel] = useState(false)
-  const cid = 'sefwesf'
+  const cid = user?._id
 
   // View all cards.
   useEffect(() => {
@@ -103,7 +106,7 @@ export default function Cards() {
   }
 
   async function Remove(cardID) {
-    // DELETE A SINGLE ADDRESS
+    // DELETE A SINGLE card
     setCount(3)
     await axios
       .delete(
@@ -135,7 +138,7 @@ export default function Cards() {
           mr="85px"
         >
           <Container display="flex" justify="center" pt="20px">
-            <InText>Credit Card</InText>
+            <InText>Add your Credit Card Details</InText>
           </Container>
           {console.log(cards)}
 
@@ -185,7 +188,14 @@ export default function Cards() {
           ))}
         </Container>
 
-        <Container
+        <StripContainer
+          subTotal={subTotal}
+          saveAddress={saveAddress}
+          savePrice={savePrice}
+          cid={cid}
+          cart={cart}
+        ></StripContainer>
+        {/* <Container
           bgColor="#ebd7c0"
           borderR="10px"
           pl="50px"
@@ -255,7 +265,7 @@ export default function Cards() {
               Add Card
             </Buttons>
           </Container>
-        </Container>
+        </Container> */}
         {successModel && (
           <PaymentSuccessModal
             successModel={setSuccessModel}
